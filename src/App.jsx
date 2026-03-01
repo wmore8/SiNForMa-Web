@@ -1,4 +1,5 @@
 import { Icon } from './components/Icon';
+import { Navbar } from './components/Navbar';
 import './App.css'
 
 function ActivityCard({ title, iconName }) {
@@ -24,22 +25,7 @@ function App() {
 
   return (
     <div className="main-container">
-      <nav className="navbar">
-        <div className="nav-brand">
-          <Icon name='icon-default' className="brand-icon" />
-          <h1>Sinforma</h1>
-        </div>
-        
-        <div className="nav-links-desktop">
-            <a href="#tablas">Tablas</a>
-            <a href="#lapiceros">Lapiceros</a>
-            <a href="#palabras">Palabras</a>
-            <a href="#numeros">Números</a>
-            <a href="#operaciones">Operaciones</a>
-        </div>
-
-      
-      </nav>
+      <Navbar></Navbar>
 
       <main className="content-area">
         <div className="cards-grid">

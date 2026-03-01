@@ -1,0 +1,53 @@
+import { useState } from 'react';
+import { Icon } from './Icon';
+
+const navLinks = [
+    { name: 'Tablas', path: '#tablas', icon: 'icon-default' },
+    { name: 'Lapiceros', path: '#lapiceros', icon: 'icon-default' },
+    { name: 'Palabras', path: '#palabras', icon: 'icon-default' },
+    { name: 'Números', path: '#numeros', icon: 'icon-default' },
+    { name: 'Operaciones', path: '#operaciones', icon: 'icon-default' }
+];
+
+export function Navbar() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+    const closeMenu = () => setIsMenuOpen(false);
+
+    return (
+        <header className="navbar-header">
+            <nav className="navbar">
+
+                <a  href={'/'} className="nav-brand" onClick={closeMenu}>
+                    <Icon name='icon-default' className="brand-icon" />
+                    <h1>Sinforma</h1>
+                </a>
+
+                <div className={`nav-links-container ${isMenuOpen ? 'open' : ''}`}>
+                    <ul className="nav-links">
+                        {navLinks.map((link) => (
+                            <li key={link.name}>
+                                <a href={link.path} className="nav-link" onClick={closeMenu}>
+                                    <Icon name={link.icon} className="nav-link-icon" />
+                                    <span>{link.name}</span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div className="nav-actions">
+                    <button className="icon-btn" title='Ajustes'>
+                        <Icon name={"icon-ajustes"} className="ajustes-icon" />
+                    </button>
+
+                    <button className="icon-btn mobile-menu-btn" onClick={toggleMenu} title={isMenuOpen ? 'Cerrar' : 'Abrir'}>
+                        <Icon name="icon-nav-toggle" className={`hamburger-icon ${isMenuOpen ? 'rotated' : ''}`} />
+                    </button>
+                </div>
+
+            </nav>
+        </header>
+    );
+}
