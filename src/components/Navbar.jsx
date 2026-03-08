@@ -10,7 +10,7 @@ const navLinks = [
     { name: 'Operaciones', path: '/operaciones', icon: 'icon-default' }
 ];
 
-export function Navbar() {
+export function Navbar({ onOpenSettings }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -39,7 +39,7 @@ export function Navbar() {
                 </div>
 
                 <div className="nav-actions">
-                    <button className="icon-btn" title='Ajustes'>
+                    <button className="icon-btn" title='Ajustes' onClick={onOpenSettings}>
                         <Icon name={"icon-ajustes"} className="ajustes-icon" />
                     </button>
 

@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import { OptionsModal } from './components/OptionsModal';
 import { Icon } from './components/Icon';
 import { Navbar } from './components/Navbar';
 import './App.css'
@@ -25,13 +27,13 @@ function Home() {
   ];
 
   return (
-      <main className="content-area">
-        <div className="cards-grid">
-          {activities.map((act) => (
-            <ActivityCard key={act.id} title={act.title} iconName={act.icon} path={act.path}/>
-          ))}
-        </div>
-      </main>
+    <main className="content-area">
+      <div className="cards-grid">
+        {activities.map((act) => (
+          <ActivityCard key={act.id} title={act.title} iconName={act.icon} path={act.path} />
+        ))}
+      </div>
+    </main>
   )
 }
 
@@ -48,20 +50,57 @@ function ActividadTablas() {
 }
 
 
+function AppLayout() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // 3. Magia de LocalStorage: Inicializamos el estado leyendo la memoria del navegador
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = localStorage.getItem('appTheme');
+    return savedTheme === 'dark'; // Si guardamos 'dark', empieza en true
+  });
+
+  // 4. Efecto para aplicar la clase al body cada vez que isDark cambie
+  useEffect(() => {
+    if (isDark) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [isDark]);
+
+  // Función para cambiar el tema y guardarlo
+  const toggleTheme = (theme) => {
+    setIsDark(theme === 'dark');
+    localStorage.setItem('appTheme', theme); // Guardamos la preferencia
+  };
+
+  return (
+    <div className='main-container'>
+      <Navbar onOpenSettings={() => setIsModalOpen(true)} />
+      
+      {/* Rutas */}
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/tablas' element={<ActividadTablas />} />
+        <Route path="*" element={<main className="content-area"><h1>Página no encontrada</h1></main>} />
+      </Routes>
+      
+      <OptionsModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        toggleTheme={toggleTheme} 
+        isDark={isDark} 
+      />
+    </div>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
-      <div className='main-container'>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/tablas' element={<ActividadTablas />} />
-          <Route path="*" element={<main className="content-area"><h1>Página no encontrada</h1></main>} />
-        </Routes>
-      </div>
+      <AppLayout />
     </BrowserRouter>
   );
-
 }
 
 export default App
