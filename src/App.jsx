@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useState,useEffect } from 'react';
-import { OptionsModal } from './components/OptionsModal';
-import { Icon } from './components/Icon';
-import { Navbar } from './components/Navbar';
-import './App.css'
+import { OptionsModal } from './shared/components/OptionsModal';
+import { Icon } from './shared/components/Icon';
+import { Navbar } from './shared/components/Navbar';
+import { ActividadTablas } from './pages/ActividadTablas';
+import './styles/App.css'
 
 function ActivityCard({ title, iconName, path }) {
   return (
@@ -37,6 +38,7 @@ function Home() {
   )
 }
 
+/*
 function ActividadTablas() {
   return (
     <main className="content-area">
@@ -48,7 +50,7 @@ function ActividadTablas() {
     </main>
   );
 }
-
+*/
 
 function AppLayout() {
   const [isModalOpen, setIsModalOpen] = useState(false);

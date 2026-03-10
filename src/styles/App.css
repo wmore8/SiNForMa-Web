@@ -12,6 +12,11 @@
   --bg-color-opacity: #f0fdf47f;
   --icon-color: #f9fafb;
 
+  /* Colores varios y utilidades*/
+  --success: #32DE84;
+  --danger: #DE328B;
+  --warning: #DEDB32;
+
   /* Variables para el color del texto */
   --text-color: #1f2937;
   --card-border: #000000;
@@ -30,7 +35,7 @@
 
   /* Tamaños de Fuente Base */
   --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
+  --font-size-md: 1rem;
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
 
@@ -181,7 +186,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-md);
   color: var(--bg-color);
   position: relative;
 }

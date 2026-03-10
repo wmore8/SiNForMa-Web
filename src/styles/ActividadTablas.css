@@ -1,0 +1,312 @@
+.actividad-layout {
+    display: flex;
+    flex-direction: column;
+    /* Al usar min-height: calc, le decimos "ocupa toda la pantalla menos la navbar", 
+       así el margin-top: auto del input-panel funcionará perfectamente. */
+    min-height: calc(100vh - 80px);
+    padding: var(--spacing-md);
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* === ORDEN EN MÓVIL Y TABLET (Flexbox Order) === */
+.actividad-header {
+    order: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-controles {
+    order: 2;
+}
+
+.panel-cuadricula {
+    order: 3;
+}
+
+/* margin-top: auto empuja este panel hacia abajo si hay espacio sobrante */
+.input-panel {
+    order: 4;
+    margin-top: auto;
+}
+
+.panel-derecho {
+    /* En móvil, hacemos como si este div no existiera, para que sus hijos 
+       (header, controles, input) se ordenen usando el "order" de arriba */
+    display: contents;
+}
+
+.actividad-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- LA CUADRICULA --- */
+
+.panel-cuadricula {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-grow: 1;
+    /* Permite que el contenedor crezca */
+    min-height: 0;
+    /* TRUCO VITAL: Permite que el aspecto ratio no desborde el flexbox */
+}
+
+/* Añadimos un contenedor extra para controlar el tamaño en escritorio */
+.tablas-grid-container {
+    width: 100%;
+    /* Centramos la cuadrícula en caso de que sea más pequeña que su contenedor */
+    display: flex;
+    justify-content: center;
+}
+
+.tablas-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 2px;
+    background-color: var(--card-border);
+    border: 2px solid var(--card-border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    width: 100%;
+    max-width: 700px;
+    /* aspect-ratio: 1 asegura que la tabla siempre sea un cuadrado perfecto */
+    aspect-ratio: 1;
+}
+
+.tabla-celda {
+    background-color: var(--bg-color);
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-size-md);
+    user-select: none;
+}
+
+.tabla-celda.visible {
+    color: var(--text-color);
+}
+
+.tabla-celda.guessable {
+    background-color: var(--warning);
+    cursor: pointer;
+    color: #000;
+    transition: all 0.2s;
+}
+
+.tabla-celda.guessable:hover {
+    filter: brightness(0.9);
+}
+
+.tabla-celda.covered {
+    background-color: #FFA726;
+    /* Color Naranja */
+    color: transparent;
+    /* Oculta el texto interno si lo hubiera */
+    cursor: not-allowed;
+}
+
+.tabla-celda.correct {
+    background-color: var(--success);
+    color: #fff;
+}
+
+.tabla-celda.error {
+    background-color:  var(--danger);
+    color: #FFF;
+}
+
+
+/* --- PANEL DERECHO (CONTROLES) --- */
+
+/*
+.panel-controles {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+
+.controles-superiores {
+    display: flex;
+    gap: 1rem;
+}
+
+.controles-superiores select {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.info-box {
+    padding: 1rem;
+    border: 1px solid var(--card-border);
+    border-radius: 0.5rem;
+    font-style: italic;
+
+}
+
+.input-panel {
+    border: 2px solid var(--card-border);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.spinners-wrapper {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-corregir {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+*/
+
+/* --- CONTROLES Y TEXTO --- */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.activity-controls {
+    display: flex;
+    gap: 1rem;
+}
+
+.dificultad-select {
+    flex: 1;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 2px solid var(--card-border);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.dificultad-select:focus {
+    outline: none;
+}
+
+.btn-secundario {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid var(--card-border);
+    background-color: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.btn-secundario:focus {
+    outline: none;
+}
+
+.btn-secundario.danger:hover {
+    border: 2px solid var(--danger);
+    color: #FFF;
+    background-color: var(--danger);
+}
+
+.btn-primario {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: var(--primary);
+    color: white;
+    /* O tu color de texto para fondo verde */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* --- INPUT PANEL --- */
+.controles-superiores {
+    display: flex;
+    gap: 1rem;
+}
+
+.input-panel {
+    border: 2px solid var(--card-border);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.spinners-wrapper {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-corregir {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/*--------------------------------TABLET-(y en adelante)--------------------------------*/
+
+@media (min-width: 768px) {}
+
+/*--------------------------------ESCRITORIO-(y en adelante)--------------------------------*/
+
+@media (min-width: 1024px) {
+   .actividad-layout {
+        flex-direction: row; /* Paneles lado a lado */
+        align-items: stretch;
+    }
+
+    .panel-cuadricula {
+        order: 1;
+        flex: 3; /* Ocupa el 60% aprox */
+        height: calc(100vh - 120px); /* Altura máxima para no hacer scroll */
+    }
+
+    .tablas-grid {
+        width: auto; /* Ya no está forzado al 100% del ancho */
+        height: 100%; /* Crece a lo alto respetando el cuadrado */
+        max-width: none;
+    }
+
+    .panel-derecho {
+        order: 2;
+        display: flex; /* Deja de ser "contents" y se vuelve un contenedor real */
+        flex-direction: column;
+        flex: 2; /* Ocupa el 40% aprox */
+        gap: 1.5rem;
+    }
+
+    /* Reseteamos los order de móvil, ahora el orden lo da el HTML dentro de panel-derecho */
+    .actividad-header, .panel-controles, .input-panel {
+        order: unset; 
+    }
+}

@@ -1,0 +1,32 @@
+.spinner-guiri {
+  display: flex;
+  align-items: center;
+  gap:0.5rem
+}
+
+.spinner-display {
+  font-size: var(--font-size-xl);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 2px solid var(--card-border);
+}
+
+.spinner-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.spinner-controls button {
+  background: transparent;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+ border: 2px solid var(--card-border);
+}
+
+.spinner-controls button:focus {
+  outline: none;
+}
+
