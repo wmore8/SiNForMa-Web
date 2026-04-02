@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { OptionsModal } from './shared/components/OptionsModal';
 import { Icon } from './shared/components/Icon';
 import { Navbar } from './shared/components/Navbar';
 import { ActividadTablas } from './pages/ActividadTablas';
+import { ActividadLapiceros } from './pages/ActividadLapiceros';
 import './styles/App.css'
 
 function ActivityCard({ title, iconName, path }) {
@@ -54,7 +55,7 @@ function ActividadTablas() {
 
 function AppLayout() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   // 3. Magia de LocalStorage: Inicializamos el estado leyendo la memoria del navegador
   const [isDark, setIsDark] = useState(() => {
     const savedTheme = localStorage.getItem('appTheme');
@@ -79,19 +80,20 @@ function AppLayout() {
   return (
     <div className='main-container'>
       <Navbar onOpenSettings={() => setIsModalOpen(true)} />
-      
+
       {/* Rutas */}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/tablas' element={<ActividadTablas />} />
+        <Route path='/lapiceros' element={<ActividadLapiceros />} />
         <Route path="*" element={<main className="content-area"><h1>Página no encontrada</h1></main>} />
       </Routes>
-      
-      <OptionsModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        toggleTheme={toggleTheme} 
-        isDark={isDark} 
+
+      <OptionsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        toggleTheme={toggleTheme}
+        isDark={isDark}
       />
     </div>
   );

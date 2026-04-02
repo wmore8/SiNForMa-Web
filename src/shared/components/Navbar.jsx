@@ -22,7 +22,7 @@ export function Navbar({ onOpenSettings }) {
 
                 <Link to={'/'} className="nav-brand" onClick={closeMenu}>
                     <Icon name='icon-default' className="brand-icon" />
-                    <h1>Sinforma</h1>
+                    <h1>SiNForMa</h1>
                 </Link>
 
                 <div className={`nav-links-container ${isMenuOpen ? 'open' : ''}`}>

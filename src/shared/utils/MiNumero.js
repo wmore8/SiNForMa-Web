@@ -1,8 +1,6 @@
 export class MiNumero {
   static losDigitos = ['ȹ', '^', 'ɛ', 'ŧ', 'ƺ', 'ɷ', 'ʔ', 'ʪ'];
   
-  // Diccionarios base (simplificados para no ocupar todo el chat, 
-  // pero puedes pegar aquí todos tus "na", "ro", "mes" de tu initEscritura())
   static escritura = {
     0: "na", 1: "ro", 2: "mes", 3: "cus", 4: "cleta", 5: "prio", 6: "burte", 7: "betu"
   };

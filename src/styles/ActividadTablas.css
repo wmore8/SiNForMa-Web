@@ -1,8 +1,7 @@
 .actividad-layout {
     display: flex;
     flex-direction: column;
-    /* Al usar min-height: calc, le decimos "ocupa toda la pantalla menos la navbar", 
-       así el margin-top: auto del input-panel funcionará perfectamente. */
+    /* Calculo de la altura de la pantalla*/
     min-height: calc(100vh - 80px);
     padding: var(--spacing-md);
     gap: 1rem;
@@ -17,6 +16,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 2px solid var(--card-border);
+
 }
 
 .panel-controles {
@@ -34,7 +35,7 @@
 }
 
 .panel-derecho {
-    /* En móvil, hacemos como si este div no existiera, para que sus hijos 
+    /* En movil, hacemos como si este div no existiera, para que sus hijos 
        (header, controles, input) se ordenen usando el "order" de arriba */
     display: contents;
 }
@@ -52,17 +53,17 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    flex-grow: 1;
     /* Permite que el contenedor crezca */
-    min-height: 0;
+    flex-grow: 1;
     /* TRUCO VITAL: Permite que el aspecto ratio no desborde el flexbox */
+    min-height: 0;
 }
 
 /* Añadimos un contenedor extra para controlar el tamaño en escritorio */
 .tablas-grid-container {
     width: 100%;
-    /* Centramos la cuadrícula en caso de que sea más pequeña que su contenedor */
     display: flex;
+    /* Centramos la cuadricula en caso de que sea mas pequeña que su contenedor */
     justify-content: center;
 }
 
@@ -119,7 +120,7 @@
 }
 
 .tabla-celda.error {
-    background-color:  var(--danger);
+    background-color: var(--danger);
     color: #FFF;
 }
 
@@ -280,33 +281,38 @@
 /*--------------------------------ESCRITORIO-(y en adelante)--------------------------------*/
 
 @media (min-width: 1024px) {
-   .actividad-layout {
-        flex-direction: row; /* Paneles lado a lado */
+    .actividad-layout {
+        flex-direction: row;
+        /* Paneles lado a lado */
         align-items: stretch;
     }
 
     .panel-cuadricula {
         order: 1;
-        flex: 3; /* Ocupa el 60% aprox */
-        height: calc(100vh - 120px); /* Altura máxima para no hacer scroll */
+        flex: 3;
+        /* Ocupa el 60% aprox */
+        height: calc(100vh - 120px);
+        /* Altura maxima para no hacer scroll */
     }
 
     .tablas-grid {
-        width: auto; /* Ya no está forzado al 100% del ancho */
-        height: 100%; /* Crece a lo alto respetando el cuadrado */
+        width: auto;
+        height: 100%;
         max-width: none;
     }
 
     .panel-derecho {
         order: 2;
-        display: flex; /* Deja de ser "contents" y se vuelve un contenedor real */
+        display: flex;
         flex-direction: column;
-        flex: 2; /* Ocupa el 40% aprox */
+        flex: 2;
         gap: 1.5rem;
     }
 
-    /* Reseteamos los order de móvil, ahora el orden lo da el HTML dentro de panel-derecho */
-    .actividad-header, .panel-controles, .input-panel {
-        order: unset; 
+    /* Reseteamos los order de movil, ahora el orden lo da el HTML dentro de panel-derecho */
+    .actividad-header,
+    .panel-controles,
+    .input-panel {
+        order: unset;
     }
 }

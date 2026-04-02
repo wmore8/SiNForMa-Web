@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
+import { TableroGrid } from '../shared/components/TableroGrid';
 import { SpinnerCustom } from '../shared/components/SpinnerCustom';
 import '../styles/ActividadTablas.css';
 
@@ -131,7 +132,7 @@ export function ActividadTablas() {
   const [digitoIzq, setDigitoIzq] = useState(0);
   const [digitoDer, setDigitoDer] = useState(0);
 
-  // Handlers
+  // Handler del evento
   const cambiarDificultad = (e) => {
     const nuevoNivel = e.target.value;
     setDificultad(nuevoNivel); // Actualizamos la dificultad
@@ -171,16 +172,8 @@ export function ActividadTablas() {
   return (
     <div className="actividad-layout">
       <div className="panel-cuadricula">
-        <div className="tablas-grid">
-          {grid.map(casilla => (
-            <div
-              key={casilla.id}
-              className={`tabla-celda ${casilla.type} ${casilla.status}`}
-              onClick={() => handleCellClick(casilla)}
-            >
-              {casilla.currentText}
-            </div>
-          ))}
+        <div className="panel-cuadricula">
+          <TableroGrid grid={grid} onCellClick={handleCellClick} />
         </div>
       </div>
 
