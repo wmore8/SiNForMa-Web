@@ -66,23 +66,23 @@ export function ActividadLapiceros() {
 
         let nombreIcono = 'icon-default';
         if (dificultad === '0') { // En Facil o Medio SOLO mostramos el icono
-            if (tipo === 'lapiz') nombreIcono = 'lapiz';
-            if (tipo === 'estuche') nombreIcono = 'lapizestuche';
-            if (tipo === 'caja') nombreIcono = 'lapizcajatransparente';
+            if (tipo === 'lapiz') nombreIcono = 'icon-lapiz';
+            if (tipo === 'estuche') nombreIcono = 'icon-lapiz-estuche';
+            if (tipo === 'caja') nombreIcono = 'icon-lapiz-caja';
         } else if (dificultad === '1') {
-            if (tipo === 'lapiz') nombreIcono = 'cuadrado';
-            if (tipo === 'estuche') nombreIcono = 'cuadradoestuche';
-            if (tipo === 'caja') nombreIcono = 'cuadradocaja';
+            if (tipo === 'lapiz') nombreIcono = 'icon-cuadrado';
+            if (tipo === 'estuche') nombreIcono = 'icon-cuadrado-estuche';
+            if (tipo === 'caja') nombreIcono = 'icon-cuadrado-caja';
         }
 
-        return <Icon name={'icon-default'} className="lapicero-icono" />;
+        return <Icon name={nombreIcono} className="lapicero-icono" />;
     };
 
     return (
         <div className="lapiceros-layout">
             <header className="lapiceros-header">
                 <div className="breadcrumb">
-                    <Icon name="icon-default" className='breadcrumb-icon' /> <span>Actividad Lapiceros</span>
+                    <Icon name="icon-lapiz" className='breadcrumb-icon' /> <span>Actividad Lapiceros</span>
                 </div>
                 <Link to="/" className="icon-btn btn-volver" style={{ color: 'var(--text-color)' }} title='Volver'>
                     <Icon name="icon-back" />

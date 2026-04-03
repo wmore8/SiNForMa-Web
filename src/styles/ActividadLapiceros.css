@@ -159,7 +159,7 @@
 }
 
 .lapicero-icono {
-    font-size: 4rem;
+    font-size: 5rem;
     color: var(--text-color);
     display: flex;
     justify-content: center;
@@ -270,7 +270,7 @@
     }
 
     .lapicero-icono {
-        font-size: 5rem;
+        font-size: 6rem;
         color: var(--text-color);
         display: flex;
         justify-content: center;

@@ -21,7 +21,7 @@ function ActivityCard({ title, iconName, path }) {
 function Home() {
   const activities = [
     { id: 1, title: 'Actividad Tablas', icon: 'icon-default', path: '/tablas' },
-    { id: 2, title: 'Actividad Lapiceros', icon: 'icon-default', path: '/lapiceros' },
+    { id: 2, title: 'Actividad Lapiceros', icon: 'icon-lapiz', path: '/lapiceros' },
     { id: 3, title: 'Actividad Palabras', icon: 'icon-default', path: '/palabras' },
     { id: 4, title: 'Actividad Números', icon: 'icon-default', path: '/numeros' },
     { id: 5, title: 'Actividad Operaciones', icon: 'icon-default', path: '/operacioness' },

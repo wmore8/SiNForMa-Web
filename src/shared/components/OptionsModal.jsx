@@ -28,9 +28,6 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark }) {
                 <Icon name="icon-dark" className='theme-btn-icon'/>
               Oscuro
             </button>
-            <button className="theme-btn disabled" disabled title="¿Color?">
-              ¿Color?
-            </button>
           </div>
         </div>
 
