@@ -30,7 +30,7 @@ export class MiNumero {
     let strNumeroRepresentado = '';
     
     if (this.elNumero < 0) {
-      strNumeroRepresentado += '-';
+      strNumeroRepresentado += '−';
     }
 
     for (let i = 0; i < strElNumero.length; i++) {

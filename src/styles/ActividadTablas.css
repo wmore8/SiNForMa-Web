@@ -276,7 +276,20 @@
 
 /*--------------------------------TABLET-(y en adelante)--------------------------------*/
 
-@media (min-width: 768px) {}
+@media (min-width: 768px) {
+    .actividad-layout {
+        display: flex;
+        flex-direction: column;
+        /* Calculo de la altura de la pantalla*/
+        min-height: calc(100vh - 80px);
+        padding: var(--spacing-lg);
+        gap: 1rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+}
 
 /*--------------------------------ESCRITORIO-(y en adelante)--------------------------------*/
 

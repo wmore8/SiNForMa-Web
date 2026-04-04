@@ -12,7 +12,7 @@ const OPCIONES_NIVELES = [
     { id: 3, from: 0, incr: 4, asc: true, label: "De ƺ en ƺ (Ascendente)", sec: "+ ƺ" },
     { id: 4, from: 0, incr: 8, asc: true, label: "De ^ȹ en ^ȹ (Ascendente)", sec: "+ ^ȹ" },
     { id: 5, from: -1, incr: 1, asc: true, label: "Aleatorio +^ (Ascendente)", sec: "+ ^" },
-    { id: 6, from: -1, incr: 1, asc: false, label: "Aleatorio -^ (Descendente)", sec: "− ^" },
+    { id: 6, from: -1, incr: 1, asc: false, label: "Aleatorio −^ (Descendente)", sec: "− ^" },
     { id: 7, from: -1, incr: 2, asc: true, label: "Aleatorio +ɛ (Ascendente)", sec: "+ ɛ" },
     { id: 8, from: -1, incr: 4, asc: true, label: "Aleatorio +ƺ (Ascendente)", sec: "+ ƺ" },
     { id: 9, from: -1, incr: 8, asc: true, label: "Aleatorio +^ȹ (Ascendente)", sec: "+ ^ȹ" }
@@ -24,7 +24,7 @@ export function ActividadPalabras() {
 
     const generarSecuencia = (idOpcion) => {
         const opc = OPCIONES_NIVELES[idOpcion];
-        let howMany = Math.floor(Math.random() * 11) + 5; 
+        let howMany = Math.floor(Math.random() * 11) + 5;
         let fromNum = opc.from;
         let toNum, curNum, prevNum;
 
@@ -69,11 +69,13 @@ export function ActividadPalabras() {
             if (ejercicio.curNum === ejercicio.toNum) { // Si termina la secuencia mostramos el mensaje
                 alert("¡Secuencia Completada! :D");
                 setEjercicio(prev => ({ ...prev, finalizado: true, prevNum: prev.curNum }));
-            } else { // Si aun quedan numeros seguimos avanzando
-                setEjercicio(prev => ({ 
-                    ...prev, 
+            } else { // Si aun quedan numeros, avisamos y seguimos avanzando
+                alert("¡Correcto! escribe el siguiente número.");
+
+                setEjercicio(prev => ({
+                    ...prev,
                     prevNum: prev.curNum,
-                    curNum: prev.asc ? prev.curNum + prev.incr : prev.curNum - prev.incr 
+                    curNum: prev.asc ? prev.curNum + prev.incr : prev.curNum - prev.incr
                 }));
                 setInputUsuario("");
                 inputRef.current.focus();
@@ -116,10 +118,10 @@ export function ActividadPalabras() {
                     <div className="simbolo-actual">{new MiNumero(ejercicio.prevNum, 10).toString()}</div>
                 </div>
 
-                  <form className="form-escritura" onSubmit={validarPaso}>
-                    <input 
+                <form className="form-escritura" onSubmit={validarPaso}>
+                    <input
                         ref={inputRef}
-                        type="text" 
+                        type="text"
                         className="input-palabra"
                         placeholder="Escribe la palabra..."
                         value={inputUsuario}
@@ -131,9 +133,9 @@ export function ActividadPalabras() {
             </main>
 
             <footer className="palabras-footer">
-                <button 
-                    className="btn-primario btn-corregir-full" 
-                    onClick={validarPaso} 
+                <button
+                    className="btn-primario btn-corregir-full"
+                    onClick={validarPaso}
                     disabled={ejercicio.finalizado || !inputUsuario}
                 >
                     {ejercicio.finalizado ? "¡Completado!" : "Siguiente"}

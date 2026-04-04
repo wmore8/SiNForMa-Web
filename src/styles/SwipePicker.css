@@ -1,0 +1,71 @@
+.swipe-picker-wrapper {
+    position: relative;
+    height: 150px;
+    /* Mostramos 3 elementos (50px * 3) */
+    width: 4rem;
+    background-color: var(--bg-color);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+/* Overlay para hacerlo parecido al picker de android */
+.swipe-picker-overlay {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 50px;
+    /* Centrar verticalmente */
+    margin-top: -25px;
+    border-top: 3px solid var(--primary);
+    border-bottom: 3px solid var(--primary);
+    /* Para que el dedo pase a traves del overlay y mueva el scroll */
+    pointer-events: none;
+    z-index: 2;
+}
+
+.swipe-picker-container {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Obliga a encajar en el centro */
+    scroll-snap-type: y mandatory;
+    /* Control de velocidad del scroll */
+    overscroll-behavior-y: contain;
+    /* Ocultar barra de scroll en Firefox/Chrome */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* Ocultar en Safari/Chrome viejo */
+.swipe-picker-container::-webkit-scrollbar {
+    display: none;
+}
+
+.swipe-item {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+    /* Para que la seleccion siempre apunte al centro */
+    scroll-snap-align: center;
+    opacity: 0.3;
+    transition: opacity 0.2s, transform 0.2s;
+    /* Evitamos los dobles click*/
+    user-select: none; 
+    -webkit-user-select: none; /* Para Safari */
+    -moz-user-select: none; /* Para Firefox */
+}
+
+.swipe-item.active {
+    opacity: 1;
+    color: var(--primary);
+}
+
+/* Relleno hueco para que el primer y ultimo item lleguen al centro */
+.swipe-padder {
+    height: 50px;
+}

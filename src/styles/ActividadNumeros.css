@@ -1,4 +1,4 @@
-.palabras-layout {
+.numeros-layout {
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - 80px);
@@ -10,7 +10,7 @@
     overflow: hidden;
 }
 
-.palabras-header {
+.numeros-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,30 +19,36 @@
     flex-shrink: 0;
 }
 
-.palabras-controles {
+/* Protegemos el layout del select largo */
+.numeros-controles {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.5rem;
     flex-shrink: 0;
+    width: 100%;
 }
 
 .dificultad-select {
     flex: 1;
-    min-width: 0;
+    min-width: 0; 
     padding: 0.75rem;
     border-radius: 0.5rem;
     border: 2px solid var(--card-border);
     background-color: var(--bg-color);
     color: var(--text-color);
     font-size: 1rem;
-    
-    /* Si el texto es muy largo, se cortara con "..." */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+.numeros-controles .icon-btn,
+.numeros-controles .btn-secundario {
+    flex-shrink: 0;
+}
+
 /* === ZONA DE JUEGO === */
-.palabras-zona-juego {
+.numeros-zona-juego {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -54,69 +60,42 @@
 
 .info-secuencia {
     text-align: center;
-    font-size: clamp(1.2rem, 3vh, 1.8rem);
+    font-size: clamp(1.2rem, 2.5vh, 2rem);
     color: var(--text-color);
-    font-weight: 400;
 }
 
-.info-secuencia strong {
-    color: var(--primary);
-    font-size: 1.2em;
-    font-weight: 600;
-}
-
-/* INPUT */
-.form-escritura {
-    width: 100%;
-    max-width: 600px;
-}
-
-.input-palabra {
-    width: 100%;
-    padding: clamp(1rem, 3vh, 1.5rem);
-    font-size: clamp(1.2rem, 4vh, 2rem);
-    text-align: center;
-    border: 2px solid var(--card-border);
-    border-radius: 0.75rem;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: all 0.2s;
-}
-
-.input-palabra:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(50, 222, 132, 0.2);
-}
-
-.input-palabra:disabled {
-    opacity: 0.6;
-    background-color: var(--bg-color-opacity);
-}
-
-/* ULTIMA PALABRA */
 .pantalla-objetivo {
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--spacing-xs);
+    /* background-color: var(--bg-color-opacity); */
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 600px;
 }
 
-.etiqueta {
-    font-size: clamp(1.2rem, 3vh, 1.5rem);
-    color: var(--text-color);
-    margin: 0;
-}
-
-.simbolo-actual {
-    font-size: clamp(3rem, 5vh, 4rem);
+.palabra-actual {
+    font-size: clamp(1.8rem, 5vh, 3rem);
     font-weight: bold;
     color: var(--primary);
+    text-transform: capitalize;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.pickers-container {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(0.5rem, 5vw, 2rem);
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 /* FOOTER */
-.palabras-footer {
+.numeros-footer {
     flex-shrink: 0;
     padding-top: var(--spacing-sm);
 }
@@ -144,12 +123,10 @@
     opacity: 0.7;
 }
 
-/* === TABLET Y ESCRITORIO === */
 @media (min-width: 768px) {
-    .palabras-zona-juego {
+    .numeros-zona-juego {
         border: 2px solid var(--card-border);
         border-radius: 1rem;
         padding: var(--spacing-xl);
-        background-color: var(--bg-color);
     }
 }

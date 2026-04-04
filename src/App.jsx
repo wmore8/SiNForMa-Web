@@ -6,6 +6,7 @@ import { Navbar } from './shared/components/Navbar';
 import { ActividadTablas } from './pages/ActividadTablas';
 import { ActividadLapiceros } from './pages/ActividadLapiceros';
 import { ActividadPalabras } from './pages/ActividadPalabras';
+import { ActividadNumeros } from './pages/ActividadNumeros';
 import './styles/App.css'
 
 function ActivityCard({ title, iconName, path }) {
@@ -88,6 +89,7 @@ function AppLayout() {
         <Route path='/tablas' element={<ActividadTablas />} />
         <Route path='/lapiceros' element={<ActividadLapiceros />} />
         <Route path='/palabras' element={<ActividadPalabras />} />
+        <Route path='/numeros' element={<ActividadNumeros />} />
         <Route path="*" element={<main className="content-area"><h1>Página no encontrada</h1></main>} />
       </Routes>
 
