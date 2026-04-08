@@ -4,7 +4,7 @@ import '../../styles/SwipePicker.css';
 
 export function SwipePicker({ opciones, value, onChange }) {
     const contenedorRef = useRef(null);
-    const ITEM_HEIGHT = 50; // Altura en pixeles de cada numero
+    const ITEM_HEIGHT = 60; // Altura en pixeles de cada numero
 
     // Referencias para evitar el bucle de scroll
     const isProgrammaticScroll = useRef(false);

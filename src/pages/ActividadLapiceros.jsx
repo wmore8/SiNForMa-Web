@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
+import { Header } from '../shared/components/Header';
 import '../styles/ActividadLapiceros.css';
 
 export function ActividadLapiceros() {
@@ -79,17 +80,11 @@ export function ActividadLapiceros() {
     };
 
     return (
-        <div className="lapiceros-layout">
-            <header className="lapiceros-header">
-                <div className="breadcrumb">
-                    <Icon name="icon-lapiz" className='breadcrumb-icon' /> <span>Actividad Lapiceros</span>
-                </div>
-                <Link to="/" className="icon-btn btn-volver" style={{ color: 'var(--text-color)' }} title='Volver'>
-                    <Icon name="icon-back" />
-                </Link>
-            </header>
+        <div className="actividad-layout">
 
-            <div className="lapiceros-controles">
+            <Header rutas={[{ label: 'Actividad Lapiceros', icon: 'icon-lapiz' }]} backPath="/" />
+
+            <div className="actividad-controles">
                 <button className="icon-btn btn-info" style={{ color: 'var(--text-color)' }} title='Información'>
                     <Icon name="icon-info" />
                 </button>

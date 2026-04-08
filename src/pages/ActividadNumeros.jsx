@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { SwipePicker } from '../shared/components/SwipePicker';
+import { Header } from '../shared/components/Header';
 import '../styles/ActividadNumeros.css';
 
 const OPCIONES_NIVELES = [
@@ -101,18 +102,10 @@ export function ActividadNumeros() {
     };
 
     return (
-        <div className="numeros-layout">
-            <header className="numeros-header">
-                <div className="breadcrumb">
-                    <Icon name="icon-default" className="breadcrumb-icon" />
-                    <span>Actividad Números ({OPCIONES_NIVELES[dificultad].sec})</span>
-                </div>
-                <Link to="/" className="icon-btn btn-volver" style={{ color: 'var(--text-color)' }} title="Volver">
-                    <Icon name="icon-back" />
-                </Link>
-            </header>
+        <div className="actividad-layout">
+            <Header rutas={[{ label: `Actividad Números (${OPCIONES_NIVELES[dificultad].sec})` }]} backPath="/" />
 
-            <div className="numeros-controles">
+            <div className="actividad-controles">
                 <button className="icon-btn btn-info" style={{ color: 'var(--text-color)' }} title="Información">
                     <Icon name="icon-info" />
                 </button>
@@ -124,7 +117,7 @@ export function ActividadNumeros() {
                 <button className="btn-secundario danger" onClick={() => reiniciarJuego(dificultad)}>Reiniciar</button>
             </div>
 
-            <main className="numeros-zona-juego">
+            <main className="actividad-zona-juego">
                 <div className="info-secuencia">
                     Números desde <strong>{new MiNumero(ejercicio.fromNum, 10).toLongString()}</strong> hasta <strong>{new MiNumero(ejercicio.toNum, 10).toLongString()}</strong>
                 </div>

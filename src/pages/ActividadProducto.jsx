@@ -1,0 +1,37 @@
+import { Link } from 'react-router-dom';
+import { Icon } from '../shared/components/Icon';
+import { Header } from '../shared/components/Header';
+
+export function ActividadProducto() {
+    return (
+        <div className="actividad-layout">
+            <Header
+                rutas={[
+                    { label: 'Actividad Operaciones', path: '/operaciones' },
+                    { label: 'Actividad multiplicaciones' }
+                ]}
+                backPath="/operaciones"
+            />
+            <main className="operaciones-main">
+                <div className="cards-grid-4">
+                    <Link to="/operaciones/producto/tablas" className="card">
+                        <Icon name="icon-default" className="card-icon" />
+                        <h2>Tablas de multiplicar</h2>
+                    </Link>
+                    <Link to="/operaciones/producto/recortados" className="card">
+                        <Icon name="icon-default" className="card-icon" />
+                        <h2>Recortados</h2>
+                    </Link>
+                    <Link to="/operaciones/producto/celosia" className="card">
+                        <Icon name="icon-default" className="card-icon" />
+                        <h2>Celosía</h2>
+                    </Link>
+                    <Link to="/operaciones/producto/clasico" className="card">
+                        <Icon name="icon-default" className="card-icon" />
+                        <h2>Producto clásico</h2>
+                    </Link>
+                </div>
+            </main>
+        </div>
+    );
+}

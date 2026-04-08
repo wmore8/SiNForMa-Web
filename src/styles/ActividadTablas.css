@@ -1,70 +1,18 @@
-.actividad-layout {
-    display: flex;
-    flex-direction: column;
-    /* Calculo de la altura de la pantalla*/
-    min-height: calc(100vh - 80px);
-    padding: var(--spacing-md);
-    gap: 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-/* === ORDEN EN MÓVIL Y TABLET (Flexbox Order) === */
-.actividad-header {
-    order: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid var(--card-border);
-
-}
-
-.panel-controles {
-    order: 2;
-}
-
-.panel-cuadricula {
-    order: 3;
-}
-
-/* margin-top: auto empuja este panel hacia abajo si hay espacio sobrante */
-.input-panel {
-    order: 4;
-    margin-top: auto;
-}
-
-.panel-derecho {
-    /* En movil, hacemos como si este div no existiera, para que sus hijos 
-       (header, controles, input) se ordenen usando el "order" de arriba */
-    display: contents;
-}
-
-.actividad-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* --- LA CUADRICULA --- */
-
+/* --- CUADRICULA ---*/
 .panel-cuadricula {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    /* Permite que el contenedor crezca */
     flex-grow: 1;
-    /* TRUCO VITAL: Permite que el aspecto ratio no desborde el flexbox */
     min-height: 0;
 }
 
-/* Añadimos un contenedor extra para controlar el tamaño en escritorio */
 .tablas-grid-container {
     width: 100%;
     display: flex;
-    /* Centramos la cuadricula en caso de que sea mas pequeña que su contenedor */
     justify-content: center;
+    max-width: 650px;
 }
 
 .tablas-grid {
@@ -76,11 +24,10 @@
     border-radius: 0.5rem;
     overflow: hidden;
     width: 100%;
-    max-width: 700px;
-    /* aspect-ratio: 1 asegura que la tabla siempre sea un cuadrado perfecto */
     aspect-ratio: 1;
 }
 
+/* --- ESTADOS DE LAS CELDAS --- */
 .tabla-celda {
     background-color: var(--bg-color);
     aspect-ratio: 1;
@@ -88,6 +35,7 @@
     justify-content: center;
     align-items: center;
     font-size: var(--font-size-md);
+    font-weight: 500;
     user-select: none;
 }
 
@@ -100,6 +48,7 @@
     cursor: pointer;
     color: #000;
     transition: all 0.2s;
+    font-weight: 600;
 }
 
 .tabla-celda.guessable:hover {
@@ -108,14 +57,13 @@
 
 .tabla-celda.covered {
     background-color: #FFA726;
-    /* Color Naranja */
     color: transparent;
-    /* Oculta el texto interno si lo hubiera */
     cursor: not-allowed;
 }
 
 .tabla-celda.correct {
     background-color: var(--success);
+    font-weight: 700;
     color: #fff;
 }
 
@@ -124,208 +72,96 @@
     color: #FFF;
 }
 
-
-/* --- PANEL DERECHO (CONTROLES) --- */
-
-/*
-.panel-controles {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-
-.controles-superiores {
-    display: flex;
-    gap: 1rem;
-}
-
-.controles-superiores select {
-    flex: 1;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-}
-
-.info-box {
-    padding: 1rem;
-    border: 1px solid var(--card-border);
-    border-radius: 0.5rem;
-    font-style: italic;
-
-}
-
-.input-panel {
-    border: 2px solid var(--card-border);
-    padding: 1.5rem;
+/* --- PANEL DE INPUTS --- */
+.input-panel-tablas {
     border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
-}
-
-.spinners-wrapper {
-    display: flex;
-    gap: 1rem;
-}
-
-.btn-corregir {
     width: 100%;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    background: var(--primary);
-    color: white;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
+    margin-top: auto;
 }
-*/
 
-/* --- CONTROLES Y TEXTO --- */
-.breadcrumb {
+.pickers-container {
+    border: 2px solid var(--card-border);
+    border-radius: 0.5rem;
+    padding: 0.25rem;
     display: flex;
+    gap: clamp(0.5rem, 5vw, 2rem);
+    justify-content: center;
     align-items: center;
-    gap: 0.5rem;
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-.activity-controls {
-    display: flex;
-    gap: 1rem;
-}
-
-.dificultad-select {
-    flex: 1;
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    border: 2px solid var(--card-border);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-size: 1rem;
-    font-family: inherit;
-}
-
-.dificultad-select:focus {
-    outline: none;
-}
-
-.btn-secundario {
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    border: 2px solid var(--card-border);
-    background-color: transparent;
-    color: var(--text-color);
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.2s;
-}
-
-.btn-secundario:focus {
-    outline: none;
-}
-
-.btn-secundario.danger:hover {
-    border: 2px solid var(--danger);
-    color: #FFF;
-    background-color: var(--danger);
-}
-
-.btn-primario {
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    border: none;
-    background-color: var(--primary);
-    color: white;
-    /* O tu color de texto para fondo verde */
-    cursor: pointer;
-    font-weight: bold;
-}
-
-/* --- INPUT PANEL --- */
-.controles-superiores {
-    display: flex;
-    gap: 1rem;
-}
-
-.input-panel {
-    border: 2px solid var(--card-border);
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.spinners-wrapper {
-    display: flex;
-    gap: 1rem;
-}
-
-.btn-corregir {
     width: 100%;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    background: var(--primary);
-    color: white;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
 }
 
-/*--------------------------------TABLET-(y en adelante)--------------------------------*/
+@media (max-width: 1023px) {
 
-@media (min-width: 768px) {
-    .actividad-layout {
-        display: flex;
-        flex-direction: column;
-        /* Calculo de la altura de la pantalla*/
-        min-height: calc(100vh - 80px);
-        padding: var(--spacing-lg);
-        gap: 1rem;
-        max-width: 1200px;
-        margin: 0 auto;
-        width: 100%;
+    /* SOLO afecta si esta dentro de tablas-layout-custom */
+    .tablas-layout-custom .panel-derecho {
+        display: contents;
     }
 
+    .tablas-layout-custom .actividad-controles {
+        order: 1;
+    }
+
+    .tablas-layout-custom .panel-cuadricula {
+        order: 2;
+        margin: var(--spacing-sm) 0;
+    }
+
+    .tablas-layout-custom .input-panel-tablas {
+        order: 3;
+    }
 }
 
 /*--------------------------------ESCRITORIO-(y en adelante)--------------------------------*/
 
 @media (min-width: 1024px) {
-    .actividad-layout {
-        flex-direction: row;
-        /* Paneles lado a lado */
+    .tablas-layout-custom {
+        flex-direction: row !important;
         align-items: stretch;
+        /* Centra los paneles verticalmente */
+        gap: var(--spacing-xl) !important;
+        max-width: 1600px !important;
     }
 
-    .panel-cuadricula {
-        order: 1;
-        flex: 3;
-        /* Ocupa el 60% aprox */
+    .tablas-layout-custom .panel-cuadricula {
+        flex: 1;
+        /* Ocupa más espacio horizontal que los controles */
+        order: -1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         height: calc(100vh - 120px);
-        /* Altura maxima para no hacer scroll */
     }
 
-    .tablas-grid {
+    .tablas-layout-custom .tablas-grid-container {
         width: auto;
         height: 100%;
         max-width: none;
     }
 
-    .panel-derecho {
-        order: 2;
-        display: flex;
-        flex-direction: column;
-        flex: 2;
-        gap: 1.5rem;
+    .tablas-layout-custom .tablas-grid {
+        /* El aspect-ratio: 1 hará su magia aquí basándose en el width del contenedor */
+        height: auto;
     }
 
-    /* Reseteamos los order de movil, ahora el orden lo da el HTML dentro de panel-derecho */
-    .actividad-header,
-    .panel-controles,
-    .input-panel {
+    .tablas-layout-custom .panel-derecho {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        /* En escritorio, no necesitamos que ocupe el 100% del alto, solo lo necesario */
+    }
+
+    .tablas-layout-custom .actividad-controles,
+    .tablas-layout-custom .input-panel-tablas {
         order: unset;
+        margin: 0;
+    }
+
+    .tablas-layout-custom .input-panel-tablas {
+        margin-top: auto;
     }
 }

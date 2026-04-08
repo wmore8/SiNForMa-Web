@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
+import { Header } from '../shared/components/Header';
 import '../styles/ActividadPalabras.css';
 
 const OPCIONES_NIVELES = [
@@ -86,17 +87,11 @@ export function ActividadPalabras() {
     };
 
     return (
-        <div className="palabras-layout">
-            <header className="palabras-header">
-                <div className="breadcrumb">
-                    <Icon name="icon-default" className="breadcrumb-icon" /> <span>Actividad Palabras ({OPCIONES_NIVELES[dificultad].sec})</span>
-                </div>
-                <Link to="/" className="icon-btn btn-volver" style={{ color: 'var(--text-color)' }} title="Volver">
-                    <Icon name="icon-back" />
-                </Link>
-            </header>
+        <div className="actividad-layout">
 
-            <div className="palabras-controles">
+            <Header rutas={[{ label: `Actividad Palabras (${OPCIONES_NIVELES[dificultad].sec})` }]} backPath="/" />
+
+            <div className="actividad-controles">
                 <button className="icon-btn btn-info" style={{ color: 'var(--text-color)' }} title="Información">
                     <Icon name="icon-info" />
                 </button>
@@ -108,7 +103,7 @@ export function ActividadPalabras() {
                 <button className="btn-secundario danger" onClick={() => reiniciarJuego(dificultad)}>Reiniciar</button>
             </div>
 
-            <main className="palabras-zona-juego">
+            <main className="actividad-zona-juego">
                 <div className="info-secuencia">
                     Escribe las palabras desde <strong>{new MiNumero(ejercicio.fromNum, 10).toString()}</strong> hasta <strong>{new MiNumero(ejercicio.toNum, 10).toString()}</strong>
                 </div>
@@ -132,12 +127,8 @@ export function ActividadPalabras() {
                 </form>
             </main>
 
-            <footer className="palabras-footer">
-                <button
-                    className="btn-primario btn-corregir-full"
-                    onClick={validarPaso}
-                    disabled={ejercicio.finalizado || !inputUsuario}
-                >
+            <footer className="actividad-footer">
+                <button className="btn-primario btn-corregir-full" onClick={validarPaso} disabled={ejercicio.finalizado || !inputUsuario}>
                     {ejercicio.finalizado ? "¡Completado!" : "Siguiente"}
                 </button>
             </footer>

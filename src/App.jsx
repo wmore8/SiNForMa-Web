@@ -7,6 +7,9 @@ import { ActividadTablas } from './pages/ActividadTablas';
 import { ActividadLapiceros } from './pages/ActividadLapiceros';
 import { ActividadPalabras } from './pages/ActividadPalabras';
 import { ActividadNumeros } from './pages/ActividadNumeros';
+import { ActividadOperaciones } from './pages/ActividadOperaciones';
+import { ActividadProducto } from './pages/ActividadProducto';
+
 import './styles/App.css'
 
 function ActivityCard({ title, iconName, path }) {
@@ -26,7 +29,7 @@ function Home() {
     { id: 2, title: 'Actividad Lapiceros', icon: 'icon-lapiz', path: '/lapiceros' },
     { id: 3, title: 'Actividad Palabras', icon: 'icon-default', path: '/palabras' },
     { id: 4, title: 'Actividad Números', icon: 'icon-default', path: '/numeros' },
-    { id: 5, title: 'Actividad Operaciones', icon: 'icon-default', path: '/operacioness' },
+    { id: 5, title: 'Actividad Operaciones', icon: 'icon-default', path: '/operaciones' },
     { id: 6, title: 'Actividad Lorem Ipsum', icon: 'icon-default', path: '/lorem' },
   ];
 
@@ -90,6 +93,15 @@ function AppLayout() {
         <Route path='/lapiceros' element={<ActividadLapiceros />} />
         <Route path='/palabras' element={<ActividadPalabras />} />
         <Route path='/numeros' element={<ActividadNumeros />} />
+        <Route path='/operaciones' element={<ActividadOperaciones />} />
+        {/* <Route path="/operaciones/suma" element={<ActividadSuma />} />
+        <Route path="/operaciones/resta" element={<ActividadResta />} />
+        <Route path="/operaciones/divisiones" element={<ActividadDivisiones />} /> */}
+        <Route path="/operaciones/producto" element={<ActividadProducto />} />
+        {/* <Route path="/operaciones/producto/tablas" element={<ActividadProductoTablas />} />
+        <Route path="/operaciones/producto/recortados" element={<ActividadProductoRecortados />} />
+        <Route path="/operaciones/producto/celosia" element={<ActividadProductoCelosia />} />
+        <Route path="/operaciones/producto/clasico" element={<ActividadProductoClasico />} /> */}
         <Route path="*" element={<main className="content-area"><h1>Página no encontrada</h1></main>} />
       </Routes>
 

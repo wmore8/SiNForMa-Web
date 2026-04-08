@@ -1,9 +1,9 @@
 .swipe-picker-wrapper {
     position: relative;
-    height: 150px;
-    /* Mostramos 3 elementos (50px * 3) */
+    height: 180px;
+    /* Mostramos 3 elementos (60px * 3) */
     width: 4rem;
-    background-color: var(--bg-color);
+    /* background-color: var(--bg-color); */
     border-radius: 0.5rem;
     overflow: hidden;
 }
@@ -14,7 +14,7 @@
     top: 50%;
     left: 0;
     right: 0;
-    height: 50px;
+    height: 60px;
     /* Centrar verticalmente */
     margin-top: -25px;
     border-top: 3px solid var(--primary);
@@ -43,7 +43,7 @@
 }
 
 .swipe-item {
-    height: 50px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,5 +67,5 @@
 
 /* Relleno hueco para que el primer y ultimo item lleguen al centro */
 .swipe-padder {
-    height: 50px;
+    height: 60px;
 }

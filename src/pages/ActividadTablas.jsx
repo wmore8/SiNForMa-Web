@@ -5,11 +5,18 @@ import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { TableroGrid } from '../shared/components/TableroGrid';
 import { SpinnerCustom } from '../shared/components/SpinnerCustom';
+import { SwipePicker } from '../shared/components/SwipePicker';
+import { Header } from '../shared/components/Header';
 import '../styles/ActividadTablas.css';
 
 //Constantes de estado
 const TIPO_CASILLA = { VISIBLE: 'visible', ADIVINABLE: 'guessable', CUBIERTA: 'covered' };
 const ESTADO_CASILLA = { BASE: 'idle', CORRECTO: 'correct', FALLO: 'error' }
+
+// Arrays de opciones para los Pickers 
+const DIGITOS = MiNumero.losDigitos;
+const OPCIONES_UNIDADES = [...DIGITOS]; // Del 0 al 7
+const OPCIONES_DECENAS = [' ', ...DIGITOS.slice(1)]; // Blanco + 1 a 7
 
 const generarTablero = (tipo, estado, texto) => {
   //Tablero inicial -> todo visible
@@ -128,23 +135,23 @@ export function ActividadTablas() {
   // Inicializamos el estado usando la funcion pura
   const [grid, setGrid] = useState(() => crearNuevoTablero('0'));
 
-  // Estado de los Spinners
-  const [digitoIzq, setDigitoIzq] = useState(0);
-  const [digitoDer, setDigitoDer] = useState(0);
+  // Estados para los SwipePickers
+  const [idxDecenas, setIdxDecenas] = useState(0);
+  const [idxUnidades, setIdxUnidades] = useState(0);
 
   // Handler del evento
   const cambiarDificultad = (e) => {
     const nuevoNivel = e.target.value;
     setDificultad(nuevoNivel); // Actualizamos la dificultad
     setGrid(crearNuevoTablero(nuevoNivel)); // Reprinteamos el tablero una sola vez
-    setDigitoIzq(0);
-    setDigitoDer(0);
+    setIdxDecenas(0);
+    setIdxUnidades(0);
   };
 
   const reiniciarJuego = () => {
     setGrid(crearNuevoTablero(dificultad));
-    setDigitoIzq(0);
-    setDigitoDer(0);
+    setIdxDecenas(0);
+    setIdxUnidades(0);
   };
 
   // Equivalente a changeValue(Button bClicked)
@@ -152,9 +159,9 @@ export function ActividadTablas() {
     if (casilla.type === TIPO_CASILLA.ADIVINABLE) {
       setGrid(grid.map(c => {
         if (c.id === casilla.id) {
-          let textoSpinner = digitoIzq === 0
-            ? MiNumero.getSimbolo(digitoDer)
-            : MiNumero.getSimbolo(digitoIzq) + MiNumero.getSimbolo(digitoDer);
+const charDecena = OPCIONES_DECENAS[idxDecenas].trim();
+                    const charUnidad = OPCIONES_UNIDADES[idxUnidades].trim();
+                    const textoSpinner = `${charDecena}${charUnidad}`;
           return { ...c, currentText: textoSpinner, status: ESTADO_CASILLA.BASE };
         }
         return c;
@@ -170,45 +177,50 @@ export function ActividadTablas() {
   };
 
   return (
-    <div className="actividad-layout">
+    <div className="actividad-layout tablas-layout-custom">
+      {/* Contenedor de la izquierda (Cuadrícula) */}
       <div className="panel-cuadricula">
-        <div className="panel-cuadricula">
+        <div className="tablas-grid-container">
           <TableroGrid grid={grid} onCellClick={handleCellClick} />
         </div>
       </div>
 
+      {/* Contenedor de la derecha (Header y Controles) */}
       <div className="panel-derecho">
-        <header className="actividad-header">
-          <div className="breadcrumb">
-            <Icon name="icon-default" /> <span>Actividad Tablas</span>
-          </div>
-          <Link to="/" className="icon-btn btn-volver" style={{ color: 'var(--text-color)' }}>
-            <Icon name="icon-back" />
-          </Link>
-        </header>
+        <Header
+          rutas={[{ label: 'Actividad Tablas' }]} backPath="/" />
 
-        <div className="panel-controles">
-          <div className="controles-superiores">
-            <button className="icon-btn" style={{ color: 'var(--text-color)' }} title='Información'>
-              <Icon name="icon-info" />
+        <div className="actividad-controles">
+          <button className="icon-btn btn-info" style={{ color: 'var(--text-color)' }} title="Información">
+            <Icon name="icon-info" />
+          </button>
+          <select value={dificultad} className="dificultad-select" onChange={cambiarDificultad}>
+            <option value="0">Dificultad Fácil</option>
+            <option value="1">Dificultad Media</option>
+            <option value="2">Dificultad Difícil</option>
+          </select>
+          <button className="btn-secundario danger" onClick={reiniciarJuego}>Reiniciar</button>
+        </div>
+
+        <div className="input-panel-tablas">
+          <div className="pickers-container">
+            <SwipePicker
+              opciones={OPCIONES_DECENAS}
+              value={idxDecenas}
+              onChange={setIdxDecenas}
+            />
+            <SwipePicker
+              opciones={OPCIONES_UNIDADES}
+              value={idxUnidades}
+              onChange={setIdxUnidades}
+            />
+          </div>
+          <div className="actividad-footer">
+            <button className="btn-corregir-full" onClick={validarEjercicio}>
+              Corregir
             </button>
-            <select value={dificultad} className='dificultad-select' onChange={cambiarDificultad}>
-              <option value="0">Dificultad Fácil</option>
-              <option value="1">Dificultad Media</option>
-              <option value="2">Dificultad Difícil</option>
-            </select>
-            <button className="btn-secundario danger" onClick={() => reiniciarJuego(dificultad)}>Reiniciar</button>
           </div>
         </div>
-
-        <div className="input-panel">
-          <div className="spinners-wrapper">
-            <SpinnerCustom value={digitoIzq} onChange={setDigitoIzq} />
-            <SpinnerCustom value={digitoDer} onChange={setDigitoDer} />
-          </div>
-          <button className="btn-primario btn-corregir" onClick={validarEjercicio}>Corregir</button>
-        </div>
-
       </div>
     </div>
   );
