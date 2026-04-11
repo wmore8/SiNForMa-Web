@@ -1,45 +1,9 @@
-.palabras-layout {
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100vh - 80px);
-    padding: var(--spacing-md);
-    gap: var(--spacing-md);
-    max-width: 1000px;
-    margin: 0 auto;
-    width: 100%;
-    overflow: hidden;
-}
-
-.palabras-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid var(--card-border);
-    padding-bottom: 0.5rem;
-    flex-shrink: 0;
-}
-
 .palabras-controles {
     display: flex;
     gap: 1rem;
     flex-shrink: 0;
 }
 
-.dificultad-select {
-    flex: 1;
-    min-width: 0;
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    border: 2px solid var(--card-border);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-size: 1rem;
-    
-    /* Si el texto es muy largo, se cortara con "..." */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
 /* === ZONA DE JUEGO === */
 .palabras-zona-juego {
@@ -147,10 +111,10 @@
 
 /* === TABLET Y ESCRITORIO === */
 @media (min-width: 768px) {
-    .palabras-zona-juego {
+    /* .palabras-zona-juego {
         border: 2px solid var(--card-border);
         border-radius: 1rem;
         padding: var(--spacing-xl);
         background-color: var(--bg-color);
-    }
+    } */
 }

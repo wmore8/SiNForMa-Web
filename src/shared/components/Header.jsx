@@ -23,7 +23,7 @@ export function Header({ rutas = [], backPath = '/' }) {
                     // Si NO es el ultimo, es un nivel anterior
                     return (
                         <span key={index} className="breadcrumb-item-wrapper">
-                            <Link to={ruta.path} className="breadcrumb-link">
+                            <Link to={ruta.path} className="breadcrumb-link" title={ruta.label}>
                                 <Icon name="icon-default" className="breadcrumb-icon" />
                                 <span className="breadcrumb-texto-oculto-movil">{ruta.label}</span>
                             </Link>

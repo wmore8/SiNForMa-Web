@@ -457,6 +457,10 @@ b,
   }
 }
 
+.btn-info{
+  color: var(--text-color);
+}
+
 /*CARDS DE ACTIVIDADES--------------------------------*/
 
 .cards-grid {
@@ -704,6 +708,10 @@ b,
     display: flex;
     flex-direction: row;
     gap: var(--spacing-md);
+  }
+
+  .actividad-layout {
+    padding: 2rem;
   }
 
 

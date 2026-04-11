@@ -92,7 +92,7 @@ export function ActividadPalabras() {
             <Header rutas={[{ label: `Actividad Palabras (${OPCIONES_NIVELES[dificultad].sec})` }]} backPath="/" />
 
             <div className="actividad-controles">
-                <button className="icon-btn btn-info" style={{ color: 'var(--text-color)' }} title="Información">
+                <button className="icon-btn btn-info" title="Información">
                     <Icon name="icon-info" />
                 </button>
                 <select value={dificultad} className="dificultad-select" onChange={cambiarDificultad}>

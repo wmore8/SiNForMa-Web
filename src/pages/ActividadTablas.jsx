@@ -191,7 +191,7 @@ const charDecena = OPCIONES_DECENAS[idxDecenas].trim();
           rutas={[{ label: 'Actividad Tablas' }]} backPath="/" />
 
         <div className="actividad-controles">
-          <button className="icon-btn btn-info" style={{ color: 'var(--text-color)' }} title="Información">
+          <button className="icon-btn btn-info" title="Información">
             <Icon name="icon-info" />
           </button>
           <select value={dificultad} className="dificultad-select" onChange={cambiarDificultad}>

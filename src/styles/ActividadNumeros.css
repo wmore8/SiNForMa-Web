@@ -74,9 +74,9 @@
 }
 
 @media (min-width: 768px) {
-    .numeros-zona-juego {
+    /* .numeros-zona-juego {
         border: 2px solid var(--card-border);
         border-radius: 1rem;
         padding: var(--spacing-xl);
-    }
+    } */
 }
