@@ -121,3 +121,54 @@
 .fila-pickers>div:not(.celda-signo) {
     width: clamp(60px, 5vw, 70px);
 }
+
+/* --- OPERACION HORIZONTAL (Para Divisiones) --- */
+.operacion-horizontal {
+    display: inline-flex;
+    height: 100%;
+    flex-direction: row;
+    align-items:baseline;
+    justify-content: center;
+    gap: clamp(0.5rem, 2vw, 1.5rem);
+    padding: clamp(var(--spacing-md), 3vw, var(--spacing-xl));
+    border: 3px solid transparent;
+    border-radius: 1rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    background-color: var(--bg-color);
+    /* Para que el texto no se vaya de la pantalla */
+    flex-wrap: wrap; 
+}
+
+.operacion-horizontal.correct {
+    border-color: var(--success);
+    background-color: rgba(50, 222, 132, 0.05);
+}
+
+.operacion-horizontal.error {
+    border-color: var(--danger);
+    background-color: rgba(222, 50, 139, 0.05);
+}
+
+.numero-fijo {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 600;
+    color: var(--text-color);
+    letter-spacing: 0.2rem;
+}
+
+.signo-matematico {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: bold;
+    color: var(--primary);
+    margin: 0 0.5rem;
+}
+
+.fila-pickers-horizontal {
+    display: flex;
+    gap: 0.5rem;
+    height: clamp(100px, 20vw, 150px);
+}
+
+.fila-pickers-horizontal > div {
+    width: clamp(45px, 12vw, 70px); /* El mismo ancho fluido que en la Suma/Resta */
+}

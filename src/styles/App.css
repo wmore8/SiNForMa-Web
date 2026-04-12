@@ -629,7 +629,7 @@ b,
 /* Textos Comunes */
 .info-secuencia {
   text-align: center;
-  font-size: clamp(1.2rem, 2.5vh, 2rem);
+  font-size: clamp(1.5rem, 3vh, 3rem);
   color: var(--text-color);
 }
 

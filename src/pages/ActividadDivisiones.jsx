@@ -1,0 +1,155 @@
+import { useState } from 'react';
+import { Icon } from '../shared/components/Icon';
+import { SwipePicker } from '../shared/components/SwipePicker';
+import { Header } from '../shared/components/Header';
+import { MiNumero } from '../shared/utils/MiNumero';
+import '../styles/ActividadOperaciones.css';
+
+const OPCIONES_DIGITOS = [' ', ...MiNumero.losDigitos];
+
+const generarDivision = (nivel) => {
+    const rand = (max) => Math.floor(Math.random() * max);
+    let val1 = 0; // Dividendo (Base 10)
+    let val2 = 1; // Divisor (Base 10)
+
+    if (nivel === '0') {
+        // Facil: 1 cifra / 1 cifra (divisor siempre > 0)
+        val1 = rand(8);
+        val2 = rand(7) + 1; 
+    } else if (nivel === '1') {
+        // Medio: 3 cifras (hasta 777 base 8 = 511 decimal) / 1 cifra
+        val1 = rand(512); 
+        val2 = rand(7) + 1;
+    } else {
+        // Difícil: 3 cifras / 2 cifras (hasta 77 base 8 = 63 decimal)
+        val1 = rand(512);
+        val2 = rand(63) + 1; 
+    }
+
+    // Division entera (sin decimales)
+    const resultadoDecimal = Math.floor(val1 / val2);
+
+    return {
+        num1Str: val1.toString(8), // Convertimos a Base 8 para mostrar
+        num2Str: val2.toString(8),
+        solucionStr: resultadoDecimal.toString(8)
+    };
+};
+
+export function ActividadDivisiones() {
+    const [dificultad, setDificultad] = useState('0');
+    const [ejercicio, setEjercicio] = useState(() => generarDivision('0'));
+
+    // Para la division, el maximo resultado de 777 / 1 es 777 (3 cifras como maximo)
+    const [idxCentenas, setIdxCentenas] = useState(0);
+    const [idxDecenas, setIdxDecenas] = useState(0);
+    const [idxUnidades, setIdxUnidades] = useState(0);
+
+    const [estadoRespuesta, setEstadoRespuesta] = useState('idle');
+
+    const cambiarDificultad = (e) => {
+        const nuevoNivel = e.target.value;
+        setDificultad(nuevoNivel);
+        setEjercicio(generarDivision(nuevoNivel));
+        resetearPickers();
+    };
+
+    const reiniciarJuego = () => {
+        setEjercicio(generarDivision(dificultad));
+        resetearPickers();
+    };
+
+    const resetearPickers = () => {
+        setIdxCentenas(0);
+        setIdxDecenas(0);
+        setIdxUnidades(0);
+        setEstadoRespuesta('idle');
+    };
+
+    const validarEjercicio = () => {
+        const c = idxCentenas > 0 ? (idxCentenas - 1).toString() : '';
+        const d = idxDecenas > 0 ? (idxDecenas - 1).toString() : '';
+        const u = idxUnidades > 0 ? (idxUnidades - 1).toString() : '0';
+
+        let respuestaNumStr = `${c}${d}${u}`.trim().replace(/^0+/, '') || '0';
+
+        if (respuestaNumStr === ejercicio.solucionStr) {
+            setEstadoRespuesta('correct');
+            alert('¡Perfecto! Has acertado.');
+        } else {
+            setEstadoRespuesta('error');
+            alert('Ups, prueba otra vez.');
+        }
+    };
+
+    const handlePickerChange = (setter) => (val) => {
+        setter(val);
+        setEstadoRespuesta('idle');
+    };
+
+    // Helper para convertir un string base 8 en simbolos alienigenas de MiNumero
+    const renderizarSimbolos = (strBase8) => {
+        return strBase8.split('').map((char, i) => (
+            <span key={i}>{new MiNumero(parseInt(char, 10)).toString()}</span>
+        ));
+    };
+
+    return (
+        <div className="actividad-layout">
+            <Header 
+                rutas={[
+                    { label: 'Actividad operaciones', path: '/operaciones', icon: 'icon-operaciones' },
+                    { label: 'Actividad divisiones' }
+                ]} 
+                backPath="/operaciones" 
+            />
+
+            <div className="actividad-controles">
+                <button className="icon-btn btn-info" title="Información">
+                    <Icon name="icon-info" />
+                </button>
+                <select value={dificultad} className="dificultad-select" onChange={cambiarDificultad}>
+                    <option value="0">Dificultad Fácil</option>
+                    <option value="1">Dificultad Media</option>
+                    <option value="2">Dificultad Difícil</option>
+                </select>
+                <button className="btn-secundario danger" onClick={reiniciarJuego}>
+                    Reiniciar
+                </button>
+            </div>
+
+            <main className="actividad-zona-juego">
+                <div className={`operacion-horizontal ${estadoRespuesta}`}>
+                    
+                    {/* Dividendo */}
+                    <div className="numero-fijo">
+                        {renderizarSimbolos(ejercicio.num1Str)}
+                    </div>
+
+                    <div className="signo-matematico">÷</div>
+
+                    {/* Divisor */}
+                    <div className="numero-fijo">
+                        {renderizarSimbolos(ejercicio.num2Str)}
+                    </div>
+
+                    <div className="signo-matematico">=</div>
+
+                    {/* Pickers: Aparecen segun la dificultad */}
+                    <div className="fila-pickers-horizontal">
+                        {dificultad >= '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={idxCentenas} onChange={handlePickerChange(setIdxCentenas)} />}
+                        {dificultad >= '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={idxDecenas}  onChange={handlePickerChange(setIdxDecenas)} />}
+                        <SwipePicker opciones={OPCIONES_DIGITOS} value={idxUnidades} onChange={handlePickerChange(setIdxUnidades)} />
+                    </div>
+
+                </div>
+            </main>
+
+            <footer className="actividad-footer">
+                <button className="btn-corregir-full" onClick={validarEjercicio}>
+                    Corregir
+                </button>
+            </footer>
+        </div>
+    );
+}

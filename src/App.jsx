@@ -11,6 +11,7 @@ import { ActividadOperaciones } from './pages/ActividadOperaciones';
 import { ActividadSuma } from './pages/ActividadSuma';
 import { ActividadResta } from './pages/ActividadResta';
 import { ActividadProducto } from './pages/ActividadProducto';
+import { ActividadDivisiones } from './pages/ActividadDivisiones';
 
 import './styles/App.css'
 
@@ -98,8 +99,7 @@ function AppLayout() {
         <Route path='/operaciones' element={<ActividadOperaciones />} />
         <Route path="/operaciones/suma" element={<ActividadSuma />} />
         <Route path="/operaciones/resta" element={<ActividadResta />} />
-        {/*
-        <Route path="/operaciones/divisiones" element={<ActividadDivisiones />} /> */}
+        <Route path="/operaciones/divisiones" element={<ActividadDivisiones />} />
         <Route path="/operaciones/producto" element={<ActividadProducto />} />
         {/* <Route path="/operaciones/producto/tablas" element={<ActividadProductoTablas />} />
         <Route path="/operaciones/producto/recortados" element={<ActividadProductoRecortados />} />
