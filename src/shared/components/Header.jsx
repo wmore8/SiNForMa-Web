@@ -33,7 +33,7 @@ export function Header({ rutas = [], backPath = '/' }) {
                 })}
             </div>
 
-            <Link to={backPath} className="icon-btn btn-volver" style={{ color: 'var(--text-color)' }} title="Volver">
+            <Link to={backPath} className="icon-btn btn-volver hover-danger" title="Volver">
                 <Icon name="icon-back" />
             </Link>
         </header>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Icon } from '../shared/components/Icon';
 import { SwipePicker } from '../shared/components/SwipePicker';
 import { Header } from '../shared/components/Header';
+import { ActividadControles } from '../shared/components/ActividadControles';
 import { MiNumero } from '../shared/utils/MiNumero';
 import '../styles/ActividadOperaciones.css';
 
@@ -111,25 +112,14 @@ export function ActividadSuma() {
         <div className="actividad-layout">
             <Header
                 rutas={[
-                    { label: 'Actividad Operaciones', path: '/operaciones'},
+                    { label: 'Actividad Operaciones', path: '/operaciones' },
                     { label: 'Actividad suma' }
                 ]}
                 backPath="/operaciones"
             />
 
-            <div className="actividad-controles">
-                <button className="icon-btn btn-info" title="Información">
-                    <Icon name="icon-info" />
-                </button>
-                <select value={dificultad} className="dificultad-select" onChange={cambiarDificultad}>
-                    <option value="0">Dificultad Fácil</option>
-                    <option value="1">Dificultad Media</option>
-                    <option value="2">Dificultad Difícil</option>
-                </select>
-                <button className="btn-secundario danger" onClick={reiniciarJuego}>
-                    Reiniciar
-                </button>
-            </div>
+            <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={reiniciarJuego} onInfoClick={() => alert("Mostrando info...")} />
+
 
             <main className="actividad-zona-juego">
                 <div className={`operacion-vertical ${estadoRespuesta}`}>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Icon } from '../shared/components/Icon';
 import { SwipePicker } from '../shared/components/SwipePicker';
 import { Header } from '../shared/components/Header';
+import { ActividadControles } from '../shared/components/ActividadControles';
 import { MiNumero } from '../shared/utils/MiNumero';
 import '../styles/ActividadOperaciones.css';
 
@@ -15,15 +16,15 @@ const generarDivision = (nivel) => {
     if (nivel === '0') {
         // Facil: 1 cifra / 1 cifra (divisor siempre > 0)
         val1 = rand(8);
-        val2 = rand(7) + 1; 
+        val2 = rand(7) + 1;
     } else if (nivel === '1') {
         // Medio: 3 cifras (hasta 777 base 8 = 511 decimal) / 1 cifra
-        val1 = rand(512); 
+        val1 = rand(512);
         val2 = rand(7) + 1;
     } else {
         // Difícil: 3 cifras / 2 cifras (hasta 77 base 8 = 63 decimal)
         val1 = rand(512);
-        val2 = rand(63) + 1; 
+        val2 = rand(63) + 1;
     }
 
     // Division entera (sin decimales)
@@ -96,31 +97,19 @@ export function ActividadDivisiones() {
 
     return (
         <div className="actividad-layout">
-            <Header 
+            <Header
                 rutas={[
                     { label: 'Actividad operaciones', path: '/operaciones', icon: 'icon-operaciones' },
                     { label: 'Actividad divisiones' }
-                ]} 
-                backPath="/operaciones" 
+                ]}
+                backPath="/operaciones"
             />
 
-            <div className="actividad-controles">
-                <button className="icon-btn btn-info" title="Información">
-                    <Icon name="icon-info" />
-                </button>
-                <select value={dificultad} className="dificultad-select" onChange={cambiarDificultad}>
-                    <option value="0">Dificultad Fácil</option>
-                    <option value="1">Dificultad Media</option>
-                    <option value="2">Dificultad Difícil</option>
-                </select>
-                <button className="btn-secundario danger" onClick={reiniciarJuego}>
-                    Reiniciar
-                </button>
-            </div>
+            <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={reiniciarJuego} onInfoClick={() => alert("Mostrando info...")} />
 
             <main className="actividad-zona-juego">
                 <div className={`operacion-horizontal ${estadoRespuesta}`}>
-                    
+
                     {/* Dividendo */}
                     <div className="numero-fijo">
                         {renderizarSimbolos(ejercicio.num1Str)}
@@ -138,7 +127,7 @@ export function ActividadDivisiones() {
                     {/* Pickers: Aparecen segun la dificultad */}
                     <div className="fila-pickers-horizontal">
                         {dificultad >= '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={idxCentenas} onChange={handlePickerChange(setIdxCentenas)} />}
-                        {dificultad >= '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={idxDecenas}  onChange={handlePickerChange(setIdxDecenas)} />}
+                        {dificultad >= '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={idxDecenas} onChange={handlePickerChange(setIdxDecenas)} />}
                         <SwipePicker opciones={OPCIONES_DIGITOS} value={idxUnidades} onChange={handlePickerChange(setIdxUnidades)} />
                     </div>
 

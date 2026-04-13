@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { Header } from '../shared/components/Header';
+import { ActividadControles } from '../shared/components/ActividadControles';
 import '../styles/ActividadLapiceros.css';
 
 export function ActividadLapiceros() {
@@ -84,17 +85,7 @@ export function ActividadLapiceros() {
 
             <Header rutas={[{ label: 'Actividad Lapiceros', icon: 'icon-lapiz' }]} backPath="/" />
 
-            <div className="actividad-controles">
-                <button className="icon-btn btn-info" title='Información'>
-                    <Icon name="icon-info" />
-                </button>
-                <select value={dificultad} className='dificultad-select' onChange={cambiarDificultad}>
-                    <option value="0">Dificultad Fácil</option>
-                    <option value="1">Dificultad Media</option>
-                    <option value="2">Dificultad Difícil</option>
-                </select>
-                <button className="btn-secundario danger" onClick={generarEjercicio}>Reiniciar</button>
-            </div>
+            <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={generarEjercicio} onInfoClick={() => alert("Mostrando info...")} />
 
             <div className="objetivo-container">
                 <div className="objetivo-numero">{aRomesco(objetivo)} lapiceros</div>

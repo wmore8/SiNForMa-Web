@@ -7,6 +7,7 @@ import { TableroGrid } from '../shared/components/TableroGrid';
 import { SpinnerCustom } from '../shared/components/SpinnerCustom';
 import { SwipePicker } from '../shared/components/SwipePicker';
 import { Header } from '../shared/components/Header';
+import { ActividadControles } from '../shared/components/ActividadControles';
 import '../styles/ActividadTablas.css';
 
 //Constantes de estado
@@ -159,9 +160,9 @@ export function ActividadTablas() {
     if (casilla.type === TIPO_CASILLA.ADIVINABLE) {
       setGrid(grid.map(c => {
         if (c.id === casilla.id) {
-const charDecena = OPCIONES_DECENAS[idxDecenas].trim();
-                    const charUnidad = OPCIONES_UNIDADES[idxUnidades].trim();
-                    const textoSpinner = `${charDecena}${charUnidad}`;
+          const charDecena = OPCIONES_DECENAS[idxDecenas].trim();
+          const charUnidad = OPCIONES_UNIDADES[idxUnidades].trim();
+          const textoSpinner = `${charDecena}${charUnidad}`;
           return { ...c, currentText: textoSpinner, status: ESTADO_CASILLA.BASE };
         }
         return c;
@@ -190,17 +191,7 @@ const charDecena = OPCIONES_DECENAS[idxDecenas].trim();
         <Header
           rutas={[{ label: 'Actividad Tablas' }]} backPath="/" />
 
-        <div className="actividad-controles">
-          <button className="icon-btn btn-info" title="Información">
-            <Icon name="icon-info" />
-          </button>
-          <select value={dificultad} className="dificultad-select" onChange={cambiarDificultad}>
-            <option value="0">Dificultad Fácil</option>
-            <option value="1">Dificultad Media</option>
-            <option value="2">Dificultad Difícil</option>
-          </select>
-          <button className="btn-secundario danger" onClick={reiniciarJuego}>Reiniciar</button>
-        </div>
+        <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={reiniciarJuego} onInfoClick={() => alert("Mostrando info...")} />
 
         <div className="input-panel-tablas">
           <div className="pickers-container">

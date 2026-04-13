@@ -4,6 +4,7 @@ import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { SwipePicker } from '../shared/components/SwipePicker';
 import { Header } from '../shared/components/Header';
+import { ActividadControles } from '../shared/components/ActividadControles';
 import '../styles/ActividadNumeros.css';
 
 const OPCIONES_NIVELES = [
@@ -105,17 +106,7 @@ export function ActividadNumeros() {
         <div className="actividad-layout">
             <Header rutas={[{ label: `Actividad Números (${OPCIONES_NIVELES[dificultad].sec})` }]} backPath="/" />
 
-            <div className="actividad-controles">
-                <button className="icon-btn btn-info" title="Información">
-                    <Icon name="icon-info" />
-                </button>
-                <select value={dificultad} className="dificultad-select" onChange={cambiarDificultad}>
-                    {OPCIONES_NIVELES.map(opc => (
-                        <option key={opc.id} value={opc.id}>{opc.label}</option>
-                    ))}
-                </select>
-                <button className="btn-secundario danger" onClick={() => reiniciarJuego(dificultad)}>Reiniciar</button>
-            </div>
+            <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={() => reiniciarJuego(dificultad)} opciones={OPCIONES_NIVELES} />
 
             <main className="actividad-zona-juego">
                 <div className="info-secuencia">

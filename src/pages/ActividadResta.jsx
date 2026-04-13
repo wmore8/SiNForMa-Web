@@ -3,10 +3,11 @@ import { Icon } from '../shared/components/Icon';
 import { SwipePicker } from '../shared/components/SwipePicker';
 import { Header } from '../shared/components/Header';
 import { MiNumero } from '../shared/utils/MiNumero';
+import { ActividadControles } from '../shared/components/ActividadControles';
 import '../styles/ActividadOperaciones.css';
 
 const OPCIONES_DIGITOS = [' ', ...MiNumero.losDigitos];
-const OPCIONES_SIGNO = [' ', '-']
+const OPCIONES_SIGNO = [' ', '−']
 
 const generarResta = (nivel) => {
     const rand = (max) => Math.floor(Math.random() * max);
@@ -127,28 +128,16 @@ export function ActividadResta() {
                 backPath="/operaciones"
             />
 
-            <div className="actividad-controles">
-                <button className="icon-btn btn-info" title="Información">
-                    <Icon name="icon-info" />
-                </button>
-                <select value={dificultad} className="dificultad-select" onChange={cambiarDificultad}>
-                    <option value="0">Dificultad Fácil</option>
-                    <option value="1">Dificultad Media</option>
-                    <option value="2">Dificultad Difícil</option>
-                </select>
-                <button className="btn-secundario danger" onClick={reiniciarJuego}>
-                    Reiniciar
-                </button>
-            </div>
+            <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={reiniciarJuego} onInfoClick={() => alert("Mostrando info...")} />
 
             <main className="actividad-zona-juego">
                 <div className={`operacion-vertical ${estadoRespuesta}`}>
 
                     {/* Primer Numero (Minuendo) */}
                     <div className="fila-operacion">
-                        <div className="celda-signo invisible">−</div>
+                        <div className="celda-signo invisible">-</div>
                         {/* Espacio extra para alinear con el Signo del Picker en el nivel dificil*/}
-                        {dificultad === '2' && <div className="celda-digito"></div>} 
+                        {dificultad === '2' && <div className="celda-digito"></div>}
                         {getDigits(ejercicio.num1Str, dificultad).map((char, index) => (
                             <div key={`n1-${index}`} className="celda-digito">
                                 {char !== ' ' ? new MiNumero(parseInt(char, 10)).toString() : ''}
@@ -158,8 +147,8 @@ export function ActividadResta() {
 
                     {/* Segundo Numero (Sustraendo) */}
                     <div className="fila-operacion">
-                        <div className="celda-signo">-</div> {/* Símbolo cambiado a Resta */}
-                       {dificultad === '2' && <div className="celda-digito"></div>}
+                        <div className="celda-signo">−</div> {/* Símbolo cambiado a Resta */}
+                        {dificultad === '2' && <div className="celda-digito"></div>}
                         {getDigits(ejercicio.num2Str, dificultad).map((char, index) => (
                             <div key={`n2-${index}`} className="celda-digito">
                                 {char !== ' ' ? new MiNumero(parseInt(char, 10)).toString() : ''}

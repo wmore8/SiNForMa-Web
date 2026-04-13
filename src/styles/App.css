@@ -279,7 +279,36 @@ b,
   font-size: 1.5rem;
 }
 
-.icon-btn {
+/*BOTONES ----------------------------------*/
+
+.hover-primary,
+.hover-danger,
+.hover-success {
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+/* Efecto Hover Primary */
+.hover-primary:hover {
+  background-color: var(--primary) !important;
+  color: #ffffff !important;
+  border-color: var(--primary) !important;
+}
+
+/* Efecto Hover Danger */
+.hover-danger:hover {
+  background-color: var(--danger) !important;
+  color: #ffffff !important;
+  border-color: var(--danger) !important;
+}
+
+/* Efecto Hover Success*/
+.hover-success:hover {
+  background-color: var(--success) !important;
+  color: #ffffff !important;
+  border-color: var(--success) !important;
+}
+
+.nav-btn {
   background: none;
   /* border: 2px solid var(--bg-color); */
   color: white;
@@ -292,16 +321,115 @@ b,
   transition: background-color 0.2s;
 }
 
-.icon-btn:focus {
+.nav-btn:focus {
   outline: none;
 }
 
-.icon-btn:hover {
+.nav-btn:hover {
   /* background-color: var(--bg-color);
   border-color: var(--primary);
   color: var(--primary); */
   background-color: var(--bg-color-opacity);
   border-color: var(--bg-color-opacity);
+}
+
+.icon-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  
+  padding: 0.5rem;
+  border: 2px solid var(--card-border);
+  background-color: transparent;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.icon-btn:focus {
+  outline: none;
+}
+
+.icon-btn:hover {}
+
+/* Botones Secundarios */
+.btn-secundario {
+  flex-shrink: 0;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--card-border);
+  background-color: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secundario.danger:hover {
+  background-color: var(--danger);
+  border-color: var(--danger);
+  color: white;
+}
+
+/* Boton Primario Ancho (Boton Corregir o Siguiente) */
+.btn-corregir-full {
+  width: 100%;
+  padding: clamp(1rem, 3vh, 1.5rem);
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+}
+
+.btn-corregir-full:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-corregir-full:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn-corregir-full:focus {
+  outline: none;
+}
+
+.btn-info,
+.btn-volver {
+  color: var(--text-color);
+  font-size: 1em;
+}
+
+.btn-icon-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  /* Separacion perfecta entre el icono y el texto */
+
+  padding: 0.5rem 1rem;
+  /* Mas padding a los lados que arriba/abajo */
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  border: 2px solid var(--card-border);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.btn-icon-text:focus {
+  outline:none;
+}
+
+.btn-icon-text svg,
+.btn-icon-text i,
+.btn-icon-text .icon {
+    font-size: 1.2em; 
 }
 
 /* --- MENU HAMBURGUESA --- */
@@ -442,7 +570,7 @@ b,
   /* Prohibe que el texto se parta en 2 lineas */
   flex-shrink: 0;
   /* Prohibe que este elemento se encoja o se aplaste */
-  
+
 }
 
 .breadcrumb-icon {
@@ -455,10 +583,6 @@ b,
   .breadcrumb-texto-oculto-movil {
     display: none;
   }
-}
-
-.btn-info{
-  color: var(--text-color);
 }
 
 /*CARDS DE ACTIVIDADES--------------------------------*/
@@ -530,7 +654,7 @@ b,
 /* Barra de Controles (Select y Reiniciar) */
 .actividad-controles {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 0.5rem;
   flex-shrink: 0;
   width: 100%;
@@ -564,7 +688,7 @@ b,
 .dificultad-select {
   flex: 1;
   min-width: 0;
-  /* Evita que rompa el layout en móviles */
+  /* Evita que rompa el layout en moviles */
   padding: 0.75rem;
   border-radius: 0.5rem;
   border: 2px solid var(--card-border);
@@ -579,51 +703,6 @@ b,
 .dificultad-select:focus {
   outline: none;
   border-color: var(--primary);
-}
-
-/* Botones Secundarios */
-.btn-secundario {
-  flex-shrink: 0;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  border: 2px solid var(--card-border);
-  background-color: transparent;
-  color: var(--text-color);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-secundario.danger:hover {
-  background-color: var(--danger);
-  border-color: var(--danger);
-  color: white;
-}
-
-/* Boton Primario Ancho (Boton Corregir o Siguiente) */
-.btn-corregir-full {
-  width: 100%;
-  padding: clamp(1rem, 3vh, 1.5rem);
-  border-radius: 0.5rem;
-  background-color: var(--primary);
-  color: white;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: transform 0.1s, opacity 0.2s;
-}
-
-.btn-corregir-full:active:not(:disabled) {
-  transform: scale(0.98);
-}
-
-.btn-corregir-full:disabled {
-  background-color: gray;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-.btn-corregir-full:focus {
-  outline: none;
 }
 
 /* Textos Comunes */

@@ -39,11 +39,11 @@ export function Navbar({ onOpenSettings }) {
                 </div>
 
                 <div className="nav-actions">
-                    <button className="icon-btn" title='Ajustes' onClick={onOpenSettings}>
+                    <button className="nav-btn" title='Ajustes' onClick={onOpenSettings}>
                         <Icon name={"icon-ajustes"} className="ajustes-icon" />
                     </button>
 
-                    <button className="icon-btn mobile-menu-btn" onClick={toggleMenu} title={isMenuOpen ? 'Cerrar' : 'Abrir'}>
+                    <button className="nav-btn mobile-menu-btn" onClick={toggleMenu} title={isMenuOpen ? 'Cerrar' : 'Abrir'}>
                         <Icon name="icon-nav-toggle" className={`hamburger-icon ${isMenuOpen ? 'rotated' : ''}`} />
                     </button>
                 </div>
