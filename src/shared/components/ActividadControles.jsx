@@ -20,7 +20,7 @@ export function ActividadControles({
                 <Icon name="icon-info" />
             </button>
 
-            <select value={dificultad} className="dificultad-select" onChange={onChange}>
+            <select value={dificultad} name='dificultad-select' className="dificultad-select" onChange={onChange}>
                 {opciones.map(opc => (
                     <option key={opc.id} value={opc.id}>
                         {opc.label}

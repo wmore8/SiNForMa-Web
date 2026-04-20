@@ -49,7 +49,9 @@
 
   /* Colores varios y utilidades*/
   --success: #32DE84;
+  --success-opacity-15: #32de852c;
   --danger: #DE328B;
+  --danger-opacity-15: #de328b2c;
   --warning: #DEDB32;
 
   /* Variables para el color del texto */
@@ -338,7 +340,7 @@ b,
   justify-content: center;
   align-items: center;
   aspect-ratio: 1 / 1;
-  
+
   padding: 0.5rem;
   border: 2px solid var(--card-border);
   background-color: transparent;
@@ -423,13 +425,13 @@ b,
 }
 
 .btn-icon-text:focus {
-  outline:none;
+  outline: none;
 }
 
 .btn-icon-text svg,
 .btn-icon-text i,
 .btn-icon-text .icon {
-    font-size: 1.2em; 
+  font-size: 1.2em;
 }
 
 /* --- MENU HAMBURGUESA --- */
@@ -439,7 +441,7 @@ b,
 
 /* giro de 90 grados */
 .hamburger-icon.rotated {
-  transform: rotate(90deg);
+  transform: rotate(-90deg);
 }
 
 
@@ -509,6 +511,7 @@ b,
   align-items: center;
   border-bottom: 2px solid var(--card-border);
   padding-bottom: 0.5rem;
+  gap: 1rem;
   flex-shrink: 0;
 }
 
@@ -582,6 +585,150 @@ b,
 @media (max-width: 500px) {
   .breadcrumb-texto-oculto-movil {
     display: none;
+  }
+}
+
+/* --- TECLADO ROMESCO ---*/
+.teclado-contenedor {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding-top: 1rem;
+}
+
+.teclado-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(0.25rem, 1vw, 0.5rem);
+  width: 100%;
+}
+
+.teclado-btn {
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(1.25rem, 5vw, 2rem);
+  font-weight: bold;
+  border-radius: 0.5rem;
+  border: 2px solid var(--card-border);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 0;
+  min-height: 0;
+  outline: none;
+}
+
+.teclado-btn.accion {
+  background-color: #f3f4f6;
+  color: var(--danger);
+}
+
+.dark-mode .teclado-btn.accion {
+  background-color: #1f2937;
+}
+
+.teclado-btn:hover {
+  border-color: var(--primary);
+}
+
+.teclado-btn.accion:hover {
+  border-color: var(--danger);
+}
+
+.teclado-btn:focus {
+  border-color: var(--primary);
+  background-color: var(--success-opacity-15);
+  outline: none;
+}
+
+.teclado-btn.accion:focus {
+  border-color: var(--danger);
+  background-color: var(--danger-opacity-15);
+}
+
+.teclado-btn:active {
+  transform: scale(0.95);
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.teclado-btn.accion:active {
+  transform: scale(0.95);
+  background-color: var(--danger);
+  color: white;
+}
+
+/* --- PANEL DERECHO --- */
+.panel-derecho-dificil {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  gap: 1.5rem;
+
+  align-items: stretch;
+}
+
+.panel-derecho-dificil .teclado-contenedor {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 0;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .panel-derecho-dificil {
+    max-width: 450px;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  .actividad-layout.multiplicacion-layout-custom.modo-dificil {
+    max-width: 1100px;
+  }
+
+  /* Ponemos la zona de juego en fila (horizontal) en lugar de columna */
+  .multiplicacion-layout-custom.modo-dificil .actividad-zona-juego {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .multiplicacion-layout-custom.modo-dificil .panel-derecho-dificil {
+    margin: 0;
+    margin-top: 4rem;
+    padding-left: 3rem;
+    border-left: 3px solid var(--card-border);
+    box-sizing: content-box;
+    max-width: 300px;
+  }
+
+
+  /* Formateamos el contenedor del teclado para que sea un panel lateral */
+  .multiplicacion-layout-custom.modo-dificil .teclado-contenedor {
+    padding-top: 0;
+    padding-left: 0;
+    border-top: none;
+    border-left: none;
+  }
+
+  /* Transformamos el teclado en una calculadora (3 columnas) */
+  .multiplicacion-layout-custom.modo-dificil .teclado-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  /* Hacemos que el ultimo boton 'C' ocupe las 3 columnas enteras por abajo */
+  .multiplicacion-layout-custom.modo-dificil .teclado-btn:last-child {
+    grid-column: span 3;
+    aspect-ratio: auto;
+    padding: 0.5rem;
   }
 }
 
@@ -856,6 +1003,10 @@ b,
   /* Ocultamos el boton hamburguesa */
   .mobile-menu-btn {
     display: none;
+  }
+
+  .actividad-layout {
+    max-width: 80vw;
   }
 
 }

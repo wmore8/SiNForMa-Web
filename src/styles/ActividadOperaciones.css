@@ -127,7 +127,7 @@
     display: inline-flex;
     height: 100%;
     flex-direction: row;
-    align-items:baseline;
+    align-items: baseline;
     justify-content: center;
     gap: clamp(0.5rem, 2vw, 1.5rem);
     padding: clamp(var(--spacing-md), 3vw, var(--spacing-xl));
@@ -136,7 +136,7 @@
     transition: border-color 0.3s ease, background-color 0.3s ease;
     background-color: var(--bg-color);
     /* Para que el texto no se vaya de la pantalla */
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
 .operacion-horizontal.correct {
@@ -169,6 +169,85 @@
     height: clamp(100px, 20vw, 150px);
 }
 
-.fila-pickers-horizontal > div {
-    width: clamp(45px, 12vw, 70px); /* El mismo ancho fluido que en la Suma/Resta */
+.fila-pickers-horizontal>div {
+    width: clamp(45px, 12vw, 70px);
+    /* El mismo ancho fluido que en la Suma/Resta */
+}
+
+/* --- CELDAS INTERACTIVAS --- */
+.celda-digito.interactiva {
+    cursor: pointer;
+    background-color: var(--bg-color);
+    border: 2px solid var(--card-border);
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.celda-digito.interactiva.llena {
+    background-color: var(--success-opacity-15);
+    border: 2px solid var(--primary);
+}
+
+.celda-digito.interactiva.activa {
+    background-color: var(--success-opacity-15);
+    /* Verde clarito */
+    border: 3px solid var(--primary);
+    transform: scale(1.1);
+    /* Escala un pelin mas grande para destacar */
+    z-index: 2;
+}
+
+.celda-digito.interactiva.correcta {
+    background-color: var(--success);
+    color: white;
+    border: 2px solid var(--success);
+}
+
+.celda-digito.interactiva.erronea {
+    background-color: var(--danger);
+    color: white;
+    border: 2px solid var(--danger);
+}
+
+/* Cuando seleccionas una celda que estaba mal para corregirla */
+.celda-digito.interactiva.erronea.activa {
+    background-color: var(--danger-opacity-15);
+    color: var(--text-color);
+    border: 3px solid var(--danger);
+    transform: scale(1.1);
+}
+
+/* --- MULTIPLICACION CLASICA (Custom Layout) --- */
+.multiplicacion-layout-custom .linea-separadora {
+    height: 4px;
+    margin: 0.25rem;
+}
+
+/* --- SOLO PARA EL NIVEL DIFICIL --- */
+.multiplicacion-layout-custom.modo-dificil .operacion-vertical {
+    gap: 0.75rem;
+}
+
+/* Reducimos el tamaño de las celdas solo cuando hay 6 columnas */
+.multiplicacion-layout-custom.modo-dificil .celda-digito,
+.multiplicacion-layout-custom.modo-dificil .celda-invisible {
+    width: clamp(32px, 10vw, 60px);
+    height: clamp(32px, 10vw, 60px);
+    font-size: clamp(2rem, 5vw, 2.8rem);
+}
+
+.multiplicacion-layout-custom.modo-dificil .celda-digito.interactiva {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+}
+
+.multiplicacion-layout-custom.modo-dificil .celda-signo {
+    width: clamp(1rem, 5vw, 2rem);
+    font-size: clamp(2rem, 5vw, 3rem);
+}
+
+/* En tablet, damos aun mas espacio vertical para aprovechar la pantalla */
+@media (min-width: 768px) {
+    .multiplicacion-layout-custom.modo-dificil .operacion-vertical {
+        gap: 1.25rem;
+    }
 }

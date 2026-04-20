@@ -68,7 +68,7 @@ export function ActividadLapiceros() {
 
         let nombreIcono = 'icon-default';
         if (dificultad === '0') { // En Facil o Medio SOLO mostramos el icono
-            if (tipo === 'lapiz') nombreIcono = 'icon-lapiz';
+            if (tipo === 'lapiz') nombreIcono = 'icon-lapiz-sm';
             if (tipo === 'estuche') nombreIcono = 'icon-lapiz-estuche';
             if (tipo === 'caja') nombreIcono = 'icon-lapiz-caja';
         } else if (dificultad === '1') {

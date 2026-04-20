@@ -5,7 +5,7 @@ import '../styles/ActividadOperaciones.css'
 
 export function ActividadOperaciones() {
     return (
-        <div className="actividad-layout">
+        <div className="actividad-layout operaciones-layout">
             <Header rutas={[ { label: 'Actividad operaciones' } ]} backPath="/"/>
             <main className="operaciones-main">
                 <div className="cards-grid-4">
@@ -17,7 +17,7 @@ export function ActividadOperaciones() {
                         <Icon name="icon-default" className="card-icon" />
                         <h2>Resta</h2>
                     </Link>
-                    <Link to="/operaciones/producto" className="card">
+                    <Link to="/operaciones/multiplicaciones" className="card">
                         <Icon name="icon-default" className="card-icon" />
                         <h2>Multiplicaciones</h2>
                     </Link>
