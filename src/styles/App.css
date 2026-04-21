@@ -687,9 +687,9 @@ b,
 
 @media (min-width: 1024px) {
 
-  .actividad-layout.multiplicacion-layout-custom.modo-dificil {
+  /* .actividad-layout.multiplicacion-layout-custom.modo-dificil {
     max-width: 1100px;
-  }
+  } */
 
   /* Ponemos la zona de juego en fila (horizontal) en lugar de columna */
   .multiplicacion-layout-custom.modo-dificil .actividad-zona-juego {
@@ -697,7 +697,6 @@ b,
     align-items: flex-start;
     justify-content: center;
     align-items: center;
-    gap: 4rem;
   }
 
   .multiplicacion-layout-custom.modo-dificil .panel-derecho-dificil {

@@ -124,7 +124,7 @@
         /* Centra los paneles verticalmente */
         gap: var(--spacing-xl) !important;
         padding: 1rem !important;
-        max-width: 1600px !important;
+        /* max-width: 1600px !important; */
     }
 
     .tablas-layout-custom .panel-cuadricula {

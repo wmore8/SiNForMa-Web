@@ -8,7 +8,7 @@ export function ActividadMultiplicaciones() {
             <Header
                 rutas={[
                     { label: 'Actividad Operaciones', path: '/operaciones' },
-                    { label: 'Actividad multiplicaciones' }
+                    { label: 'Multiplicaciones' }
                 ]}
                 backPath="/operaciones"
             />

@@ -11,6 +11,7 @@ import { ActividadOperaciones } from './pages/ActividadOperaciones';
 import { ActividadSuma } from './pages/ActividadSuma';
 import { ActividadResta } from './pages/ActividadResta';
 import { ActividadMultiplicaciones } from './pages/ActividadMultiplicaciones';
+import { ActividadRecortados } from './pages/ActividadRecortados';
 import { ActividadMultiplicacionClasica } from './pages/ActividadMultiplicacionClasica';
 import { ActividadDivisiones } from './pages/ActividadDivisiones';
 
@@ -48,30 +49,17 @@ function Home() {
   )
 }
 
-/*
-function ActividadTablas() {
-  return (
-    <main className="content-area">
-      <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-        <h1>Actividad Tablas</h1>
-        <p>Aun en desarrollo...</p>
-        <Link to="/" style={{ color: 'var(--primary)', fontWeight: 'bold' }}>Volver al inicio</Link>
-      </div>
-    </main>
-  );
-}
-*/
 
 function AppLayout() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 3. Magia de LocalStorage: Inicializamos el estado leyendo la memoria del navegador
+  // Uso del LocalStorage: Inicializamos el estado leyendo la memoria del navegador
   const [isDark, setIsDark] = useState(() => {
     const savedTheme = localStorage.getItem('appTheme');
     return savedTheme === 'dark'; // Si guardamos 'dark', empieza en true
   });
 
-  // 4. Efecto para aplicar la clase al body cada vez que isDark cambie
+  // Efecto para aplicar la clase al body cada vez que isDark cambie
   useEffect(() => {
     if (isDark) {
       document.body.classList.add('dark-mode');
@@ -80,7 +68,7 @@ function AppLayout() {
     }
   }, [isDark]);
 
-  // Función para cambiar el tema y guardarlo
+  // Funcion para cambiar el tema y guardarlo
   const toggleTheme = (theme) => {
     setIsDark(theme === 'dark');
     localStorage.setItem('appTheme', theme); // Guardamos la preferencia
@@ -102,8 +90,8 @@ function AppLayout() {
         <Route path="/operaciones/resta" element={<ActividadResta />} />
         <Route path="/operaciones/divisiones" element={<ActividadDivisiones />} />
         <Route path="/operaciones/multiplicaciones" element={<ActividadMultiplicaciones />} />
+        <Route path="/operaciones/multiplicaciones/recortados" element={<ActividadRecortados />} />
         {/* <Route path="/operaciones/multiplicaciones/tablas" element={<ActividadProductoTablas />} />
-        <Route path="/operaciones/multiplicaciones/recortados" element={<ActividadProductoRecortados />} />
         <Route path="/operaciones/multiplicaciones/celosia" element={<ActividadProductoCelosia />} />*/}
         <Route path="/operaciones/multiplicaciones/clasico" element={<ActividadMultiplicacionClasica />} />
         <Route path="*" element={<main className="content-area"><h1>Página no encontrada</h1></main>} />

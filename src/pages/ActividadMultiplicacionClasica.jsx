@@ -226,8 +226,8 @@ export function ActividadMultiplicacionClasica() {
         <div className={`actividad-layout multiplicacion-layout-custom ${dificultad === '2' ? 'modo-dificil' : ''}`}>
             <Header rutas={[
                 { label: 'Actividad operaciones', path: '/operaciones' },
-                { label: 'Actividad multiplicaciones', path: '/operaciones/multiplicaciones' },
-                { label: 'Multiplicación clásica' }]}
+                { label: 'Multiplicaciones', path: '/operaciones/multiplicaciones' },
+                { label: 'Producto clásico' }]}
                 backPath="/operaciones/multiplicaciones" />
 
             <ActividadControles
