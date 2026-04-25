@@ -49,8 +49,10 @@
 
   /* Colores varios y utilidades*/
   --success: #32DE84;
+  --success-opacity-5: #32de850c;
   --success-opacity-15: #32de852c;
   --danger: #DE328B;
+  --danger-opacity-5: #de328b0a;
   --danger-opacity-15: #de328b2c;
   --warning: #DEDB32;
 
@@ -681,7 +683,7 @@ b,
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .panel-derecho-dificil {
-    max-width: 450px;
+    max-width: 550px;
   }
 }
 
@@ -701,11 +703,11 @@ b,
 
   .multiplicacion-layout-custom.modo-dificil .panel-derecho-dificil {
     margin: 0;
-    margin-top: 4rem;
-    padding-left: 3rem;
-    border-left: 3px solid var(--card-border);
+    margin-top: 0rem;
+    padding-left: 0rem;
+    /* border-left: 3px solid var(--card-border); */
     box-sizing: content-box;
-    max-width: 300px;
+    max-width: 350px;
   }
 
 
@@ -854,7 +856,7 @@ b,
 /* Textos Comunes */
 .info-secuencia {
   text-align: center;
-  font-size: clamp(1.5rem, 3vh, 3rem);
+  font-size: clamp(1.5rem, 2vw, 3rem);
   color: var(--text-color);
 }
 
@@ -919,7 +921,7 @@ b,
   }
 
   .brand-icon {
-    font-size: 2.8rem;
+    font-size: 2.5rem;
   }
 
   .nav-actions {

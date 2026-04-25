@@ -11,7 +11,7 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark }) {
         
         <div className="modal-header">
           <h2 className='modal-title'><Icon name="icon-ajustes" /> Opciones</h2>
-          <button className="icon-btn close-btn" onClick={onClose} style={{color: 'var(--text-color)'}}>
+          <button className="icon-btn close-btn hover-danger" onClick={onClose} >
             <Icon name="icon-close" />
           </button>
         </div>

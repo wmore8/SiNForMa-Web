@@ -21,32 +21,6 @@
     }
 }
 
-/* .cards-grid-4 .card {
-    background-color: var(--bg-color);
-    border: 2px solid var(--card-border);
-    border-radius: 1rem;
-    padding: var(--spacing-xl);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: var(--text-color);
-    transition: transform 0.2s, border-color 0.2s;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-} */
-
-/* .cards-grid-4 .card:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary);
-}
-
-.cards-grid-4 .card-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: var(--primary);
-} */
-
 .operacion-vertical {
     display: inline-flex;
     flex-direction: column;
@@ -61,12 +35,12 @@
 
 .operacion-vertical.correct {
     border-color: var(--success);
-    background-color: rgba(50, 222, 132, 0.05);
+    background-color: var(--success-opacity-5);
 }
 
 .operacion-vertical.error {
     border-color: var(--danger);
-    background-color: rgba(222, 50, 139, 0.05);
+    background-color: var(--danger-opacity-5);
 }
 
 .fila-operacion {
@@ -141,12 +115,12 @@
 
 .operacion-horizontal.correct {
     border-color: var(--success);
-    background-color: rgba(50, 222, 132, 0.05);
+    background-color: var(--success-opacity-5);
 }
 
 .operacion-horizontal.error {
     border-color: var(--danger);
-    background-color: rgba(222, 50, 139, 0.05);
+    background-color: var(--danger-opacity-5);
 }
 
 .numero-fijo {
@@ -256,16 +230,107 @@
 .container-recortados {
     display: 'flex';
     direction: 'column';
+    justify-content: center;
     width: 100%;
     gap: 1.5rem;
 }
 
-.operacion-original-recortados {
-    font-size: clamp(2rem, 6vw, 3.5rem);
+.panel-izquierdo {
+    display: contents;
+}
+
+@media (min-width: 1024px) {
+    .panel-izquierdo {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        align-items: center;
+        width: 100%;
+    }
+
+    .multiplicacion-layout-custom .actividad-zona-juego {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        flex-wrap: nowrap !important;
+    }
+
+    .recortados-grid {
+        padding-top: 5vw;
+    }
+
+}
+
+
+/* CONTENEDOR DEL RESULTADO FINAL TOTAL */
+
+.operacion-original {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: clamp(1.5rem, 6vw, 3rem);
     font-weight: bold;
     text-align: center;
     color: var(--text-color);
     letter-spacing: 0.1em;
+    margin-top: clamp(1rem, 5vw, 2rem);
+    margin-bottom: clamp(1rem, 5vw, 2rem);
+
+}
+
+.caja-total {
+    min-width: clamp(140px, 20vw, 250px);
+    font-size: clamp(1.25rem, 5vw, 2rem);
+    min-height: clamp(50px, 10vw, 70px);
+    padding-left: clamp(0.25rem, 2vw, 1rem);
+    padding-right: clamp(0.25rem, 2vw, 1rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--card-border);
+    border-radius: 0.75rem;
+    background-color: var(--bg-color);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.caja-total.llena {
+    background-color: var(--success-opacity-15);
+    border: 2px solid var(--success);
+}
+
+.caja-total.activa {
+    background-color: var(--success-opacity-15);
+    border: 3px solid var(--primary);
+    transform: scale(1.02);
+}
+
+.caja-total.correcta {
+    background-color: var(--success);
+    color: white;
+    border: 2px solid var(--success);
+}
+
+.caja-total.erronea {
+    background-color: var(--danger);
+    color: white;
+    border: 2px solid var(--danger);
+}
+
+.caja-total.erronea.activa {
+    background-color: var(--danger-opacity-15);
+    color: var(--text-color);
+    border: 3px solid var(--danger);
+}
+
+.caja-total.correcta.activa {
+    background-color: var(--success-opacity-15);
+    /* Fondo verdoso transparente */
+    color: var(--text-color);
+    border: 3px solid var(--success);
 }
 
 .recortados-grid {
@@ -275,7 +340,7 @@
     gap: clamp(0.5rem, 2vw, 1rem);
     width: 100%;
     align-items: center;
-    padding: clamp(1rem, 3vw, 2rem);
+    /* padding: clamp(1rem, 3vw, 2rem); */
     background-color: var(--bg-color);
     border-radius: 1rem;
 }
@@ -286,7 +351,7 @@
 }
 
 .etiqueta-recortado {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-size: clamp(1.25rem, 4vw, 2rem);
     font-weight: bold;
     /* border: 2px solid var(--card-border);
     border-radius: 0.5rem; */
@@ -294,8 +359,8 @@
     text-align: center;
 
     /* white-space: normal; 
-    word-break: break-all;
-    line-height: 1.1; */
+    word-break: break-all; */
+    line-height: 1.1;
 }
 
 .etiqueta-recortado.signo-primario {
@@ -303,9 +368,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* font-size: clamp(1.5rem, 5vw, 3rem); */
+    font-size: clamp(1.5rem, 5vw, 3rem);
     gap: 0.5rem;
 }
+
+.etiqueta-recortado.con-borde {
+    border: 2px solid var(--card-border);
+    border-radius: 0.5rem;
+    /* margin: 0.35rem;  */
+    padding: 0.5rem;
+    background-color: var(--bg-color);
+}
+
 
 /* Celdas rectangulares que se expanden con el contenido */
 .celda-ancha {
@@ -316,7 +390,7 @@
     height: auto;
     min-height: clamp(50px, 12vw, 70px);
     padding: 0.5rem;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-size: clamp(1rem, 3vw, 2rem);
     font-weight: 600;
     color: var(--text-color);
     background-color: var(--bg-color);
@@ -356,7 +430,7 @@
 }
 
 .celda-ancha.erronea.activa {
-    background-color: rgba(222, 50, 139, 0.15);
+    background-color: var(--danger-opacity-15);
     color: var(--text-color);
     border: 3px solid var(--danger);
 }
@@ -370,11 +444,167 @@
     margin: 0.5rem 0;
 }
 
-.operacion-original-recortados {
-    font-size: clamp(2rem, 6vw, 3.5rem);
+/* -------------------------- ACTIVIDAD CELOSIA -------------------------- */
+
+.celosia-grid {
+    display: grid;
+    /* 5 columnas */
+    grid-template-columns: auto repeat(3, clamp(75px, 20vw, 125px)) auto;
+    /* 4 filas */
+    grid-template-rows: auto repeat(2, clamp(75px, 20vw, 125px)) auto;
+    gap: 0;
+    background-color: var(--bg-color);
+    /* border: 3px solid var(--card-border); */
+    border-radius: 0.5rem;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.celosia-etiqueta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
     font-weight: bold;
-    text-align: center;
     color: var(--text-color);
-    letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+}
+
+.celosia-etiqueta.signo {
+    color: var(--primary);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+
+}
+
+.celosia-etiqueta.con-borde {
+    border: 2px solid var(--card-border);
+    border-radius: 0.5rem;
+    margin: 0.35rem;
+    background-color: var(--bg-color);
+}
+
+.celosia-celda {
+    position: relative;
+    background-color: var(--bg-color);
+    border: 1px solid var(--card-border);
+    /* DIAGONAL De abajo-izquierda a arriba-derecha ( / ) */
+    background-image: linear-gradient(to top left, transparent 49%, var(--card-border) 50%, var(--card-border) 50%, transparent 51%);
+}
+
+/* CAJITAS DE INPUT */
+.celosia-input {
+    position: absolute;
+    width: 38%;
+    height: 38%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 600;
+    cursor: pointer;
+    background-color: var(--bg-color);
+    border: 2px solid var(--card-border);
+    border-radius: 0.35rem;
+    transition: all 0.2s ease;
+    color: var(--text-color);
+    /* Para que quede por encima de la linea diagonal */
+    z-index: 1;
+}
+
+/* Posiciones para encajar en los triangulos de la diagonal ( / ) */
+.celosia-input.decena {
+    top: 8%;
+    left: 8%;
+}
+
+.celosia-input.unidad {
+    bottom: 8%;
+    right: 8%;
+}
+
+.celosia-input:hover {
+    border-color: var(--primary);
+}
+
+.celosia-input.llena {
+    background-color: var(--success-opacity-15);
+    border-style: solid;
+    border-color: var(--success);
+}
+
+.celosia-input.activa {
+    background-color: var(--success-opacity-15);
+    border-style: solid;
+    border-color: var(--primary);
+    transform: scale(1.1);
+    z-index: 3;
+}
+
+.celosia-input.correcta {
+    background-color: var(--success);
+    color: white;
+    border-color: var(--success);
+    border-style: solid;
+}
+
+.celosia-input.erronea {
+    background-color: var(--danger);
+    color: white;
+    border-color: var(--danger);
+    border-style: solid;
+}
+
+.celosia-input.erronea.activa {
+    background-color: var(--danger-opacity-15);
+    color: var(--text-color);
+    border: 2px solid var(--danger);
+}
+
+/* Inputs de resultado perimetral */
+.celosia-resultado-input {
+    width: clamp(40px, 8vw, 60px);
+    height: clamp(40px, 8vw, 60px);
+    margin: auto;
+    border: 2px solid var(--card-border);
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(1.2rem, 3vw, 2.5rem);
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.celosia-resultado-input.llena {
+    background-color: var(--success-opacity-15);
+    border: 2px solid var(--success);
+}
+
+.celosia-resultado-input.activa {
+    background-color: var(--success-opacity-15);
+    border: 2px solid var(--primary);
+    transform: scale(1.05);
+    z-index: 2;
+}
+
+.celosia-resultado-input.correcta {
+    background-color: var(--success);
+    color: white;
+    border-color: var(--success);
+}
+
+.celosia-resultado-input.erronea {
+    background-color: var(--danger);
+    color: white;
+    border-color: var(--danger);
+}
+
+.celosia-resultado-input.erronea.activa {
+    background-color: var(--danger-opacity-15);
+    color: var(--text-color);
+    border: 3px solid var(--danger);
 }

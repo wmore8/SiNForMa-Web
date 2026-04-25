@@ -11,7 +11,9 @@ import { ActividadOperaciones } from './pages/ActividadOperaciones';
 import { ActividadSuma } from './pages/ActividadSuma';
 import { ActividadResta } from './pages/ActividadResta';
 import { ActividadMultiplicaciones } from './pages/ActividadMultiplicaciones';
+import { ActividadTablasMultiplicar } from './pages/ActividadTablasMultiplicar';
 import { ActividadRecortados } from './pages/ActividadRecortados';
+import { ActividadCelosia } from './pages/ActividadCelosia';
 import { ActividadMultiplicacionClasica } from './pages/ActividadMultiplicacionClasica';
 import { ActividadDivisiones } from './pages/ActividadDivisiones';
 
@@ -91,8 +93,8 @@ function AppLayout() {
         <Route path="/operaciones/divisiones" element={<ActividadDivisiones />} />
         <Route path="/operaciones/multiplicaciones" element={<ActividadMultiplicaciones />} />
         <Route path="/operaciones/multiplicaciones/recortados" element={<ActividadRecortados />} />
-        {/* <Route path="/operaciones/multiplicaciones/tablas" element={<ActividadProductoTablas />} />
-        <Route path="/operaciones/multiplicaciones/celosia" element={<ActividadProductoCelosia />} />*/}
+        <Route path="/operaciones/multiplicaciones/tablas" element={<ActividadTablasMultiplicar />} />
+        <Route path="/operaciones/multiplicaciones/celosia" element={<ActividadCelosia />} />
         <Route path="/operaciones/multiplicaciones/clasico" element={<ActividadMultiplicacionClasica />} />
         <Route path="*" element={<main className="content-area"><h1>Página no encontrada</h1></main>} />
       </Routes>

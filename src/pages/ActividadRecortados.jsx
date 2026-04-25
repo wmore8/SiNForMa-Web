@@ -45,7 +45,7 @@ const generarRecortados = () => {
             s21: (v1U * v2D).toString(8),
             s2: (val1 * v2D).toString(8), // Total Fila Decenas
 
-            sT: (val1 * val2).toString(8) // Total Final
+            solTotal: (val1 * val2).toString(8) // Total Final
         }
     };
 };
@@ -53,7 +53,7 @@ const generarRecortados = () => {
 export function ActividadRecortados() {
     const [ejercicio, setEjercicio] = useState(() => generarRecortados());
 
-    const celdasVacias = { s13: '', s12: '', s11: '', s1: '', s23: '', s22: '', s21: '', s2: '', sT: '' };
+    const celdasVacias = { s13: '', s12: '', s11: '', s1: '', s23: '', s22: '', s21: '', s2: '', solTotal: '' };
     const [celdas, setCeldas] = useState(celdasVacias);
     const [feedback, setFeedback] = useState(celdasVacias);
 
@@ -145,6 +145,11 @@ export function ActividadRecortados() {
         }
     };
 
+    const valTotal = celdas['solTotal'];
+    const actTotal = celdaActiva === 'solTotal';
+    const feedTotal = feedback['solTotal'];
+    const llenaTotal = (valTotal !== '' && feedTotal === '') ? 'llena' : '';
+
     return (
         <div className="actividad-layout multiplicacion-layout-custom modo-dificil">
             <Header rutas={[
@@ -155,52 +160,55 @@ export function ActividadRecortados() {
 
             <ActividadControles
                 dificultad={0}
-                opciones={[{ id: 0, label: "Nivel Único (3x2 Cifras)" }]}
+                opciones={[{ id: 0, label: "Nivel Único" }]}
                 onChange={() => { }}
                 onReiniciar={reiniciarTodo}
                 onInfoClick={() => alert("Multiplica el número de la izquierda por los de arriba y pon el resultado en las casillas.")}
             />
 
             <main className="actividad-zona-juego">
+                <div className='panel-izquierdo'>
+                    <div className="operacion-original">
+                        <span>
+                            {aSimbolo(ejercicio.str1Original)} <span className="signo-primario">×</span> {aSimbolo(ejercicio.str2Original)}
+                        </span>
+                        <div className="etiqueta-recortado signo-primario">=</div>
+                        <div className={`caja-total ${llenaTotal} ${actTotal ? 'activa' : ''} ${feedTotal}`} onClick={() => setCeldaActiva('solTotal')}>
+                            {valTotal !== '' ? aSimbolo(valTotal) : ''}
+                        </div>
 
-                <div className="container-recortados">
-
-                    <div className="operacion-original-recortados">
-                        {aSimbolo(ejercicio.str1Original)} <span className="signo-primario">×</span> {aSimbolo(ejercicio.str2Original)}
                     </div>
 
-                    <div className="recortados-grid">
+                    <div className="container-recortados">
 
-                        {/* ENCABEZADOS DE COLUMNA */}
-                        <div className="etiqueta-recortado signo-primario">×</div> {/* Signo en la esquina superior izquierda */}
-                        <div className="etiqueta-recortado">{aSimbolo(ejercicio.lbl1C)}</div>
-                        <div className="etiqueta-recortado">{aSimbolo(ejercicio.lbl1D)}</div>
-                        <div className="etiqueta-recortado">{aSimbolo(ejercicio.lbl1U)}</div>
-                        <div></div> {/* Hueco del total vacio */}
+                        <div className="recortados-grid">
 
-                        <div className="linea-horizontal-grid"></div>
+                            {/* ENCABEZADOS DE COLUMNA */}
+                            <div className="etiqueta-recortado signo-primario">×</div> {/* Signo en la esquina superior izquierda */}
+                            <div className="etiqueta-recortado con-borde">{aSimbolo(ejercicio.lbl1C)}</div>
+                            <div className="etiqueta-recortado con-borde">{aSimbolo(ejercicio.lbl1D)}</div>
+                            <div className="etiqueta-recortado con-borde">{aSimbolo(ejercicio.lbl1U)}</div>
+                            <div></div> {/* Hueco del total vacio */}
 
-                        {/* FILA 1 (Multiplicado por las Decenas */}
-                        <div className="etiqueta-recortado">{aSimbolo(ejercicio.lbl2D)}</div>
-                        {renderCelda('s23')}
-                        {renderCelda('s22')}
-                        {renderCelda('s21')}
-                        {renderCelda('s2')} {/* Total Fila Decenas */}
+                            <div className="linea-horizontal-grid"></div>
 
-                        {/* FILA 2 (Multiplicado por las Unidades */}
-                        <div className="etiqueta-recortado">{aSimbolo(ejercicio.lbl2U)}</div>
-                        {renderCelda('s13')}
-                        {renderCelda('s12')}
-                        {renderCelda('s11')}
-                        {renderCelda('s1')} {/* Total Fila Unidades */}
+                            {/* FILA 1 (Multiplicado por las Decenas */}
+                            <div className="etiqueta-recortado con-borde">{aSimbolo(ejercicio.lbl2D)}</div>
+                            {renderCelda('s23')}
+                            {renderCelda('s22')}
+                            {renderCelda('s21')}
+                            {renderCelda('s2')} {/* Total Fila Decenas */}
 
-                        <div className="linea-horizontal-grid"></div>
+                            {/* FILA 2 (Multiplicado por las Unidades */}
+                            <div className="etiqueta-recortado con-borde">{aSimbolo(ejercicio.lbl2U)}</div>
+                            {renderCelda('s13')}
+                            {renderCelda('s12')}
+                            {renderCelda('s11')}
+                            {renderCelda('s1')} {/* Total Fila Unidades */}
 
-                        {/* FILA DEL TOTAL */}
-                        <div></div><div></div><div></div>
-                        <div className="etiqueta-recortado signo-primario">=</div>
-                        {renderCelda('sT')}
+                            <div className="linea-horizontal-grid"></div>
 
+                        </div>
                     </div>
                 </div>
 
