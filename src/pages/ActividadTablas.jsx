@@ -170,11 +170,39 @@ export function ActividadTablas() {
     }
   };
 
-  const validarEjercicio = () => {
-    setGrid(grid.map(casilla => {
-      if (casilla.type !== TIPO_CASILLA.ADIVINABLE || casilla.currentText === '?') return casilla;
-      return { ...casilla, status: casilla.currentText === casilla.realText ? ESTADO_CASILLA.CORRECTO : ESTADO_CASILLA.FALLO };
-    }));
+const validarEjercicio = () => {
+    let hayErrores = false;
+    let todasRellenas = true;
+
+    const nuevoGrid = grid.map(casilla => {
+      // Ignoramos las que no son para adivinar
+      if (casilla.type !== TIPO_CASILLA.ADIVINABLE) return casilla;
+      
+      // Si encontramos un '?', es que falta por rellenar
+      if (casilla.currentText === '?') {
+        todasRellenas = false;
+        return casilla;
+      }
+
+      // Evaluamos acierto o fallo
+      const esCorrecta = casilla.currentText === casilla.realText;
+      if (!esCorrecta) hayErrores = true;
+
+      return { 
+        ...casilla, 
+        status: esCorrecta ? ESTADO_CASILLA.CORRECTO : ESTADO_CASILLA.FALLO 
+      };
+    });
+
+    setGrid(nuevoGrid);
+
+    if (!todasRellenas) {
+        alert('Completa todas las casillas con "?"');
+    } else if (hayErrores) {
+        alert('¡Vaya! Revisa las casillas rojas.');
+    } else {
+        alert('¡Perfecto! Todo está correcto.');
+    }
   };
 
   return (

@@ -18,7 +18,7 @@
 .tablas-grid {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    gap: 2px;
+    gap: clamp(2px, 0.1vw, 6px);
     background-color: var(--card-border);
     border: 2px solid var(--card-border);
     border-radius: 0.5rem;
@@ -115,6 +115,29 @@
     }
 }
 
+/* --- MODIFICACIONES PARA TABLAS DE MULTIPLICAR (9x9) --- */
+
+/* Hacemos que esta cuadricula especifica tenga 9 columnas */
+.tablas-multiplicar .tablas-grid {
+    grid-template-columns: repeat(9, 1fr);
+}
+
+/* Estilo para las cabeceras (Fila superior y columna izquierda) */
+.tabla-celda.header {
+    background: linear-gradient(var(--success-opacity-15), var(--success-opacity-15)), var(--bg-color);
+    color: var(--primary);
+    font-weight: 700;
+    /* Ajustamos un pelin la fuente para que quepa bien al ser 9 columnas */
+    font-size: clamp(1rem, 3.5vw, 1.8rem);
+}
+
+/* La celda superior izquierda (El signo de multiplicar) */
+.tabla-celda.header.esquina {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    color: white;
+    background: var(--success);
+}
+
 /*--------------------------------ESCRITORIO-(y en adelante)--------------------------------*/
 
 @media (min-width: 1024px) {
@@ -154,6 +177,7 @@
         flex-direction: column;
         gap: 1.5rem;
         /* En escritorio, no necesitamos que ocupe el 100% del alto, solo lo necesario */
+        min-width: 0;
     }
 
     .tablas-layout-custom .actividad-controles,
