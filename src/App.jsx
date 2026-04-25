@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { OptionsModal } from './shared/components/OptionsModal';
+import { OptionsModal } from './shared/components/ModalOptions';
 import { Icon } from './shared/components/Icon';
 import { Navbar } from './shared/components/Navbar';
 import { ActividadTablas } from './pages/ActividadTablas';

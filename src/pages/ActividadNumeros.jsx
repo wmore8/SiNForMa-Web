@@ -1,11 +1,8 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { SwipePicker } from '../shared/components/SwipePicker';
 import { Header } from '../shared/components/Header';
 import { ActividadControles } from '../shared/components/ActividadControles';
-import '../styles/ActividadNumeros.css';
 
 const OPCIONES_NIVELES = [
     { id: 0, from: 1, incr: 1, asc: true, label: "De ro en ro (Ascendente)", sec: "+ ro" },

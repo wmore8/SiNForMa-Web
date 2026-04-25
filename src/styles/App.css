@@ -56,6 +56,10 @@
   --danger-opacity-15: #de328b2c;
   --warning: #DEDB32;
 
+  /* Utilidades*/
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+
+
   /* Variables para el color del texto */
   --text-color: #1f2937;
   --card-border: #000000;
@@ -137,14 +141,14 @@ b,
 
 /*--------------------------------MOVIL-(y en adelante)--------------------------------*/
 
-/*MODAL----------------------------------*/
+/* ---------------------------------- MODAL ---------------------------------- */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--modal-overlay);
   /* Por encima de la navbar */
   z-index: 2000;
   display: flex;
@@ -155,10 +159,10 @@ b,
 .modal-content {
   background-color: var(--bg-color);
   color: var(--text-color);
-  padding: 2rem;
+  padding: clamp(1.5rem, 5vw, 2rem);
   border-radius: 1rem;
   width: 90%;
-  max-width: 700px;
+  max-width: 1000px;
   box-shadow: var(--shadow-lg);
   border: 2px solid var(--card-border);
 }
@@ -167,19 +171,35 @@ b,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(1rem, 4vw, 1.5rem);
   font-size: large;
 }
 
 .modal-title {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: 1rem;
   align-items: center;
+  font-size: clamp(1.5rem, 5vw, 1.8rem); 
+  margin: 0; 
+  line-height: 1.2;
 }
 
 .modal-legend {
   margin-bottom: 1rem;
   font-weight: 600;
+}
+
+.modal-body-centered {
+  text-align: center;
+  padding: 1rem;
+}
+
+.modal-text-content {
+  font-size: 1.3rem;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  color: var(--text-color);
 }
 
 .close-btn {
@@ -228,8 +248,7 @@ b,
   border-color: gray;
 }
 
-
-/*NAVBAR--------------------------------*/
+/* -------------------------------- NAVBAR -------------------------------- */
 
 .navbar-header {
   position: sticky;
@@ -283,7 +302,7 @@ b,
   font-size: 1.5rem;
 }
 
-/*BOTONES ----------------------------------*/
+/* -------------------------------- BOTONES ---------------------------------- */
 
 .hover-primary,
 .hover-danger,
@@ -355,8 +374,6 @@ b,
   outline: none;
 }
 
-.icon-btn:hover {}
-
 /* Botones Secundarios */
 .btn-secundario {
   flex-shrink: 0;
@@ -400,6 +417,22 @@ b,
 
 .btn-corregir-full:focus {
   outline: none;
+}
+
+.btn-corregir-full.success {
+  background-color: var(--success);
+}
+
+.btn-corregir-full.danger {
+  background-color: var(--danger);
+}
+
+.btn-corregir-full.success:hover {
+  filter: brightness(0.95);
+}
+
+.btn-corregir-full.danger:hover {
+  filter: brightness(0.95);
 }
 
 .btn-info,
@@ -505,7 +538,7 @@ b,
   color: inherit;
 }
 
-/* --- BREADCRUMB --- */
+/* -------------------------------- BREADCRUMB -------------------------------- */
 
 .actividad-header {
   display: flex;
@@ -590,7 +623,7 @@ b,
   }
 }
 
-/* --- TECLADO ROMESCO ---*/
+/* -------------------------------- TECLADO ROMESCO --------------------------------*/
 .teclado-contenedor {
   width: 100%;
   max-width: 400px;
@@ -664,7 +697,7 @@ b,
   color: white;
 }
 
-/* --- PANEL DERECHO --- */
+/* -------------------------------- PANEL DERECHO -------------------------------- */
 .panel-derecho-dificil {
   display: flex;
   flex-direction: column;
@@ -733,7 +766,7 @@ b,
   }
 }
 
-/*CARDS DE ACTIVIDADES--------------------------------*/
+/* -------------------------------- CARDS DE ACTIVIDADES -------------------------------- */
 
 .cards-grid {
   display: grid;
@@ -784,7 +817,7 @@ b,
 }
 
 
-/* --- ACTIVIDADES --- */
+/* -------------------------------- ACTIVIDADES -------------------------------- */
 
 /* Contenedor Principal */
 .actividad-layout {
@@ -830,7 +863,7 @@ b,
   width: 100%;
 }
 
-/* COMPONENTES UI COMUNES */
+/* -------------------------------------- COMPONENTES UI COMUNES -------------------------------------- */
 
 /* Select de Dificultad */
 .dificultad-select {
@@ -857,12 +890,65 @@ b,
 .info-secuencia {
   text-align: center;
   font-size: clamp(1.5rem, 2vw, 3rem);
+  font-weight: 600;
   color: var(--text-color);
 }
 
 .info-secuencia strong {
   color: var(--primary);
   font-size: 1.2em;
+  font-weight: 700;
+}
+
+.etiqueta {
+  font-size: clamp(1.2rem, 3vh, 1.5rem);
+  font-weight: 500;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.palabra-actual {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: bold;
+  color: var(--primary);
+  text-transform: capitalize;
+  text-shadow: var(--shadow-sm);
+}
+
+.simbolo-actual {
+  font-size: clamp(3rem, 5vh, 4rem);
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.form-escritura {
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Form para la escritura */
+
+.input-palabra {
+  width: 100%;
+  padding: clamp(1rem, 3vh, 1.5rem);
+  font-size: clamp(1.2rem, 4vh, 2rem);
+  text-align: center;
+  border: 2px solid var(--card-border);
+  border-radius: 0.75rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.2s;
+}
+
+.input-palabra:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(50, 222, 132, 0.2);
+}
+
+.input-palabra:disabled {
+  opacity: 0.6;
+  background-color: var(--bg-color-opacity);
 }
 
 /* Cajas de Objetivo */
@@ -876,6 +962,15 @@ b,
   border-radius: 1rem;
   width: 100%;
   max-width: 600px;
+}
+
+.pickers-container {
+  display: flex;
+  flex-direction: row;
+  gap: clamp(0.5rem, 5vw, 2rem);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 /*--------------------------------TABLET-(y en adelante)--------------------------------*/

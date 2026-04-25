@@ -14,12 +14,7 @@
     width: 100%;
 }
 
-@media (min-width: 768px) {
-    .cards-grid-4 {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-lg);
-    }
-}
+/* -------------------------- OPERACION VERTICAL CLASICA -------------------------- */
 
 .operacion-vertical {
     display: inline-flex;
@@ -53,7 +48,6 @@
 }
 
 .celda-signo {
-    /* Anchura fluida para que en movil ocupe menos */
     width: clamp(1.5rem, 5vw, 3rem);
     font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 700;
@@ -79,6 +73,14 @@
     align-items: center;
 }
 
+.celda-digito.interactiva {
+    cursor: pointer;
+    background-color: var(--bg-color);
+    border: 2px solid var(--card-border);
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+}
+
 .linea-separadora {
     width: 100%;
     height: 6px;
@@ -96,7 +98,8 @@
     width: clamp(60px, 5vw, 70px);
 }
 
-/* --- OPERACION HORIZONTAL (Para Divisiones) --- */
+/* -------------------------- OPERACION HORIZONTAL (Para Divisiones) -------------------------- */
+
 .operacion-horizontal {
     display: inline-flex;
     height: 100%;
@@ -145,50 +148,6 @@
 
 .fila-pickers-horizontal>div {
     width: clamp(45px, 12vw, 70px);
-    /* El mismo ancho fluido que en la Suma/Resta */
-}
-
-/* --- CELDAS INTERACTIVAS --- */
-.celda-digito.interactiva {
-    cursor: pointer;
-    background-color: var(--bg-color);
-    border: 2px solid var(--card-border);
-    border-radius: 0.5rem;
-    transition: all 0.2s ease;
-}
-
-.celda-digito.interactiva.llena {
-    background-color: var(--success-opacity-15);
-    border: 2px solid var(--primary);
-}
-
-.celda-digito.interactiva.activa {
-    background-color: var(--success-opacity-15);
-    /* Verde clarito */
-    border: 3px solid var(--primary);
-    transform: scale(1.1);
-    /* Escala un pelin mas grande para destacar */
-    z-index: 2;
-}
-
-.celda-digito.interactiva.correcta {
-    background-color: var(--success);
-    color: white;
-    border: 2px solid var(--success);
-}
-
-.celda-digito.interactiva.erronea {
-    background-color: var(--danger);
-    color: white;
-    border: 2px solid var(--danger);
-}
-
-/* Cuando seleccionas una celda que estaba mal para corregirla */
-.celda-digito.interactiva.erronea.activa {
-    background-color: var(--danger-opacity-15);
-    color: var(--text-color);
-    border: 3px solid var(--danger);
-    transform: scale(1.1);
 }
 
 /* --- MULTIPLICACION CLASICA (Custom Layout) --- */
@@ -219,48 +178,11 @@
     font-size: clamp(2rem, 5vw, 3rem);
 }
 
-/* En tablet, damos aun mas espacio vertical para aprovechar la pantalla */
-@media (min-width: 768px) {
-    .multiplicacion-layout-custom.modo-dificil .operacion-vertical {
-        gap: 1.25rem;
-    }
-}
-
 /* -------------------------- ACTIVIDAD RECORTADOS -------------------------- */
-.container-recortados {
-    display: 'flex';
-    direction: 'column';
-    justify-content: center;
-    width: 100%;
-    gap: 1.5rem;
-}
 
 .panel-izquierdo {
     display: contents;
 }
-
-@media (min-width: 1024px) {
-    .panel-izquierdo {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        align-items: center;
-        width: 100%;
-    }
-
-    .multiplicacion-layout-custom .actividad-zona-juego {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        flex-wrap: nowrap !important;
-    }
-
-    .recortados-grid {
-        padding-top: 5vw;
-    }
-
-}
-
 
 /* CONTENEDOR DEL RESULTADO FINAL TOTAL */
 
@@ -297,40 +219,12 @@
     transition: all 0.2s ease;
 }
 
-.caja-total.llena {
-    background-color: var(--success-opacity-15);
-    border: 2px solid var(--success);
-}
-
-.caja-total.activa {
-    background-color: var(--success-opacity-15);
-    border: 3px solid var(--primary);
-    transform: scale(1.02);
-}
-
-.caja-total.correcta {
-    background-color: var(--success);
-    color: white;
-    border: 2px solid var(--success);
-}
-
-.caja-total.erronea {
-    background-color: var(--danger);
-    color: white;
-    border: 2px solid var(--danger);
-}
-
-.caja-total.erronea.activa {
-    background-color: var(--danger-opacity-15);
-    color: var(--text-color);
-    border: 3px solid var(--danger);
-}
-
-.caja-total.correcta.activa {
-    background-color: var(--success-opacity-15);
-    /* Fondo verdoso transparente */
-    color: var(--text-color);
-    border: 3px solid var(--success);
+.container-recortados {
+    display: 'flex';
+    direction: 'column';
+    justify-content: center;
+    width: 100%;
+    gap: 1.5rem;
 }
 
 .recortados-grid {
@@ -403,36 +297,6 @@
     /* Rompe el numero si es un solo bloque largo */
     line-height: 1.1;
     text-align: center;
-}
-
-.celda-ancha.llena {
-    background-color: var(--success-opacity-15);
-    border: 2px solid var(--primary);
-}
-
-.celda-ancha.activa {
-    background-color: var(--success-opacity-15);
-    border: 3px solid var(--primary);
-    transform: scale(1.05);
-    z-index: 2;
-}
-
-.celda-ancha.correcta {
-    background-color: var(--success);
-    color: white;
-    border: 2px solid var(--success);
-}
-
-.celda-ancha.erronea {
-    background-color: var(--danger);
-    color: white;
-    border: 2px solid var(--danger);
-}
-
-.celda-ancha.erronea.activa {
-    background-color: var(--danger-opacity-15);
-    color: var(--text-color);
-    border: 3px solid var(--danger);
 }
 
 .linea-horizontal-grid {
@@ -525,44 +389,6 @@
     right: 8%;
 }
 
-.celosia-input:hover {
-    border-color: var(--primary);
-}
-
-.celosia-input.llena {
-    background-color: var(--success-opacity-15);
-    border-style: solid;
-    border-color: var(--success);
-}
-
-.celosia-input.activa {
-    background-color: var(--success-opacity-15);
-    border-style: solid;
-    border-color: var(--primary);
-    transform: scale(1.1);
-    z-index: 3;
-}
-
-.celosia-input.correcta {
-    background-color: var(--success);
-    color: white;
-    border-color: var(--success);
-    border-style: solid;
-}
-
-.celosia-input.erronea {
-    background-color: var(--danger);
-    color: white;
-    border-color: var(--danger);
-    border-style: solid;
-}
-
-.celosia-input.erronea.activa {
-    background-color: var(--danger-opacity-15);
-    color: var(--text-color);
-    border: 2px solid var(--danger);
-}
-
 /* Inputs de resultado perimetral */
 .celosia-resultado-input {
     width: clamp(40px, 8vw, 60px);
@@ -579,32 +405,125 @@
     color: var(--text-color);
 }
 
+/* --- ESTADOS GLOBALES DE INTERACCION: Agrupamos colores para celdas, celosia y recortados --- */
+
+/* ESTADO LLENA (Rellenada sin corregir) */
+.celda-digito.interactiva.llena,
+.caja-total.llena,
+.celda-ancha.llena,
+.celosia-input.llena,
 .celosia-resultado-input.llena {
     background-color: var(--success-opacity-15);
-    border: 2px solid var(--success);
+    border-color: var(--success);
+    border-style: solid;
 }
 
+/* ESTADO ACTIVA (Seleccionada) */
+.celda-digito.interactiva.activa,
+.caja-total.activa,
+.celda-ancha.activa,
+.celosia-input.activa,
 .celosia-resultado-input.activa {
     background-color: var(--success-opacity-15);
-    border: 2px solid var(--primary);
-    transform: scale(1.05);
+    border-color: var(--primary);
+    border-style: solid;
     z-index: 2;
 }
 
+.celda-digito.interactiva.activa,
+.celosia-input.activa {
+    transform: scale(1.1);
+}
+
+.caja-total.activa {
+    transform: scale(1.02);
+}
+
+.celda-ancha.activa,
+.celosia-resultado-input.activa {
+    transform: scale(1.05);
+}
+
+/* ESTADO CORRECTA */
+.celda-digito.interactiva.correcta,
+.caja-total.correcta,
+.celda-ancha.correcta,
+.celosia-input.correcta,
 .celosia-resultado-input.correcta {
     background-color: var(--success);
     color: white;
     border-color: var(--success);
+    border-style: solid;
 }
 
+/* ESTADO ERRONEA */
+.celda-digito.interactiva.erronea,
+.caja-total.erronea,
+.celda-ancha.erronea,
+.celosia-input.erronea,
 .celosia-resultado-input.erronea {
     background-color: var(--danger);
     color: white;
     border-color: var(--danger);
+    border-style: solid;
 }
 
+/* ESTADO ERRONEA + ACTIVA (Corrigiendo un fallo) */
+.celda-digito.interactiva.erronea.activa,
+.caja-total.erronea.activa,
+.celda-ancha.erronea.activa,
+.celosia-input.erronea.activa,
 .celosia-resultado-input.erronea.activa {
     background-color: var(--danger-opacity-15);
     color: var(--text-color);
-    border: 3px solid var(--danger);
+    border-color: var(--danger);
+}
+
+/* ESTADO CORRECTA + ACTIVA (Editando un acierto) */
+.celda-digito.interactiva.correcta.activa,
+.caja-total.correcta.activa,
+.celda-ancha.correcta.activa,
+.celosia-input.correcta.activa,
+.celosia-resultado-input.correcta.activa {
+    background-color: var(--success-opacity-15);
+    color: var(--text-color);
+    border-color: var(--success);
+}
+
+/*--------------------------------TABLET-(y en adelante)--------------------------------*/
+
+@media (min-width: 768px) {
+    .cards-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg);
+    }
+
+    .multiplicacion-layout-custom.modo-dificil .operacion-vertical {
+        gap: 1.25rem;
+    }
+}
+
+/*--------------------------------ESCRITORIO-(y en adelante)--------------------------------*/
+
+@media (min-width: 1024px) {
+    .panel-izquierdo {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+    }
+
+    .multiplicacion-layout-custom .actividad-zona-juego {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: nowrap !important;
+    }
+
+    .recortados-grid {
+        padding-top: 5vw;
+    }
+
 }

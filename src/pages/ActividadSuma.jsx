@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Icon } from '../shared/components/Icon';
-import { SwipePicker } from '../shared/components/SwipePicker';
-import { Header } from '../shared/components/Header';
-import { ActividadControles } from '../shared/components/ActividadControles';
+import { TEXTOS } from '../constants/textos';
 import { MiNumero } from '../shared/utils/MiNumero';
+import { SwipePicker } from '../shared/components/SwipePicker';
+import { ActividadLayout } from '../shared/components/ActividadLayout';
 import '../styles/ActividadOperaciones.css';
 
 const OPCIONES_DIGITOS = [' ', ...MiNumero.losDigitos];
@@ -56,6 +55,9 @@ export function ActividadSuma() {
 
     const [estadoRespuesta, setEstadoRespuesta] = useState('idle');
 
+    const [mostrarFeedback, setMostrarFeedback] = useState(false);
+    const [esCorrecto, setEsCorrecto] = useState(false);
+
     const cambiarDificultad = (e) => {
         const nuevoNivel = e.target.value;
         setDificultad(nuevoNivel);
@@ -85,14 +87,11 @@ export function ActividadSuma() {
 
         // Juntamos la respuesta y le quitamos ceros/espacios a la izquierda
         let respuestaStr = `${m}${c}${d}${u}`.trim().replace(/^0+/, '') || '0';
-        // TODO: Cambiar por modal propio
-        if (respuestaStr === ejercicio.solucionStr) {
-            setEstadoRespuesta('correct');
-            alert('¡Perfecto! Has acertado.');
-        } else {
-            setEstadoRespuesta('error');
-            alert('Ups, prueba otra vez.');
-        }
+
+        const acierto = respuestaStr === ejercicio.solucionStr;
+        setEstadoRespuesta(acierto ? 'correct' : 'error');
+        setEsCorrecto(acierto);
+        setMostrarFeedback(true);
     };
 
     const handlePickerChange = (setter) => (val) => {
@@ -109,21 +108,20 @@ export function ActividadSuma() {
     };
 
     return (
-        <div className="actividad-layout">
-            <Header
-                rutas={[
-                    { label: 'Actividad Operaciones', path: '/operaciones' },
-                    { label: 'Actividad suma' }
-                ]}
-                backPath="/operaciones"
-            />
-
-            <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={reiniciarJuego} onInfoClick={() => alert("Mostrando info...")} />
-
+        <ActividadLayout
+            rutas={[{ label: TEXTOS.titulos.operaciones, path: '/operaciones' }, { label: TEXTOS.titulos.suma }]}
+            backPath="/operaciones"
+            dificultad={dificultad}
+            onChangeDificultad={cambiarDificultad}
+            onReiniciar={reiniciarJuego}
+            textoInfo={TEXTOS.infoActividades.suma}
+            mostrarFeedback={mostrarFeedback}
+            esCorrecto={esCorrecto}
+            onCerrarFeedback={() => setMostrarFeedback(false)}
+        >
 
             <main className="actividad-zona-juego">
                 <div className={`operacion-vertical ${estadoRespuesta}`}>
-
                     {/* Primer Numero */}
                     <div className="fila-operacion">
                         <div className="celda-signo invisible">+</div>
@@ -154,15 +152,14 @@ export function ActividadSuma() {
                         <SwipePicker opciones={OPCIONES_DIGITOS} value={idxDecenas} onChange={handlePickerChange(setIdxDecenas)} />
                         <SwipePicker opciones={OPCIONES_DIGITOS} value={idxUnidades} onChange={handlePickerChange(setIdxUnidades)} />
                     </div>
-
                 </div>
             </main>
 
             <footer className="actividad-footer">
-                <button className="btn-corregir-full" onClick={validarEjercicio}>
-                    Corregir
+                <button className="btn-corregir-full hover-primary" onClick={validarEjercicio}>
+                    {TEXTOS.global.corregir}
                 </button>
             </footer>
-        </div>
+        </ActividadLayout>
     );
 }

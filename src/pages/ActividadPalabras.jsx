@@ -1,11 +1,7 @@
-// src/pages/ActividadPalabras.jsx
 import { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { Header } from '../shared/components/Header';
 import { ActividadControles } from '../shared/components/ActividadControles';
-import '../styles/ActividadPalabras.css';
 
 const OPCIONES_NIVELES = [
     { id: 0, from: 1, incr: 1, asc: true, label: "De ^ en ^ (Ascendente)", sec: "+ ^" },
