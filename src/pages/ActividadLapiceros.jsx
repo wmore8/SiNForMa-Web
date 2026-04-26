@@ -1,24 +1,25 @@
-// src/pages/ActividadLapiceros.jsx
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
-import { Header } from '../shared/components/Header';
-import { ActividadControles } from '../shared/components/ActividadControles';
+import { ActividadLayout } from '../shared/components/ActividadLayout';
+import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadLapiceros.css';
 
 export function ActividadLapiceros() {
     const [dificultad, setDificultad] = useState('0');
 
     // Lazy initialization: Calculamos los valores aleatorios desde el principio
-    //simulacion de aleatoriedad de Java a JS -> R.nextInt(512) o Math.pow(8,3) (es 3 elevado a 8 : 3^8)
+    // simulacion de aleatoriedad de Java a JS -> R.nextInt(512) o Math.pow(8,3) (es 3 elevado a 8 : 3^8)
     const [objetivo, setObjetivo] = useState(() => Math.floor(Math.random() * 513));
-    //posibilidad de desactivar las UNIDADES en un 50%
+    // posibilidad de desactivar las UNIDADES en un 50%
     const [unidadesHabilitadas, setUnidadesHabilitadas] = useState(() => Math.random() < 0.5);
     // Inicializamos los valores de los inputs
     const [cajas, setCajas] = useState(0);
     const [estuches, setEstuches] = useState(0);
     const [lapices, setLapices] = useState(0);
+    //Estados para los modales
+    const [mostrarFeedback, setMostrarFeedback] = useState(false);
+    const [esCorrecto, setEsCorrecto] = useState(false);
 
     const generarEjercicio = () => {
         // Simulacion de aleatoriedad de Java a JS -> R.nextInt(512) o Math.pow(8,3) (es 3 elevado a 8 : 3^8)
@@ -51,11 +52,10 @@ export function ActividadLapiceros() {
     const validarEjercicio = () => {
         const total = lapices + (estuches * 8) + (cajas * 64);
         const dif = total - objetivo;
-        const esCorrecto = (unidadesHabilitadas && dif === 0) ||
-            (!unidadesHabilitadas && dif >= 0 && dif <= 7);
+        const acierto = (unidadesHabilitadas && dif === 0) || (!unidadesHabilitadas && dif >= 0 && dif <= 7);
 
-        if (esCorrecto) alert("¡Perfecto! :D");
-        else alert("Prueba otra vez :(");
+        setEsCorrecto(acierto);
+        setMostrarFeedback(true);
     };
 
     const aRomesco = (numDecimal) => new MiNumero(numDecimal, 10).toString();
@@ -81,67 +81,79 @@ export function ActividadLapiceros() {
     };
 
     return (
-        <div className="actividad-layout">
-
-            <Header rutas={[{ label: 'Actividad Lapiceros', icon: 'icon-lapiz' }]} backPath="/" />
-
-            <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={generarEjercicio} onInfoClick={() => alert("Mostrando info...")} />
-
-            <div className="objetivo-container">
-                <div className="objetivo-numero">{aRomesco(objetivo)} lapiceros</div>
-            </div>
-
-            <main className="lapiceros-zona-juego">
-                <div className="lapiceros-lista">
-                    {/* UNIDADES: Lapiz*/}
-                    <div className={`lapicero-item ${!unidadesHabilitadas ? 'deshabilitado' : ''}`}>
-                        <div className="lapicero-info">
-                            {renderInfo('lapiz', 'Lápiz')}
-                        </div>
-                        <div className="lapicero-controles">
-                            <div className="valor-box">{aRomesco(lapices)}</div>
-                            <div className="botones-stack">
-                                <button onClick={delLapiz} disabled={!unidadesHabilitadas}>−</button>
-                                <button onClick={addLapiz} disabled={!unidadesHabilitadas}>+</button>
-                            </div>
+        <ActividadLayout
+            rutas={[{ label: TEXTOS.titulos.lapiceros, icon: 'icon-lapiz' }]}
+            backPath="/"
+            dificultad={dificultad}
+            onChangeDificultad={cambiarDificultad}
+            onReiniciar={generarEjercicio}
+            textoInfo={TEXTOS.infoActividades.lapiceros}
+            mostrarFeedback={mostrarFeedback}
+            esCorrecto={esCorrecto}
+            onCerrarFeedback={() => setMostrarFeedback(false)}
+            mensajeExito={TEXTOS.feedback.exitoLapiceros}
+            mensajeError={TEXTOS.feedback.errorLapiceros}
+        >
+            <div className="actividad-zona-juego">
+                <div className="lapiceros-contenedor-central">
+                    <div className="objetivo-container">
+                        <div className="objetivo-numero">
+                            {aRomesco(objetivo)} {TEXTOS.ui.lapiceros.objetivo}
                         </div>
                     </div>
 
-                    {/* DECENAS: Estuche */}
-                    <div className="lapicero-item">
-                        <div className="lapicero-info">
-                            {renderInfo('estuche', 'Estuche')}
-                        </div>
-                        <div className="lapicero-controles">
-                            <div className="valor-box">{aRomesco(estuches)}</div>
-                            <div className="botones-stack">
-                                <button onClick={delEstuche}>−</button>
-                                <button onClick={addEstuche}>+</button>
+                    <div className="lapiceros-lista">
+                        {/* UNIDADES: Lapiz*/}
+                        <div className={`lapicero-item ${!unidadesHabilitadas ? 'deshabilitado' : ''}`}>
+                            <div className="lapicero-info">
+                                {renderInfo('lapiz', TEXTOS.ui.lapiceros.lapiz)}
+                            </div>
+                            <div className="lapicero-controles">
+                                <div className="valor-box">{aRomesco(lapices)}</div>
+                                <div className="botones-stack">
+                                    <button onClick={delLapiz} disabled={!unidadesHabilitadas}>−</button>
+                                    <button onClick={addLapiz} disabled={!unidadesHabilitadas}>+</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* CENTENAS: Caja */}
-                    <div className="lapicero-item">
-                        <div className="lapicero-info">
-                            {renderInfo('caja', 'Caja')}
+                        {/* DECENAS: Estuche */}
+                        <div className="lapicero-item">
+                            <div className="lapicero-info">
+                                {renderInfo('estuche', TEXTOS.ui.lapiceros.estuche)}
+                            </div>
+                            <div className="lapicero-controles">
+                                <div className="valor-box">{aRomesco(estuches)}</div>
+                                <div className="botones-stack">
+                                    <button onClick={delEstuche}>−</button>
+                                    <button onClick={addEstuche}>+</button>
+                                </div>
+                            </div>
                         </div>
-                        <div className="lapicero-controles">
-                            <div className="valor-box">{aRomesco(cajas)}</div>
-                            <div className="botones-stack">
-                                <button onClick={delCaja}>−</button>
-                                <button onClick={addCaja}>+</button>
+
+                        {/* CENTENAS: Caja */}
+                        <div className="lapicero-item">
+                            <div className="lapicero-info">
+                                {renderInfo('caja', TEXTOS.ui.lapiceros.caja)}
+                            </div>
+                            <div className="lapicero-controles">
+                                <div className="valor-box">{aRomesco(cajas)}</div>
+                                <div className="botones-stack">
+                                    <button onClick={delCaja}>−</button>
+                                    <button onClick={addCaja}>+</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
 
-            <footer className="lapiceros-footer">
-                <button className="btn-primario btn-corregir-full" onClick={validarEjercicio}>
-                    Corregir
+            <div className="actividad-footer">
+                <button className="btn-corregir-full" onClick={validarEjercicio}>
+                    {TEXTOS.global.corregir}
                 </button>
-            </footer>
-        </div>
+            </div>
+            
+        </ActividadLayout>
     );
 }

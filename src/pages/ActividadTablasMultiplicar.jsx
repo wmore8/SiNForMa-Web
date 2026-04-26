@@ -104,6 +104,12 @@ export function ActividadTablasMultiplicar() {
     const [idxDecenas, setIdxDecenas] = useState(0);
     const [idxUnidades, setIdxUnidades] = useState(0);
 
+    // ESTADOS PARA MODALES MANUALES
+    const [mostrarInfo, setMostrarInfo] = useState(false);
+    const [mostrarFeedback, setMostrarFeedback] = useState(false);
+    const [esCorrecto, setEsCorrecto] = useState(false);
+    const [mensajeFeedback, setMensajeFeedback] = useState("");
+
     const cambiarDificultad = (e) => {
         const nuevoNivel = e.target.value;
         setDificultad(nuevoNivel);
@@ -134,69 +140,66 @@ export function ActividadTablasMultiplicar() {
     };
 
     const validarEjercicio = () => {
-       let hayErrores = false;
+        let hayErrores = false;
         let todasRellenas = true;
 
         const nuevoGrid = grid.map(casilla => {
             if (casilla.type !== TIPO_CASILLA.ADIVINABLE) return casilla;
-            
+
             if (casilla.currentText === '?') {
                 todasRellenas = false;
                 return casilla;
             }
-            
+
             const isCorrect = casilla.currentText === casilla.realText;
             if (!isCorrect) hayErrores = true;
-            
+
             return { ...casilla, status: isCorrect ? ESTADO_CASILLA.CORRECTO : ESTADO_CASILLA.FALLO };
         });
 
         setGrid(nuevoGrid);
 
         if (!todasRellenas) {
-            alert('Aún quedan interrogantes por resolver.');
+            setEsCorrecto(false);
+            setMensajeFeedback('Aún quedan interrogantes por resolver.');
+            setMostrarFeedback(true);
         } else if (hayErrores) {
-            alert('Prueba otra vez, hay resultados incorrectos.');
+            setEsCorrecto(false);
+            setMensajeFeedback('Prueba otra vez, hay resultados incorrectos.');
+            setMostrarFeedback(true);
         } else {
-            alert('¡Perfecto! Has completado la tabla.');
+            setEsCorrecto(true);
+            setMensajeFeedback('¡Perfecto! Has completado la tabla.');
+            setMostrarFeedback(true);
         }
     };
 
     return (
-        <div className="actividad-layout tablas-layout-custom">
-
-            <div className="panel-cuadricula">
-                <div className="tablas-grid-container tablas-multiplicar">
-                    <TableroGrid grid={grid} onCellClick={handleCellClick} />
+        <>
+            <div className="actividad-layout tablas-layout-custom">
+                <div className="panel-cuadricula">
+                    <div className="tablas-grid-container tablas-multiplicar">
+                        <TableroGrid grid={grid} onCellClick={handleCellClick} />
                 </div>
-            </div>
 
-            <div className="panel-derecho">
-                <Header rutas={[
-                    { label: 'Actividad operaciones', path: '/operaciones' },
-                    { label: 'Multiplicaciones', path: '/operaciones/multiplicaciones' },
-                    { label: 'Tablas de multiplicar' }]}
-                    backPath="/operaciones/multiplicaciones" />
-
-                <ActividadControles
-                    dificultad={dificultad}
-                    onChange={cambiarDificultad}
                     onReiniciar={reiniciarJuego}
                     onInfoClick={() => alert("Resuelve las multiplicaciones. Elige el número en la ruleta y toca la casilla con el '?'.")}
-                />
-
-                <div className="input-panel-tablas">
-                    <div className="pickers-container">
                         <SwipePicker opciones={OPCIONES_DECENAS} value={idxDecenas} onChange={setIdxDecenas} />
-                        <SwipePicker opciones={OPCIONES_UNIDADES} value={idxUnidades} onChange={setIdxUnidades} />
-                    </div>
-                    <div className="actividad-footer">
-                        <button className="btn-corregir-full hover-primary" onClick={validarEjercicio}>
-                            Corregir
-                        </button>
+                <div className="panel-derecho">
+                    <Header rutas={[
+                        { label: 'Actividad operaciones', path: '/operaciones' },
+                        { label: 'Multiplicaciones', path: '/operaciones/multiplicaciones' },
+                        { label: 'Tablas de multiplicar' }]}
+
+                        onInfoClick={() => setMostrarInfo(true)}
+
+                        <div className="pickers-container">
+                            <SwipePicker opciones={OPCIONES_UNIDADES} value={idxUnidades} onChange={setIdxUnidades} />
                     </div>
                 </div>
             </div>
-        </div>
+            />
+
+            <ModalFeedback
     );
 }

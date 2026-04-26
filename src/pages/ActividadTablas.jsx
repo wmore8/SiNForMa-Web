@@ -8,6 +8,9 @@ import { SpinnerCustom } from '../shared/components/SpinnerCustom';
 import { SwipePicker } from '../shared/components/SwipePicker';
 import { Header } from '../shared/components/Header';
 import { ActividadControles } from '../shared/components/ActividadControles';
+import { ModalInfo } from '../shared/components/ModalInfo';
+import { ModalFeedback } from '../shared/components/ModalFeedback';
+import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadTablas.css';
 
 //Constantes de estado
@@ -136,6 +139,12 @@ export function ActividadTablas() {
   // Inicializamos el estado usando la funcion pura
   const [grid, setGrid] = useState(() => crearNuevoTablero('0'));
 
+  // Estados para controlar los modales manualmente
+  const [mostrarInfo, setMostrarInfo] = useState(false);
+  const [mostrarFeedback, setMostrarFeedback] = useState(false);
+  const [esCorrecto, setEsCorrecto] = useState(false);
+  const [mensajeFeedback, setMensajeFeedback] = useState("");
+
   // Estados para los SwipePickers
   const [idxDecenas, setIdxDecenas] = useState(0);
   const [idxUnidades, setIdxUnidades] = useState(0);
@@ -170,14 +179,14 @@ export function ActividadTablas() {
     }
   };
 
-const validarEjercicio = () => {
+  const validarEjercicio = () => {
     let hayErrores = false;
     let todasRellenas = true;
 
     const nuevoGrid = grid.map(casilla => {
       // Ignoramos las que no son para adivinar
       if (casilla.type !== TIPO_CASILLA.ADIVINABLE) return casilla;
-      
+
       // Si encontramos un '?', es que falta por rellenar
       if (casilla.currentText === '?') {
         todasRellenas = false;
@@ -188,59 +197,76 @@ const validarEjercicio = () => {
       const esCorrecta = casilla.currentText === casilla.realText;
       if (!esCorrecta) hayErrores = true;
 
-      return { 
-        ...casilla, 
-        status: esCorrecta ? ESTADO_CASILLA.CORRECTO : ESTADO_CASILLA.FALLO 
+      return {
+        ...casilla,
+        status: esCorrecta ? ESTADO_CASILLA.CORRECTO : ESTADO_CASILLA.FALLO
       };
     });
 
     setGrid(nuevoGrid);
 
     if (!todasRellenas) {
-        alert('Completa todas las casillas con "?"');
+      setEsCorrecto(false);
+      setMensajeFeedback('Completa todas las casillas con "?"');
+      setMostrarFeedback(true);
     } else if (hayErrores) {
-        alert('¡Vaya! Revisa las casillas rojas.');
+      setEsCorrecto(false);
+      setMensajeFeedback('¡Vaya! Revisa las casillas rojas.');
+      setMostrarFeedback(true);
     } else {
-        alert('¡Perfecto! Todo está correcto.');
+      setEsCorrecto(true);
+      setMensajeFeedback('¡Perfecto! Todo está correcto.');
+      setMostrarFeedback(true);
     }
   };
 
   return (
-    <div className="actividad-layout tablas-layout-custom">
-      {/* Contenedor de la izquierda (Cuadrícula) */}
-      <div className="panel-cuadricula">
-        <div className="tablas-grid-container">
-          <TableroGrid grid={grid} onCellClick={handleCellClick} />
+    <>
+      <div className="actividad-layout tablas-layout-custom">
+        {/* Contenedor de la izquierda (Cuadrícula) */}
+        <div className="panel-cuadricula">
+          <div className="tablas-grid-container">
+            <TableroGrid grid={grid} onCellClick={handleCellClick} />
+          </div>
+        </div>
+
+        {/* Contenedor de la derecha (Header y Controles) */}
+        <div className="panel-derecho">
+          <Header
+            rutas={[{ label: TEXTOS.titulos.tablas }]} backPath="/" />
+
+          <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={reiniciarJuego} onInfoClick={() => setMostrarInfo(true)} />
+
+          <div className="input-panel-tablas">
+            <div className="pickers-container">
+              <SwipePicker
+                opciones={OPCIONES_DECENAS}
+                value={idxDecenas}
+                onChange={setIdxDecenas}
+              />
+              <SwipePicker
+                opciones={OPCIONES_UNIDADES}
+                value={idxUnidades}
+                onChange={setIdxUnidades}
+              />
+            </div>
+            <div className="actividad-footer">
+              <button className="btn-corregir-full" onClick={validarEjercicio}>
+                {TEXTOS.global.corregir}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Contenedor de la derecha (Header y Controles) */}
-      <div className="panel-derecho">
-        <Header
-          rutas={[{ label: 'Actividad Tablas' }]} backPath="/" />
+      <ModalInfo isOpen={mostrarInfo} onClose={() => setMostrarInfo(false)} mensaje={TEXTOS.infoActividades.tablas} />
 
-        <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={reiniciarJuego} onInfoClick={() => alert("Mostrando info...")} />
-
-        <div className="input-panel-tablas">
-          <div className="pickers-container">
-            <SwipePicker
-              opciones={OPCIONES_DECENAS}
-              value={idxDecenas}
-              onChange={setIdxDecenas}
-            />
-            <SwipePicker
-              opciones={OPCIONES_UNIDADES}
-              value={idxUnidades}
-              onChange={setIdxUnidades}
-            />
-          </div>
-          <div className="actividad-footer">
-            <button className="btn-corregir-full" onClick={validarEjercicio}>
-              Corregir
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+      <ModalFeedback
+        isOpen={mostrarFeedback}
+        onClose={() => setMostrarFeedback(false)}
+        esCorrecto={esCorrecto}
+        mensaje={mensajeFeedback}
+      />
+    </>
   );
 }

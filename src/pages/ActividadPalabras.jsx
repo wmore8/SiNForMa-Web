@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { Header } from '../shared/components/Header';
-import { ActividadControles } from '../shared/components/ActividadControles';
+import { ActividadLayout } from '../shared/components/ActividadLayout';
+import { TEXTOS } from '../constants/textos';
 
 const OPCIONES_NIVELES = [
     { id: 0, from: 1, incr: 1, asc: true, label: "De ^ en ^ (Ascendente)", sec: "+ ^" },
@@ -19,6 +20,11 @@ const OPCIONES_NIVELES = [
 export function ActividadPalabras() {
     const [dificultad, setDificultad] = useState(0);
     const inputRef = useRef(null);
+
+    // Estados para los modales
+    const [mostrarFeedback, setMostrarFeedback] = useState(false);
+    const [esCorrecto, setEsCorrecto] = useState(false);
+    const [mensajeFeedback, setMensajeFeedback] = useState("");
 
     const generarSecuencia = (idOpcion) => {
         const opc = OPCIONES_NIVELES[idOpcion];
@@ -65,10 +71,14 @@ export function ActividadPalabras() {
 
         if (palabraUsuario === palabraCorrecta) {
             if (ejercicio.curNum === ejercicio.toNum) { // Si termina la secuencia mostramos el mensaje
-                alert("¡Secuencia Completada! :D");
+                setEsCorrecto(true);
+                setMensajeFeedback(TEXTOS.feedback.exitoSecuenciaFin);
+                setMostrarFeedback(true);
                 setEjercicio(prev => ({ ...prev, finalizado: true, prevNum: prev.curNum }));
             } else { // Si aun quedan numeros, avisamos y seguimos avanzando
-                alert("¡Correcto! escribe el siguiente número.");
+                setEsCorrecto(true);
+                setMensajeFeedback(TEXTOS.feedback.exitoSecuenciaPal);
+                setMostrarFeedback(true);
 
                 setEjercicio(prev => ({
                     ...prev,
@@ -76,27 +86,44 @@ export function ActividadPalabras() {
                     curNum: prev.asc ? prev.curNum + prev.incr : prev.curNum - prev.incr
                 }));
                 setInputUsuario("");
-                inputRef.current.focus();
             }
         } else { //si se equivoca avisamos
-            alert("Prueba otra vez :(");
+            setEsCorrecto(false);
+            setMensajeFeedback(TEXTOS.feedback.errorSecuencia);
+            setMostrarFeedback(true);
+        }
+    };
+
+    // Al cerrar el modal, devolvemos el foco al input 
+    const handleCerrarFeedback = () => {
+        setMostrarFeedback(false);
+        if (!ejercicio.finalizado && inputRef.current) {
+            setTimeout(() => inputRef.current.focus(), 100);
         }
     };
 
     return (
-        <div className="actividad-layout">
-
-            <Header rutas={[{ label: `Actividad Palabras (${OPCIONES_NIVELES[dificultad].sec})` }]} backPath="/" />
-
-            <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={() => reiniciarJuego(dificultad)} opciones={OPCIONES_NIVELES} />
-
+        <ActividadLayout
+            rutas={[{ label: `${TEXTOS.titulos.palabras} (${OPCIONES_NIVELES[dificultad].sec})` }]}
+            backPath="/"
+            dificultad={dificultad}
+            opcionesDificultad={OPCIONES_NIVELES}
+            onChangeDificultad={cambiarDificultad}
+            onReiniciar={() => reiniciarJuego(dificultad)}
+            textoInfo={TEXTOS.infoActividades.secuenciasPal}
+            mostrarFeedback={mostrarFeedback}
+            esCorrecto={esCorrecto}
+            onCerrarFeedback={handleCerrarFeedback}
+            mensajeExito={mensajeFeedback}
+            mensajeError={mensajeFeedback}
+        >
             <main className="actividad-zona-juego">
                 <div className="info-secuencia">
-                    Escribe las palabras desde <strong>{new MiNumero(ejercicio.fromNum, 10).toString()}</strong> hasta <strong>{new MiNumero(ejercicio.toNum, 10).toString()}</strong>
+                    {TEXTOS.ui.secuencias.palabrasDesde} <strong>{new MiNumero(ejercicio.fromNum, 10).toString()}</strong> {TEXTOS.ui.secuencias.hasta} <strong>{new MiNumero(ejercicio.toNum, 10).toString()}</strong>
                 </div>
 
                 <div className="pantalla-objetivo">
-                    <p className="etiqueta">Última palabra:</p>
+                    <p className="etiqueta">{TEXTOS.ui.secuencias.ultimaPalabra}</p>
                     <div className="simbolo-actual">{new MiNumero(ejercicio.prevNum, 10).toString()}</div>
                 </div>
 
@@ -105,7 +132,7 @@ export function ActividadPalabras() {
                         ref={inputRef}
                         type="text"
                         className="input-palabra"
-                        placeholder="Escribe la palabra..."
+                        placeholder={TEXTOS.ui.secuencias.placeholderPalabra}
                         value={inputUsuario}
                         onChange={(e) => setInputUsuario(e.target.value)}
                         disabled={ejercicio.finalizado}
@@ -116,9 +143,9 @@ export function ActividadPalabras() {
 
             <footer className="actividad-footer">
                 <button className="btn-primario btn-corregir-full" onClick={validarPaso} disabled={ejercicio.finalizado || !inputUsuario}>
-                    {ejercicio.finalizado ? "¡Completado!" : "Siguiente"}
+                    {ejercicio.finalizado ? TEXTOS.global.completado : TEXTOS.global.siguiente}
                 </button>
             </footer>
-        </div>
+        </ActividadLayout>
     );
 }

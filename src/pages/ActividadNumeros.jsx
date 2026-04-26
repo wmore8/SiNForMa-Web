@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { SwipePicker } from '../shared/components/SwipePicker';
-import { Header } from '../shared/components/Header';
-import { ActividadControles } from '../shared/components/ActividadControles';
+import { ActividadLayout } from '../shared/components/ActividadLayout';
+import { TEXTOS } from '../constants/textos';
 
 const OPCIONES_NIVELES = [
     { id: 0, from: 1, incr: 1, asc: true, label: "De ro en ro (Ascendente)", sec: "+ ro" },
@@ -25,6 +25,11 @@ const OPCIONES_CENTENAS = [' ', ...DIGITOS.slice(1)]; // Blanco + 1 a 7
 
 export function ActividadNumeros() {
     const [dificultad, setDificultad] = useState(0);
+
+    // Estados para los modales
+    const [mostrarFeedback, setMostrarFeedback] = useState(false);
+    const [esCorrecto, setEsCorrecto] = useState(false);
+    const [mensajeFeedback, setMensajeFeedback] = useState("");
 
     const generarSecuencia = (idOpcion) => {
         const opc = OPCIONES_NIVELES[idOpcion];
@@ -80,44 +85,57 @@ export function ActividadNumeros() {
         const strUsuario = `${charCentena}${charDecena}${charUnidad}`;
         const strCorrecto = new MiNumero(ejercicio.curNum, 10).toString();
 
-        if (strUsuario === strCorrecto) { // Si termina la secuencia mostramos el mensaje
+        if (strUsuario === strCorrecto) {  // Si termina la secuencia mostramos el mensaje
             if (ejercicio.curNum === ejercicio.toNum) {
-                alert("¡Secuencia Completada! :D");
+                setEsCorrecto(true);
+                setMensajeFeedback(TEXTOS.feedback.exitoSecuenciaFin);
+                setMostrarFeedback(true);
                 setEjercicio(prev => ({ ...prev, finalizado: true, prevNum: prev.curNum }));
             } else { // Si aun quedan numeros, avisamos y seguimos avanzando
-                alert("¡Correcto! Introduce el siguiente número.");
+                setEsCorrecto(true);
+                setMensajeFeedback(TEXTOS.feedback.exitoSecuenciaNum);
+                setMostrarFeedback(true);
 
                 setEjercicio(prev => ({
                     ...prev,
                     prevNum: prev.curNum,
                     curNum: prev.asc ? prev.curNum + prev.incr : prev.curNum - prev.incr
                 }));
-                // resetPickers();
             }
         } else { //si se equivoca avisamos
-            alert("Prueba otra vez :(");
+            setEsCorrecto(false);
+            setMensajeFeedback(TEXTOS.feedback.errorSecuencia);
+            setMostrarFeedback(true);
         }
     };
 
     return (
-        <div className="actividad-layout">
-            <Header rutas={[{ label: `Actividad Números (${OPCIONES_NIVELES[dificultad].sec})` }]} backPath="/" />
-
-            <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={() => reiniciarJuego(dificultad)} opciones={OPCIONES_NIVELES} />
-
+        <ActividadLayout
+            rutas={[{ label: `${TEXTOS.titulos.numeros} (${OPCIONES_NIVELES[dificultad].sec})` }]}
+            backPath="/"
+            dificultad={dificultad}
+            opcionesDificultad={OPCIONES_NIVELES}
+            onChangeDificultad={cambiarDificultad}
+            onReiniciar={() => reiniciarJuego(dificultad)}
+            textoInfo={TEXTOS.infoActividades.secuenciasNum}
+            mostrarFeedback={mostrarFeedback}
+            esCorrecto={esCorrecto}
+            onCerrarFeedback={() => setMostrarFeedback(false)}
+            mensajeExito={mensajeFeedback}
+            mensajeError={mensajeFeedback}
+        >
             <main className="actividad-zona-juego">
                 <div className="info-secuencia">
-                    Números desde <strong>{new MiNumero(ejercicio.fromNum, 10).toLongString()}</strong> hasta <strong>{new MiNumero(ejercicio.toNum, 10).toLongString()}</strong>
+                    {TEXTOS.ui.secuencias.numerosDesde} <strong>{new MiNumero(ejercicio.fromNum, 10).toLongString()}</strong> {TEXTOS.ui.secuencias.hasta} <strong>{new MiNumero(ejercicio.toNum, 10).toLongString()}</strong>
                 </div>
 
                 <div className="pantalla-objetivo">
-                    <p className="etiqueta">Último número:</p>
+                    <p className="etiqueta">{TEXTOS.ui.secuencias.ultimoNumero}</p>
                     <div className="palabra-actual">
                         {new MiNumero(ejercicio.prevNum, 10).toLongString()}
                     </div>
                 </div>
 
-                {/* CONTENEDOR DE PICKERS MODULARIZADOS */}
                 <div className="pickers-container">
                     <SwipePicker
                         opciones={OPCIONES_CENTENAS}
@@ -143,9 +161,9 @@ export function ActividadNumeros() {
                     onClick={validarPaso}
                     disabled={ejercicio.finalizado}
                 >
-                    {ejercicio.finalizado ? "¡Completado!" : "Siguiente"}
+                    {ejercicio.finalizado ? TEXTOS.global.completado : TEXTOS.global.siguiente}
                 </button>
             </footer>
-        </div>
+        </ActividadLayout>
     );
 }
