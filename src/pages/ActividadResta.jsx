@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Icon } from '../shared/components/Icon';
 import { SwipePicker } from '../shared/components/SwipePicker';
-import { Header } from '../shared/components/Header';
 import { MiNumero } from '../shared/utils/MiNumero';
-import { ActividadControles } from '../shared/components/ActividadControles';
+import { ActividadLayout } from '../shared/components/ActividadLayout';
+import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadOperaciones.css';
 
 const OPCIONES_DIGITOS = [' ', ...MiNumero.losDigitos];
@@ -57,8 +56,12 @@ export function ActividadResta() {
     const [idxCentenas, setIdxCentenas] = useState(0);
     const [idxDecenas, setIdxDecenas] = useState(0);
     const [idxUnidades, setIdxUnidades] = useState(0);
-
+    // Estado visual para el CSS (borde de la caja)
     const [estadoRespuesta, setEstadoRespuesta] = useState('idle');
+
+    // Estados para los modales
+    const [mostrarFeedback, setMostrarFeedback] = useState(false);
+    const [esCorrecto, setEsCorrecto] = useState(false);
 
     const cambiarDificultad = (e) => {
         const nuevoNivel = e.target.value;
@@ -99,11 +102,12 @@ export function ActividadResta() {
 
         if ((numeroCorrecto && signoCorrecto) || esCero) {
             setEstadoRespuesta('correct');
-            alert('¡Perfecto! Has acertado.');
+            setEsCorrecto(true);
         } else {
             setEstadoRespuesta('error');
-            alert('Ups, prueba otra vez.');
+            setEsCorrecto(false);
         }
+        setMostrarFeedback(true);
     };
 
     const handlePickerChange = (setter) => (val) => {
@@ -119,25 +123,29 @@ export function ActividadResta() {
     };
 
     return (
-        <div className="actividad-layout">
-            <Header
-                rutas={[
-                    { label: 'Actividad peraciones', path: '/operaciones', icon: 'icon-operaciones' },
-                    { label: 'Actividad resta' }
-                ]}
-                backPath="/operaciones"
-            />
 
-            <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={reiniciarJuego} onInfoClick={() => alert("Mostrando info...")} />
-
+        <ActividadLayout
+            rutas={[
+                { label: TEXTOS.titulos.operaciones, path: '/operaciones' },
+                { label: TEXTOS.titulos.resta }
+            ]}
+            backPath="/operaciones"
+            dificultad={dificultad}
+            onChangeDificultad={cambiarDificultad}
+            onReiniciar={reiniciarJuego}
+            textoInfo={TEXTOS.infoActividades.resta}
+            mostrarFeedback={mostrarFeedback}
+            esCorrecto={esCorrecto}
+            onCerrarFeedback={() => setMostrarFeedback(false)}
+        >
             <main className="actividad-zona-juego">
                 <div className={`operacion-vertical ${estadoRespuesta}`}>
 
                     {/* Primer Numero (Minuendo) */}
                     <div className="fila-operacion">
                         <div className="celda-signo invisible">-</div>
-                        {/* Espacio extra para alinear con el Signo del Picker en el nivel dificil*/}
                         {dificultad === '2' && <div className="celda-digito"></div>}
+                        {/* Espacio extra para alinear con el Signo del Picker en el nivel dificil*/}
                         {getDigits(ejercicio.num1Str, dificultad).map((char, index) => (
                             <div key={`n1-${index}`} className="celda-digito">
                                 {char !== ' ' ? new MiNumero(parseInt(char, 10)).toString() : ''}
@@ -147,7 +155,7 @@ export function ActividadResta() {
 
                     {/* Segundo Numero (Sustraendo) */}
                     <div className="fila-operacion">
-                        <div className="celda-signo">−</div> {/* Símbolo cambiado a Resta */}
+                        <div className="celda-signo">−</div>
                         {dificultad === '2' && <div className="celda-digito"></div>}
                         {getDigits(ejercicio.num2Str, dificultad).map((char, index) => (
                             <div key={`n2-${index}`} className="celda-digito">
@@ -172,9 +180,9 @@ export function ActividadResta() {
 
             <footer className="actividad-footer">
                 <button className="btn-corregir-full" onClick={validarEjercicio}>
-                    Corregir
+                    {TEXTOS.global.corregir}
                 </button>
             </footer>
-        </div>
+        </ActividadLayout>
     );
 }

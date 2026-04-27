@@ -1,10 +1,10 @@
 // src/pages/ActividadMultiplicacionClasica.jsx
 import { useState } from 'react';
-import { ActividadControles } from '../shared/components/ActividadControles';
 import { SwipePicker } from '../shared/components/SwipePicker';
-import { Header } from '../shared/components/Header';
 import { TecladoBase8 } from '../shared/components/TecladoBase8';
 import { MiNumero } from '../shared/utils/MiNumero';
+import { ActividadLayout } from '../shared/components/ActividadLayout';
+import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadOperaciones.css';
 
 const OPCIONES_DIGITOS = [' ', ...MiNumero.losDigitos];
@@ -72,6 +72,12 @@ export function ActividadMultiplicacionClasica() {
     const [feedbackFinal, setFeedbackFinal] = useState([]);
 
     const [estadoRespuesta, setEstadoRespuesta] = useState('idle');
+
+    // Estados para los modales
+    const [mostrarFeedback, setMostrarFeedback] = useState(false);
+    const [esCorrecto, setEsCorrecto] = useState(false);
+    const [mensajeExito, setMensajeExito] = useState(TEXTOS.feedback.exitoGenerico);
+    const [mensajeError, setMensajeError] = useState(TEXTOS.feedback.errorGenerico);
 
     // --- FUNCIONES COMUNES ---
     const reiniciarTodo = (nuevoNivel = dificultad) => {
@@ -172,9 +178,13 @@ export function ActividadMultiplicacionClasica() {
 
             const respStr = `${m}${c}${d}${u}`.trim().replace(/^0+/, '') || '0';
             if (respStr === ejercicio.solucionStr) {
-                setEstadoRespuesta('correct'); alert('¡Perfecto! Has acertado.');
+                setEstadoRespuesta('correct');
+                setEsCorrecto(true);
+                setMensajeExito(TEXTOS.feedback.exitoGenerico);
             } else {
-                setEstadoRespuesta('error'); alert('Ups, prueba otra vez.');
+                setEstadoRespuesta('error');
+                setEsCorrecto(false);
+                setMensajeError(TEXTOS.feedback.errorGenerico);
             }
         } else {
             // Validacion Nivel Dificil (Celda por Celda)
@@ -208,11 +218,16 @@ export function ActividadMultiplicacionClasica() {
             setCeldaActiva(null); // Quitamos la seleccion para ver bien los colores
 
             if (todoCorrecto) {
-                setEstadoRespuesta('correct'); alert('¡Magnífico! Has completado la multiplicación.');
+                setEstadoRespuesta('correct');
+                setEsCorrecto(true);
+                setMensajeExito(TEXTOS.feedback.exitoMultiplicacionDif);
             } else {
-                setEstadoRespuesta('error'); alert('Hay algunas casillas rojas. Revísalas.');
+                setEstadoRespuesta('error');
+                setEsCorrecto(false);
+                setMensajeError(TEXTOS.feedback.errorMultiplicacionDif);
             }
         }
+        setMostrarFeedback(true);
     };
 
     // Helper visual para Nivel 0 y 1
@@ -223,18 +238,25 @@ export function ActividadMultiplicacionClasica() {
     };
 
     return (
-        <div className={`actividad-layout multiplicacion-layout-custom ${dificultad === '2' ? 'modo-dificil' : ''}`}>
-            <Header rutas={[
-                { label: 'Actividad operaciones', path: '/operaciones' },
-                { label: 'Multiplicaciones', path: '/operaciones/multiplicaciones' },
-                { label: 'Producto clásico' }]}
-                backPath="/operaciones/multiplicaciones" />
 
-            <ActividadControles
-                dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={() => reiniciarTodo(dificultad)}
-                onInfoClick={() => alert("Nivel Dificil: Toca las casillas vacías y usa el teclado numérico de abajo.")}
-            />
-
+        <ActividadLayout
+            rutas={[
+                { label: TEXTOS.titulos.operaciones, path: '/operaciones' },
+                { label: TEXTOS.titulos.multiplicaciones, path: '/operaciones/multiplicaciones' },
+                { label: TEXTOS.titulos.productoClasico }
+            ]}
+            backPath="/operaciones/multiplicaciones"
+            dificultad={dificultad}
+            onChangeDificultad={cambiarDificultad}
+            onReiniciar={() => reiniciarTodo(dificultad)}
+            textoInfo={TEXTOS.infoActividades.productoClasico}
+            mostrarFeedback={mostrarFeedback}
+            esCorrecto={esCorrecto}
+            onCerrarFeedback={() => setMostrarFeedback(false)}
+            mensajeExito={mensajeExito}
+            mensajeError={mensajeError}
+            className={`multiplicacion-layout-custom ${dificultad === '2' ? 'modo-dificil' : ''}`}
+        >
             <main className="actividad-zona-juego">
                 <div className={`operacion-vertical ${estadoRespuesta}`}>
 
@@ -264,10 +286,11 @@ export function ActividadMultiplicacionClasica() {
                         </>
                     ) : (
                         <>
-                            {/* LAYOUT DIFÍCIL (Cuadricula Interactiva) */}
+                            {/* LAYOUT DIFICIL (Cuadricula Interactiva) */}
                             <div className="fila-operacion">
                                 <div className="celda-signo invisible"></div>
                                 {/* Desplazamos 3 casillas para alinear con la solucion final de 6 cifras */}
+
                                 <div className="celda-invisible"></div><div className="celda-invisible"></div><div className="celda-invisible"></div>
                                 {ejercicio.num1Str.padStart(3, ' ').split('').map((c, i) => (
                                     <div key={`h1-${i}`} className="celda-digito">{c !== ' ' ? new MiNumero(parseInt(c, 10)).toString() : ''}</div>
@@ -290,7 +313,6 @@ export function ActividadMultiplicacionClasica() {
                                 <div className="celda-invisible"></div><div className="celda-invisible"></div>
                                 {celdasPasos[0].map((_, col) => renderCelda('paso', 0, col))}
                             </div>
-
                             {/* Paso 1 (Desplazado 1 hueco a la izquierda) */}
                             <div className="fila-operacion">
                                 <div className="celda-signo invisible"></div>
@@ -298,8 +320,8 @@ export function ActividadMultiplicacionClasica() {
                                 {celdasPasos[1].map((_, col) => renderCelda('paso', 1, col))}
                                 <div className="celda-invisible"></div>
                             </div>
-
                             {/* Paso 2 (Desplazado 2 huecos a la izquierda) */}
+
                             <div className="fila-operacion">
                                 <div className="celda-signo invisible"></div>
                                 {celdasPasos[2].map((_, col) => renderCelda('paso', 2, col))}
@@ -307,8 +329,8 @@ export function ActividadMultiplicacionClasica() {
                             </div>
 
                             <div className="linea-separadora"></div>
-
                             {/* RESULTADO FINAL (6 cifras) */}
+
                             <div className="fila-operacion">
                                 <div className="celda-signo invisible"></div>
                                 {celdasFinal.map((_, col) => renderCelda('final', 0, col))}
@@ -321,7 +343,7 @@ export function ActividadMultiplicacionClasica() {
                     <div className="panel-derecho-dificil">
                         <TecladoBase8 onTeclaClick={handleTeclaClick} />
                         <button className="btn-corregir-full hover-primary" onClick={validarEjercicio}>
-                            Corregir
+                            {TEXTOS.global.corregir}
                         </button>
                     </div>
                 )}
@@ -329,10 +351,10 @@ export function ActividadMultiplicacionClasica() {
             {dificultad !== '2' && (
                 <footer className="actividad-footer">
                     <button className="btn-corregir-full hover-primary" onClick={validarEjercicio}>
-                        Corregir
+                        {TEXTOS.global.corregir}
                     </button>
                 </footer>
             )}
-        </div>
+        </ActividadLayout>
     );
 }

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { ActividadControles } from '../shared/components/ActividadControles';
-import { Header } from '../shared/components/Header';
 import { TecladoBase8 } from '../shared/components/TecladoBase8';
 import { MiNumero } from '../shared/utils/MiNumero';
+import { ActividadLayout } from '../shared/components/ActividadLayout';
+import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadOperaciones.css';
 
 const generarRecortados = () => {
@@ -58,6 +58,10 @@ export function ActividadRecortados() {
     const [feedback, setFeedback] = useState(celdasVacias);
 
     const [celdaActiva, setCeldaActiva] = useState(null);
+
+    // Estados para los modales
+    const [mostrarFeedback, setMostrarFeedback] = useState(false);
+    const [esCorrecto, setEsCorrecto] = useState(false);
 
     const reiniciarTodo = () => {
         setEjercicio(generarRecortados());
@@ -139,10 +143,11 @@ export function ActividadRecortados() {
         setCeldaActiva(null);
 
         if (todoCorrecto) {
-            alert('¡Impresionante! Has dominado los Recortados.');
+            setEsCorrecto(true);
         } else {
-            alert('Hay casillas rojas. Fíjate bien en la tabla de multiplicar.');
+            setEsCorrecto(false);
         }
+        setMostrarFeedback(true);
     };
 
     const valTotal = celdas['solTotal'];
@@ -151,21 +156,26 @@ export function ActividadRecortados() {
     const llenaTotal = (valTotal !== '' && feedTotal === '') ? 'llena' : '';
 
     return (
-        <div className="actividad-layout multiplicacion-layout-custom modo-dificil">
-            <Header rutas={[
-                { label: 'Actividad operaciones', path: '/operaciones' },
-                { label: 'Multiplicaciones', path: '/operaciones/multiplicaciones' },
-                { label: 'Recortados' }]}
-                backPath="/operaciones/multiplicaciones" />
 
-            <ActividadControles
-                dificultad={0}
-                opciones={[{ id: 0, label: "Nivel Único" }]}
-                onChange={() => { }}
-                onReiniciar={reiniciarTodo}
-                onInfoClick={() => alert("Multiplica el número de la izquierda por los de arriba y pon el resultado en las casillas.")}
-            />
-
+        <ActividadLayout
+            rutas={[
+                { label: TEXTOS.titulos.operaciones, path: '/operaciones' },
+                { label: TEXTOS.titulos.multiplicaciones, path: '/operaciones/multiplicaciones' },
+                { label: TEXTOS.titulos.recortados }
+            ]}
+            backPath="/operaciones/multiplicaciones"
+            dificultad={0}
+            opcionesDificultad={[{ id: 0, label: "Nivel Único" }]}
+            onChangeDificultad={() => { }}
+            onReiniciar={reiniciarTodo}
+            textoInfo={TEXTOS.infoActividades.recortados}
+            mostrarFeedback={mostrarFeedback}
+            esCorrecto={esCorrecto}
+            onCerrarFeedback={() => setMostrarFeedback(false)}
+            mensajeExito={TEXTOS.feedback.exitoRecortados}
+            mensajeError={TEXTOS.feedback.errorRecortados}
+            className="multiplicacion-layout-custom modo-dificil"
+        >
             <main className="actividad-zona-juego">
                 <div className='panel-izquierdo'>
                     <div className="operacion-original">
@@ -176,11 +186,9 @@ export function ActividadRecortados() {
                         <div className={`caja-total ${llenaTotal} ${actTotal ? 'activa' : ''} ${feedTotal}`} onClick={() => setCeldaActiva('solTotal')}>
                             {valTotal !== '' ? aSimbolo(valTotal) : ''}
                         </div>
-
                     </div>
 
                     <div className="container-recortados">
-
                         <div className="recortados-grid">
 
                             {/* ENCABEZADOS DE COLUMNA */}
@@ -192,14 +200,14 @@ export function ActividadRecortados() {
 
                             <div className="linea-horizontal-grid"></div>
 
-                            {/* FILA 1 (Multiplicado por las Decenas */}
+                            {/* FILA 1 (Multiplicado por las Decenas) */}
                             <div className="etiqueta-recortado con-borde">{aSimbolo(ejercicio.lbl2D)}</div>
                             {renderCelda('s23')}
                             {renderCelda('s22')}
                             {renderCelda('s21')}
                             {renderCelda('s2')} {/* Total Fila Decenas */}
 
-                            {/* FILA 2 (Multiplicado por las Unidades */}
+                            {/* FILA 2 (Multiplicado por las Unidades) */}
                             <div className="etiqueta-recortado con-borde">{aSimbolo(ejercicio.lbl2U)}</div>
                             {renderCelda('s13')}
                             {renderCelda('s12')}
@@ -212,15 +220,14 @@ export function ActividadRecortados() {
                     </div>
                 </div>
 
-                {/* EL PANEL LATERAL*/}
                 <div className="panel-derecho-dificil">
                     <TecladoBase8 onTeclaClick={handleTeclaClick} />
                     <button className="btn-corregir-full hover-primary" onClick={validarEjercicio}>
-                        Corregir
+                        {TEXTOS.global.corregir}
                     </button>
                 </div>
 
             </main>
-        </div>
+        </ActividadLayout>
     );
 }

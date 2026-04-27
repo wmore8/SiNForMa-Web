@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { ActividadControles } from '../shared/components/ActividadControles';
-import { Header } from '../shared/components/Header';
 import { TecladoBase8 } from '../shared/components/TecladoBase8';
 import { MiNumero } from '../shared/utils/MiNumero';
+import { ActividadLayout } from '../shared/components/ActividadLayout';
+import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadOperaciones.css';
 
 const generarCelosia = () => {
@@ -56,6 +56,10 @@ export function ActividadCelosia() {
     const [celdas, setCeldas] = useState(getCeldasVacias());
     const [feedback, setFeedback] = useState(getCeldasVacias());
     const [celdaActiva, setCeldaActiva] = useState(null);
+
+    // Estados para los modales
+    const [mostrarFeedback, setMostrarFeedback] = useState(false);
+    const [esCorrecto, setEsCorrecto] = useState(false);
 
     const reiniciarTodo = () => {
         setEjercicio(generarCelosia());
@@ -156,10 +160,11 @@ export function ActividadCelosia() {
         setCeldaActiva(null);
 
         if (todoCorrecto) {
-            alert('¡Impresionante! Has resuelto la Celosía perfecta.');
+            setEsCorrecto(true);
         } else {
-            alert('Hay casillas rojas. Revisa las multiplicaciones y las sumas.');
+            setEsCorrecto(false);
         }
+        setMostrarFeedback(true);
     };
 
     // Helper para el cajetin del Total
@@ -169,21 +174,26 @@ export function ActividadCelosia() {
     const llenaTotal = (valTotal !== '' && feedTotal === '') ? 'llena' : '';
 
     return (
-        <div className="actividad-layout multiplicacion-layout-custom modo-dificil">
-            <Header rutas={[
-                { label: 'Actividad operaciones', path: '/operaciones' },
-                { label: 'Multiplicaciones', path: '/operaciones/multiplicaciones' },
-                { label: 'Celosía' }]}
-                backPath="/operaciones/multiplicaciones" />
 
-            <ActividadControles
-                dificultad={0}
-                opciones={[{ id: 0, label: "Nivel Único" }]}
-                onChange={() => { }}
-                onReiniciar={reiniciarTodo}
-                onInfoClick={() => alert("Multiplica cada cifra y suma las diagonales para obtener el resultado final.")}
-            />
-
+        <ActividadLayout
+            rutas={[
+                { label: TEXTOS.titulos.operaciones, path: '/operaciones' },
+                { label: TEXTOS.titulos.multiplicaciones, path: '/operaciones/multiplicaciones' },
+                { label: TEXTOS.titulos.celosia }
+            ]}
+            backPath="/operaciones/multiplicaciones"
+            dificultad={0}
+            opcionesDificultad={[{ id: 0, label: "Nivel Único" }]}
+            onChangeDificultad={() => { }}
+            onReiniciar={reiniciarTodo}
+            textoInfo={TEXTOS.infoActividades.celosia}
+            mostrarFeedback={mostrarFeedback}
+            esCorrecto={esCorrecto}
+            onCerrarFeedback={() => setMostrarFeedback(false)}
+            mensajeExito={TEXTOS.feedback.exitoCelosia}
+            mensajeError={TEXTOS.feedback.errorCelosia}
+            className="multiplicacion-layout-custom modo-dificil"
+        >
             <main className="actividad-zona-juego">
 
                 <div className='panel-izquierdo celosia'>
@@ -200,7 +210,6 @@ export function ActividadCelosia() {
 
                     <div className='container-recortados'>
                         <div className="celosia-grid">
-
                             {/* FILA 0: Encabezados Superiores */}
                             <div className="celosia-etiqueta"></div> {/* Hueco vacio */}
                             <div className="celosia-etiqueta con-borde">{aSimbolo(ejercicio.str1[0])}</div>
@@ -230,17 +239,16 @@ export function ActividadCelosia() {
                             <div className="celosia-etiqueta"></div> {/* Hueco vacio */}
 
                         </div>
-
                     </div>
                 </div>
 
                 <div className="panel-derecho-dificil">
                     <TecladoBase8 onTeclaClick={handleTeclaClick} />
                     <button className="btn-corregir-full hover-primary" onClick={validarEjercicio}>
-                        Corregir
+                        {TEXTOS.global.corregir}
                     </button>
                 </div>
             </main>
-        </div>
+        </ActividadLayout>
     );
 }

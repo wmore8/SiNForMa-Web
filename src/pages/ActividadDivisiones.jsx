@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Icon } from '../shared/components/Icon';
 import { SwipePicker } from '../shared/components/SwipePicker';
-import { Header } from '../shared/components/Header';
-import { ActividadControles } from '../shared/components/ActividadControles';
 import { MiNumero } from '../shared/utils/MiNumero';
+import { ActividadLayout } from '../shared/components/ActividadLayout';
+import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadOperaciones.css';
 
 const OPCIONES_DIGITOS = [' ', ...MiNumero.losDigitos];
@@ -45,8 +44,11 @@ export function ActividadDivisiones() {
     const [idxCentenas, setIdxCentenas] = useState(0);
     const [idxDecenas, setIdxDecenas] = useState(0);
     const [idxUnidades, setIdxUnidades] = useState(0);
-
+    // Estado visual para el CSS (borde de la caja)
     const [estadoRespuesta, setEstadoRespuesta] = useState('idle');
+    // Estados para los modales
+    const [mostrarFeedback, setMostrarFeedback] = useState(false);
+    const [esCorrecto, setEsCorrecto] = useState(false);
 
     const cambiarDificultad = (e) => {
         const nuevoNivel = e.target.value;
@@ -76,11 +78,12 @@ export function ActividadDivisiones() {
 
         if (respuestaNumStr === ejercicio.solucionStr) {
             setEstadoRespuesta('correct');
-            alert('¡Perfecto! Has acertado.');
+            setEsCorrecto(true);
         } else {
             setEstadoRespuesta('error');
-            alert('Ups, prueba otra vez.');
+            setEsCorrecto(false);
         }
+        setMostrarFeedback(true);
     };
 
     const handlePickerChange = (setter) => (val) => {
@@ -88,7 +91,7 @@ export function ActividadDivisiones() {
         setEstadoRespuesta('idle');
     };
 
-    // Helper para convertir un string base 8 en simbolos alienigenas de MiNumero
+    // Helper para convertir un string base 8 en simbolos Romescos
     const renderizarSimbolos = (strBase8) => {
         return strBase8.split('').map((char, i) => (
             <span key={i}>{new MiNumero(parseInt(char, 10)).toString()}</span>
@@ -96,34 +99,34 @@ export function ActividadDivisiones() {
     };
 
     return (
-        <div className="actividad-layout">
-            <Header
-                rutas={[
-                    { label: 'Actividad operaciones', path: '/operaciones', icon: 'icon-operaciones' },
-                    { label: 'Actividad divisiones' }
-                ]}
-                backPath="/operaciones"
-            />
-
-            <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={reiniciarJuego} onInfoClick={() => alert("Mostrando info...")} />
-
+        <ActividadLayout
+            rutas={[
+                { label: TEXTOS.titulos.operaciones, path: '/operaciones' },
+                { label: TEXTOS.titulos.divisiones }
+            ]}
+            backPath="/operaciones"
+            dificultad={dificultad}
+            onChangeDificultad={cambiarDificultad}
+            onReiniciar={reiniciarJuego}
+            textoInfo={TEXTOS.infoActividades.divisiones}
+            mostrarFeedback={mostrarFeedback}
+            esCorrecto={esCorrecto}
+            onCerrarFeedback={() => setMostrarFeedback(false)}
+        >
             <main className="actividad-zona-juego">
                 <div className={`operacion-horizontal ${estadoRespuesta}`}>
-
                     {/* Dividendo */}
                     <div className="numero-fijo">
                         {renderizarSimbolos(ejercicio.num1Str)}
                     </div>
 
                     <div className="signo-matematico">÷</div>
-
                     {/* Divisor */}
                     <div className="numero-fijo">
                         {renderizarSimbolos(ejercicio.num2Str)}
                     </div>
 
                     <div className="signo-matematico">=</div>
-
                     {/* Pickers: Aparecen segun la dificultad */}
                     <div className="fila-pickers-horizontal">
                         {dificultad >= '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={idxCentenas} onChange={handlePickerChange(setIdxCentenas)} />}
@@ -136,9 +139,9 @@ export function ActividadDivisiones() {
 
             <footer className="actividad-footer">
                 <button className="btn-corregir-full" onClick={validarEjercicio}>
-                    Corregir
+                    {TEXTOS.global.corregir}
                 </button>
             </footer>
-        </div>
+        </ActividadLayout>
     );
 }

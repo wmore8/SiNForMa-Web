@@ -4,6 +4,9 @@ import { ActividadControles } from '../shared/components/ActividadControles';
 import { TableroGrid } from '../shared/components/TableroGrid';
 import { SwipePicker } from '../shared/components/SwipePicker';
 import { MiNumero } from '../shared/utils/MiNumero';
+import { ModalInfo } from '../shared/components/ModalInfo';
+import { ModalFeedback } from '../shared/components/ModalFeedback';
+import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadTablas.css';
 
 // Constantes de estado
@@ -180,26 +183,49 @@ export function ActividadTablasMultiplicar() {
                 <div className="panel-cuadricula">
                     <div className="tablas-grid-container tablas-multiplicar">
                         <TableroGrid grid={grid} onCellClick={handleCellClick} />
+                    </div>
                 </div>
 
-                    onReiniciar={reiniciarJuego}
-                    onInfoClick={() => alert("Resuelve las multiplicaciones. Elige el número en la ruleta y toca la casilla con el '?'.")}
-                        <SwipePicker opciones={OPCIONES_DECENAS} value={idxDecenas} onChange={setIdxDecenas} />
                 <div className="panel-derecho">
                     <Header rutas={[
                         { label: 'Actividad operaciones', path: '/operaciones' },
                         { label: 'Multiplicaciones', path: '/operaciones/multiplicaciones' },
                         { label: 'Tablas de multiplicar' }]}
+                        backPath="/operaciones/multiplicaciones" />
 
+                    <ActividadControles
+                        dificultad={dificultad}
+                        onChange={cambiarDificultad}
+                        onReiniciar={reiniciarJuego}
                         onInfoClick={() => setMostrarInfo(true)}
+                    />
 
+                    <div className="input-panel-tablas">
                         <div className="pickers-container">
+                            <SwipePicker opciones={OPCIONES_DECENAS} value={idxDecenas} onChange={setIdxDecenas} />
                             <SwipePicker opciones={OPCIONES_UNIDADES} value={idxUnidades} onChange={setIdxUnidades} />
+                        </div>
+                        <div className="actividad-footer">
+                            <button className="btn-corregir-full" onClick={validarEjercicio}>
+                                {TEXTOS.global.corregir}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <ModalInfo
+                isOpen={mostrarInfo}
+                onClose={() => setMostrarInfo(false)}
+                mensaje={TEXTOS.infoActividades.tablasMultiplicar}
             />
 
             <ModalFeedback
+                isOpen={mostrarFeedback}
+                onClose={() => setMostrarFeedback(false)}
+                esCorrecto={esCorrecto}
+                mensaje={mensajeFeedback}
+            />
+        </>
     );
 }
