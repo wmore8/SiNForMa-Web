@@ -5,8 +5,8 @@
 
 ---
 
-## 🛠️ Estado del Proyecto
-- **Fase Actual**: `v0.7.4-beta` (Lista para pruebas de usuario y revisión pedagógica).
+## ✏️ Estado del Proyecto
+- **Fase Actual** `v0.7.4-beta`: [https://lustrous-creponne-95eb1a.netlify.app](https://lustrous-creponne-95eb1a.netlify.app)  (Lista para pruebas de usuario y revisión pedagógica).
 - **Prototipo Inicial**: [https://cool-marshmallow-512ba5.netlify.app](https://cool-marshmallow-512ba5.netlify.app/)
 
 ## 🎯 Objetivos Logrados
@@ -33,6 +33,7 @@ La plataforma organiza las actividades en bloques progresivos:
 - [ ] Accesibilidad : Tres tamaños de texto seleccionables y control total por teclado (Focus/Tab navigation).
 - [ ] Desarrollar la **Unidad de conversión** (Conversor dinámico Romesco ↔ Decimal).
 - [ ] QA: Pruebas funcionales.
+- [ ] Implementación del diseño de los iconos
 - [ ] Nueva feature: Actividad de conteo mediante gestos táctiles (swipe sobre objetos).
 
 ## 🛠️ Tecnologías
@@ -41,5 +42,3 @@ La plataforma organiza las actividades en bloques progresivos:
 - **Estilos**: CSS nativo con variables dinámicas para tematización.
 - **Iconografía**: Sistema de iconos SVG modularizado.
 
----
-© 2024 Proyecto SiNForMa - Facultad de Informática
