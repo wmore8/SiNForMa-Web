@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { ActividadLayout } from '../shared/components/ActividadLayout';
+import { MyNumberPicker } from '../shared/components/MyNumberPicker';
 import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadLapiceros.css';
 
@@ -95,54 +96,58 @@ export function ActividadLapiceros() {
             mensajeError={TEXTOS.feedback.errorLapiceros}
         >
             <div className="actividad-zona-juego">
-                <div className="lapiceros-contenedor-central">
-                    <div className="objetivo-container">
-                        <div className="objetivo-numero">
-                            {aRomesco(objetivo)} {TEXTOS.ui.lapiceros.objetivo}
+                <div className="objetivo-container">
+                    <div className="objetivo-numero">
+                        {aRomesco(objetivo)} <span className='texto-lapiceros'>{TEXTOS.ui.lapiceros.objetivo}</span>
+                    </div>
+                </div>
+
+                <div className="lapiceros-lista">
+                    {/* UNIDADES: Lapiz*/}
+                    <div className={`lapicero-item ${!unidadesHabilitadas ? 'deshabilitado' : ''}`}>
+                        <div className="lapicero-info">
+                            {renderInfo('lapiz', TEXTOS.ui.lapiceros.lapiz)}
+                        </div>
+                        <div className="lapicero-controles">
+                            <MyNumberPicker
+                                valorMostrado={aRomesco(lapices)}
+                                onSubir={addLapiz}
+                                onBajar={delLapiz}
+                                disableSubir={!unidadesHabilitadas || lapices >= 512}
+                                disableBajar={!unidadesHabilitadas || lapices <= 0}
+                            />
                         </div>
                     </div>
 
-                    <div className="lapiceros-lista">
-                        {/* UNIDADES: Lapiz*/}
-                        <div className={`lapicero-item ${!unidadesHabilitadas ? 'deshabilitado' : ''}`}>
-                            <div className="lapicero-info">
-                                {renderInfo('lapiz', TEXTOS.ui.lapiceros.lapiz)}
-                            </div>
-                            <div className="lapicero-controles">
-                                <div className="valor-box">{aRomesco(lapices)}</div>
-                                <div className="botones-stack">
-                                    <button onClick={delLapiz} disabled={!unidadesHabilitadas}>−</button>
-                                    <button onClick={addLapiz} disabled={!unidadesHabilitadas}>+</button>
-                                </div>
-                            </div>
+                    {/* DECENAS: Estuche */}
+                    <div className="lapicero-item">
+                        <div className="lapicero-info">
+                            {renderInfo('estuche', TEXTOS.ui.lapiceros.estuche)}
                         </div>
-
-                        {/* DECENAS: Estuche */}
-                        <div className="lapicero-item">
-                            <div className="lapicero-info">
-                                {renderInfo('estuche', TEXTOS.ui.lapiceros.estuche)}
-                            </div>
-                            <div className="lapicero-controles">
-                                <div className="valor-box">{aRomesco(estuches)}</div>
-                                <div className="botones-stack">
-                                    <button onClick={delEstuche}>−</button>
-                                    <button onClick={addEstuche}>+</button>
-                                </div>
-                            </div>
+                        <div className="lapicero-controles">
+                            <MyNumberPicker
+                                valorMostrado={aRomesco(estuches)}
+                                onSubir={addEstuche}
+                                onBajar={delEstuche}
+                                disableSubir={estuches >= 64}
+                                disableBajar={estuches <= 0}
+                            />
                         </div>
+                    </div>
 
-                        {/* CENTENAS: Caja */}
-                        <div className="lapicero-item">
-                            <div className="lapicero-info">
-                                {renderInfo('caja', TEXTOS.ui.lapiceros.caja)}
-                            </div>
-                            <div className="lapicero-controles">
-                                <div className="valor-box">{aRomesco(cajas)}</div>
-                                <div className="botones-stack">
-                                    <button onClick={delCaja}>−</button>
-                                    <button onClick={addCaja}>+</button>
-                                </div>
-                            </div>
+                    {/* CENTENAS: Caja */}
+                    <div className="lapicero-item">
+                        <div className="lapicero-info">
+                            {renderInfo('caja', TEXTOS.ui.lapiceros.caja)}
+                        </div>
+                        <div className="lapicero-controles">
+                            <MyNumberPicker
+                                valorMostrado={aRomesco(cajas)}
+                                onSubir={addCaja}
+                                onBajar={delCaja}
+                                disableSubir={cajas >= 8}
+                                disableBajar={cajas <= 0}
+                            />
                         </div>
                     </div>
                 </div>
@@ -153,7 +158,7 @@ export function ActividadLapiceros() {
                     {TEXTOS.global.corregir}
                 </button>
             </div>
-            
+
         </ActividadLayout>
     );
 }

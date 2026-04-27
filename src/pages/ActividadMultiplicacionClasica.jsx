@@ -249,7 +249,7 @@ export function ActividadMultiplicacionClasica() {
             dificultad={dificultad}
             onChangeDificultad={cambiarDificultad}
             onReiniciar={() => reiniciarTodo(dificultad)}
-            textoInfo={TEXTOS.infoActividades.productoClasico}
+            textoInfo={dificultad === '2' ? TEXTOS.infoActividades.productoClasicoDificil : TEXTOS.infoActividades.productoClasicoFacil}
             mostrarFeedback={mostrarFeedback}
             esCorrecto={esCorrecto}
             onCerrarFeedback={() => setMostrarFeedback(false)}

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { TableroGrid } from '../shared/components/TableroGrid';
-import { SpinnerCustom } from '../shared/components/SpinnerCustom';
 import { SwipePicker } from '../shared/components/SwipePicker';
 import { Header } from '../shared/components/Header';
 import { ActividadControles } from '../shared/components/ActividadControles';
