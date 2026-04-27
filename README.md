@@ -1,10 +1,45 @@
 # SiNForMa-Web
+### Sistema Interactivo de un Nuevo Sistema Numérico
 
-**ToDo:**
+**SiNForMa-Web** es una plataforma educativa interactiva diseñada para la enseñanza y práctica del sistema de numeración en **Base 8 (Romesco)**. El proyecto busca facilitar la transición cognitiva hacia bases no decimales mediante actividades visuales, algorítmicas y lúdicas.
 
-- Actualizar el `readme`
- -  **Prototipo** -> Listo: [https://cool-marshmallow-512ba5.netlify.app](https://cool-marshmallow-512ba5.netlify.app/)
- - Spinner
- - Unidad de conversión (Romesco a Decimal)
- - Tablas
- - Componentes usables en ambos dispositivos (tactil - ratón)
+---
+
+## 🛠️ Estado del Proyecto
+- **Fase Actual**: `v0.7.4-beta` (Lista para pruebas de usuario y revisión pedagógica).
+- **Prototipo Inicial**: [https://cool-marshmallow-512ba5.netlify.app](https://cool-marshmallow-512ba5.netlify.app/)
+
+## 🎯 Objetivos Logrados
+- [x] **Arquitectura Modular**: Implementación de un `ActividadLayout` centralizado que gestiona Header, Controles, Modales de Información y Feedback.
+- [x] **Diccionario de Constantes**: Centralización de todos los textos de la app en `textos.js` para facilitar el mantenimiento.
+- [x] **Multi-dispositivo**: Interfaz adaptada para ratón y pantallas táctiles mediante componentes como `SwipePicker` y `TecladoBase8`.
+- [x] **Modo Claro/Oscuro**: Soporte nativo para temas visuales con persistencia en `localStorage`.
+- [x] **Navegación Robusta**: Sistema de rutas jerárquico y página de error 404 personalizada.
+
+## 🧩 Actividades Disponibles
+La plataforma organiza las actividades en bloques progresivos:
+
+1.  **Fundamentos**:
+    * **Lapiceros**: Conteo y agrupación visual de unidades, estuches y cajas.
+    * **Secuencias**: Práctica de progresión numérica tanto en formato numérico como en palabras.
+2.  **Tableros Lógicos**:
+    * **Tablas de Adivinar**: Deducción de posiciones en cuadrículas de 8x8.
+    * **Tablas de Multiplicar**: Refuerzo de productos básicos en Base 8.
+3.  **Operaciones Aritméticas**:
+    * **Suma, Resta y División**: Operaciones con validación en tiempo real y gestión de signos.
+    * **Multiplicación Avanzada**: Metodologías de Producto Clásico, Celosía y Recortados.
+
+## 📋 Próximos Pasos (ToDo)
+- [ ] Accesibilidad : Tres tamaños de texto seleccionables y control total por teclado (Focus/Tab navigation).
+- [ ] Desarrollar la **Unidad de conversión** (Conversor dinámico Romesco ↔ Decimal).
+- [ ] QA: Pruebas funcionales.
+- [ ] Nueva feature: Actividad de conteo mediante gestos táctiles (swipe sobre objetos).
+
+## 🛠️ Tecnologías
+- **Core**: React + Vite.
+- **Routing**: React Router DOM.
+- **Estilos**: CSS nativo con variables dinámicas para tematización.
+- **Iconografía**: Sistema de iconos SVG modularizado.
+
+---
+© 2024 Proyecto SiNForMa - Facultad de Informática

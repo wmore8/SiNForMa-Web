@@ -1,35 +1,30 @@
 import { Link } from 'react-router-dom';
-import { Icon } from '../shared/components/Icon';
 import { Header } from '../shared/components/Header';
+import { ActivityCard } from '../shared/components/ActivityCard';
+import { TEXTOS } from '../constants/textos';
 
 export function ActividadMultiplicaciones() {
+    const multiplicaciones = [
+        { id: 1, title: TEXTOS.titulos.tablasMultiplicar, icon: 'icon-default', path: '/operaciones/multiplicaciones/tablas' },
+        { id: 2, title: TEXTOS.titulos.recortados, icon: 'icon-default', path: '/operaciones/multiplicaciones/recortados' },
+        { id: 3, title: TEXTOS.titulos.celosia, icon: 'icon-default', path: '/operaciones/multiplicaciones/celosia' },
+        { id: 4, title: TEXTOS.titulos.productoClasico, icon: 'icon-default', path: '/operaciones/multiplicaciones/clasico' },
+    ];
+    
     return (
         <div className="actividad-layout">
             <Header
                 rutas={[
-                    { label: 'Actividad Operaciones', path: '/operaciones' },
-                    { label: 'Multiplicaciones' }
+                    { label: TEXTOS.titulos.operaciones, path: '/operaciones' },
+                    { label: TEXTOS.titulos.multiplicaciones }
                 ]}
                 backPath="/operaciones"
             />
-            <main className="operaciones-main">
+           <main className="operaciones-main">
                 <div className="cards-grid-4">
-                    <Link to="/operaciones/multiplicaciones/tablas" className="card">
-                        <Icon name="icon-default" className="card-icon" />
-                        <h2>Tablas de multiplicar</h2>
-                    </Link>
-                    <Link to="/operaciones/multiplicaciones/recortados" className="card">
-                        <Icon name="icon-default" className="card-icon" />
-                        <h2>Recortados</h2>
-                    </Link>
-                    <Link to="/operaciones/multiplicaciones/celosia" className="card">
-                        <Icon name="icon-default" className="card-icon" />
-                        <h2>Celosía</h2>
-                    </Link>
-                    <Link to="/operaciones/multiplicaciones/clasico" className="card">
-                        <Icon name="icon-default" className="card-icon" />
-                        <h2>Producto clásico</h2>
-                    </Link>
+                    {multiplicaciones.map((mult) => (
+                        <ActivityCard key={mult.id} title={mult.title} iconName={mult.icon} path={mult.path} />
+                    ))}
                 </div>
             </main>
         </div>

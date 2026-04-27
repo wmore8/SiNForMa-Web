@@ -139,6 +139,51 @@ b,
   /* width: 100vw; */
 }
 
+/* --- ESTILOS PARA PAGINA NOT FOUND (404) --- */
+.not-found-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  /* Ocupa el espacio central del Layout */
+}
+
+.not-found-icon {
+  font-size: 6rem;
+  color: var(--primary);
+}
+
+.not-found-code {
+  font-size: clamp(4rem, 10vw, 6rem);
+  color: var(--primary);
+  margin: 0;
+  line-height: 1;
+}
+
+.not-found-subtitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.not-found-text {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+/* --- UTILIDADES DE TEXTO --- */
+.texto-label-secundario {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
 /*--------------------------------MOVIL-(y en adelante)--------------------------------*/
 
 /* ---------------------------------- MODAL ---------------------------------- */

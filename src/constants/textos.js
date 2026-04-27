@@ -25,7 +25,8 @@ export const TEXTOS = {
         tablasMultiplicar: "Tablas de multiplicar",
         celosia: "Celosía",
         recortados: "Recortados",
-        productoClasico: "Producto clásico"
+        productoClasico: "Producto clásico",
+        error404: "Página no encontrada"
     },
 
     // Textos de Informacion de las Actividades (Para el ModalInfo)
@@ -79,6 +80,11 @@ export const TEXTOS = {
 
     // Textos específicos dentro de la UI de las actividades
     ui: {
+        notFound: {
+            subtitulo: "¡Vaya! Te has salido de la cuadrícula.",
+            mensaje: "Parece que la página que buscas se ha perdido en otra base numérica o ha dejado de existir.",
+            botonHome: "Volver al inicio"
+        },
         lapiceros: {
             lapiz: "Lápiz",
             estuche: "Estuche",

@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import { OptionsModal } from './shared/components/ModalOptions';
 import { Icon } from './shared/components/Icon';
 import { Navbar } from './shared/components/Navbar';
+import { ActivityCard } from './shared/components/ActivityCard';
+import { NotFound } from './pages/NotFound';
+import { Home } from './pages/Home';
 import { ActividadTablas } from './pages/ActividadTablas';
 import { ActividadLapiceros } from './pages/ActividadLapiceros';
 import { ActividadPalabras } from './pages/ActividadPalabras';
@@ -18,39 +21,6 @@ import { ActividadMultiplicacionClasica } from './pages/ActividadMultiplicacionC
 import { ActividadDivisiones } from './pages/ActividadDivisiones';
 
 import './styles/App.css'
-
-function ActivityCard({ title, iconName, path }) {
-  return (
-    <Link to={path} className="card">
-      <div className="card-icon-container">
-        <Icon name={iconName} className="card-icon" />
-      </div>
-      <h2 className="card-title">{title}</h2>
-    </Link>
-  );
-}
-
-function Home() {
-  const activities = [
-    { id: 1, title: 'Actividad Tablas', icon: 'icon-default', path: '/tablas' },
-    { id: 2, title: 'Actividad Lapiceros', icon: 'icon-lapiz', path: '/lapiceros' },
-    { id: 3, title: 'Actividad Palabras', icon: 'icon-default', path: '/palabras' },
-    { id: 4, title: 'Actividad Números', icon: 'icon-default', path: '/numeros' },
-    { id: 5, title: 'Actividad Operaciones', icon: 'icon-default', path: '/operaciones' },
-    { id: 6, title: 'Actividad Lorem Ipsum', icon: 'icon-default', path: '/lorem' },
-  ];
-
-  return (
-    <main className="content-area">
-      <div className="cards-grid">
-        {activities.map((act) => (
-          <ActivityCard key={act.id} title={act.title} iconName={act.icon} path={act.path} />
-        ))}
-      </div>
-    </main>
-  )
-}
-
 
 function AppLayout() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -96,7 +66,7 @@ function AppLayout() {
         <Route path="/operaciones/multiplicaciones/tablas" element={<ActividadTablasMultiplicar />} />
         <Route path="/operaciones/multiplicaciones/celosia" element={<ActividadCelosia />} />
         <Route path="/operaciones/multiplicaciones/clasico" element={<ActividadMultiplicacionClasica />} />
-        <Route path="*" element={<main className="content-area"><h1>Página no encontrada</h1></main>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <OptionsModal
