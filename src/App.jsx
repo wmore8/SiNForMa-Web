@@ -31,6 +31,11 @@ function AppLayout() {
     return savedTheme === 'dark'; // Si guardamos 'dark', empieza en true
   });
 
+  // Estado para el tamaño de texto
+  const [textSize, setTextSize] = useState(() => {
+    return localStorage.getItem('appTextSize') || 'md'; // md por defecto
+  });
+
   // Efecto para aplicar la clase al body cada vez que isDark cambie
   useEffect(() => {
     if (isDark) {
@@ -40,10 +45,23 @@ function AppLayout() {
     }
   }, [isDark]);
 
+  // Efecto para cambiar el tamaño de letra raiz
+  useEffect(() => {
+    const html = document.documentElement;
+    html.classList.remove('text-size-sm', 'text-size-md', 'text-size-lg');
+    html.classList.add(`text-size-${textSize}`);
+  }, [textSize]);
+
   // Funcion para cambiar el tema y guardarlo
   const toggleTheme = (theme) => {
     setIsDark(theme === 'dark');
     localStorage.setItem('appTheme', theme); // Guardamos la preferencia
+  };
+  
+  // Funcion para cambiar tamaño
+  const changeTextSize = (size) => {
+    setTextSize(size);
+    localStorage.setItem('appTextSize', size);
   };
 
   return (
@@ -74,6 +92,8 @@ function AppLayout() {
         onClose={() => setIsModalOpen(false)}
         toggleTheme={toggleTheme}
         isDark={isDark}
+        textSize={textSize}
+        changeTextSize={changeTextSize}
       />
     </div>
   );

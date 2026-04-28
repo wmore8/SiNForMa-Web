@@ -84,6 +84,14 @@ export const TEXTOS = {
             subtitulo: "¡Vaya! Te has salido de la cuadrícula.",
             mensaje: "Parece que la página que buscas se ha perdido en otra base numérica o ha dejado de existir.",
             botonHome: "Volver al inicio"
+        },opciones: {
+            tituloFuente: "Tamaño de fuente",
+            pequeno: "Pequeño",
+            medio: "Medio",
+            grande: "Grande",
+            tituloTema: "Tema de la aplicación",
+            claro: "Claro",
+            oscuro: "Oscuro"
         },
         lapiceros: {
             lapiz: "Lápiz",

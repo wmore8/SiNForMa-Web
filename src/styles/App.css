@@ -81,6 +81,11 @@
   --font-size-md: 1rem;
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
+
+  /* Tamaños de Fuente Dinamicos */
+  --global-font-size-sm: 14px;
+  --global-font-size-md: 16px;
+  --global-font-size-lg: 20px;
 }
 
 .dark-mode {
@@ -137,6 +142,20 @@ b,
   flex-direction: column;
   min-height: 100dvh;
   /* width: 100vw; */
+}
+
+/* --- TAMAÑOS DE TEXTO DINAMICOS  --- */
+html.text-size-sm {
+  font-size: var(--global-font-size-sm);
+}
+
+/* Navegador por defecto */
+html.text-size-md {
+  font-size: var(--global-font-size-md);
+}
+
+html.text-size-lg {
+  font-size: var(--global-font-size-lg);
 }
 
 /* --- ESTILOS PARA PAGINA NOT FOUND (404) --- */
@@ -249,6 +268,95 @@ b,
 
 .close-btn {
   color: var(--text-color);
+}
+
+/* --- SLIDER DE TEXTO CUSTOM --- */
+.slider-container {
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+}
+
+/* Contenedor relativo para posicionar los elementos */
+.custom-discrete-slider {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  margin: 1rem 0;
+}
+
+/* La linea horizontal de fondo */
+.slider-track {
+  position: absolute;
+  top: 50%;
+  /* la linea empieza y acaba exactamente en el centro de las bolas de los lados*/
+  left: 15px;
+  right: 15px;
+  height: 6px;
+  background-color: var(--card-border);
+  transform: translateY(-50%);
+  border-radius: 3px;
+  z-index: 0;
+}
+
+/* Los labels no seleccionados */
+.slider-step {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--bg-color);
+  border: 3px solid var(--card-border);
+  /* Por encima de la linea */
+  z-index: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+/* Efecto hover a las bolas no seleccionadas */
+.slider-step:hover {
+  transform: scale(1.15);
+  border-color: var(--primary);
+}
+
+.slider-step:focus {
+  outline: none;
+}
+
+/* La bola seleccionada */
+.slider-step.active {
+  width: 30px;
+  height: 30px;
+  background-color: var(--primary);
+  border: 4px solid var(--text-color);
+  /* Borde oscuro como en el mockup */
+}
+
+/* Textos debajo del slider */
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+/* Ahora los textos tambien tienen hover porque se pueden clicar */
+.slider-labels span {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.slider-labels span:hover {
+  color: var(--primary);
+}
+
+.slider-labels .slider-active {
+  color: var(--primary);
+  font-weight: 700;
+  opacity: 1;
 }
 
 .theme-toggle-buttons {
@@ -934,7 +1042,7 @@ b,
 /* Textos Comunes */
 .info-secuencia {
   text-align: center;
-  font-size: clamp(1.5rem, 2vw, 3rem);
+  font-size: calc(1.5rem + 1vw);
   font-weight: 600;
   color: var(--text-color);
 }
@@ -946,14 +1054,14 @@ b,
 }
 
 .etiqueta {
-  font-size: clamp(1.2rem, 3vh, 1.5rem);
+  font-size: calc(1.2rem + 1vw);
   font-weight: 500;
   color: var(--text-color);
   margin: 0;
 }
 
 .palabra-actual {
-  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-size: calc(2rem + 1vw);
   font-weight: bold;
   color: var(--primary);
   text-transform: capitalize;
@@ -961,7 +1069,7 @@ b,
 }
 
 .simbolo-actual {
-  font-size: clamp(3rem, 5vh, 4rem);
+  font-size: calc(2rem + 1vw);
   font-weight: bold;
   color: var(--primary);
 }
