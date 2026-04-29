@@ -205,6 +205,43 @@ html.text-size-lg {
 
 /*--------------------------------MOVIL-(y en adelante)--------------------------------*/
 
+/* ---------------------------------- NAVBAR DINÁMICA (controlada por React) ---------------------------------- */
+
+body.layout-desktop .navbar {
+  padding: 1rem 3rem;
+}
+
+body.layout-desktop .nav-links-container {
+  position: static;
+  max-height: none;
+  overflow: visible;
+  background-color: transparent;
+  box-shadow: none;
+  display: flex;
+  justify-content: flex-start;
+}
+
+body.layout-desktop .nav-links {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 2rem;
+  gap: 2rem;
+}
+
+body.layout-desktop .nav-links li {
+  width: auto;
+}
+
+body.layout-desktop .nav-link {
+  padding: 0;
+  font-size: 1.25rem;
+}
+
+body.layout-desktop .mobile-menu-btn {
+  display: none;
+}
+
 /* ---------------------------------- MODAL ---------------------------------- */
 .modal-overlay {
   position: fixed;
@@ -757,10 +794,7 @@ html.text-size-lg {
   display: flex;
   align-items: center;
   color: var(--text-color);
-  white-space: nowrap;
-  /* Prohibe que el texto se parta en 2 lineas */
-  flex-shrink: 0;
-  /* Prohibe que este elemento se encoja o se aplaste */
+  line-height: 1.2;
 
 }
 
@@ -1045,6 +1079,7 @@ html.text-size-lg {
   font-size: calc(1.5rem + 1vw);
   font-weight: 600;
   color: var(--text-color);
+  text-transform: capitalize;
 }
 
 .info-secuencia strong {
@@ -1276,47 +1311,6 @@ html.text-size-lg {
   .card-title {
     font-weight: 600;
     font-size: 1.8rem;
-  }
-
-  .navbar {
-    padding: 1rem 3rem;
-  }
-
-  .nav-links-container {
-    /* Volvemos al flujo normal dentro de la navbar */
-    position: static;
-    max-height: none;
-    overflow: visible;
-    background-color: transparent;
-    box-shadow: none;
-    display: flex;
-    justify-content: flex-start;
-  }
-
-  .nav-links {
-    flex-direction: row;
-    /* alinea los items a la izquierda */
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 2rem;
-    gap: 2rem;
-  }
-
-
-  .nav-links li {
-    width: auto;
-  }
-
-  .nav-link {
-    /* Reseteamos el padding porque la Navbar ya lo tiene */
-    padding: 0;
-    font-size: 1.25rem;
-
-  }
-
-  /* Ocultamos el boton hamburguesa */
-  .mobile-menu-btn {
-    display: none;
   }
 
   .actividad-layout {

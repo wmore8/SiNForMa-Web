@@ -186,7 +186,7 @@ export function ActividadTablasMultiplicar() {
                     </div>
                 </div>
 
-                <div className="panel-derecho">
+                <div className="panel-derecho breadcrumb-tablas">
                     <Header rutas={[
                         { label: 'Actividad operaciones', path: '/operaciones' },
                         { label: 'Multiplicaciones', path: '/operaciones/multiplicaciones' },

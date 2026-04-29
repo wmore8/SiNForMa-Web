@@ -252,8 +252,8 @@
     color: var(--text-color);
     text-align: center;
 
-    /* white-space: normal; 
-    word-break: break-all; */
+    white-space: normal; 
+    word-break: break-all;
     line-height: 1.1;
 }
 

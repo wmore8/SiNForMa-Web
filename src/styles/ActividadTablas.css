@@ -17,7 +17,9 @@
 
 .tablas-grid {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    /* minmax(0, 1fr) permite a la cuadricula encogerse sin limite */
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows: repeat(8, minmax(0, 1fr));
     gap: clamp(2px, 0.1vw, 6px);
     background-color: var(--card-border);
     border: 2px solid var(--card-border);
@@ -25,6 +27,8 @@
     overflow: hidden;
     width: 100%;
     aspect-ratio: 1;
+    /* Container queries para que el texto escale fluido */
+    container-type: inline-size;
 }
 
 /* --- ESTADOS DE LAS CELDAS --- */
@@ -187,7 +191,6 @@
     }
 
     .tablas-layout-custom .tablas-grid {
-        /* El aspect-ratio: 1 hara su magia aqui basandose en el width del contenedor */
         height: auto;
     }
 
@@ -209,4 +212,10 @@
     .tablas-layout-custom .input-panel-tablas {
         margin-top: auto;
     }
+
+    /* BREADCRUMB SOLO PARA TABLAS DE MULTIPLICAR*/
+    .breadcrumb-tablas .breadcrumb-texto-oculto-movil {
+        display: none;
+    }
+
 }

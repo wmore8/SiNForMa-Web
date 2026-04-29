@@ -57,12 +57,40 @@ function AppLayout() {
     setIsDark(theme === 'dark');
     localStorage.setItem('appTheme', theme); // Guardamos la preferencia
   };
-  
+
   // Funcion para cambiar tamaño
   const changeTextSize = (size) => {
     setTextSize(size);
     localStorage.setItem('appTextSize', size);
   };
+
+  // Estado para saber si estamos en modo escritorio
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Efecto para calcular en que tamaño se colapasa la nabar
+  useEffect(() => {
+    const checkDesktop = () => {
+      const width = window.innerWidth;
+
+      if (textSize === 'sm' && width >= 1100) setIsDesktop(true);
+      else if (textSize === 'md' && width >= 1250) setIsDesktop(true);
+      else if (textSize === 'lg' && width >= 1600) setIsDesktop(true);
+      else setIsDesktop(false);
+    };
+
+    // Comprobamos al cargar la app y cada vez que cambie el tamaño de la ventana
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+
+    // Limpieza del event listener
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, [textSize]); // Depende de textSize para recalcularse al instante si mueves el slider
+
+  // Efecto para inyectar al body del HTML
+  useEffect(() => {
+    if (isDesktop) document.body.classList.add('layout-desktop');
+    else document.body.classList.remove('layout-desktop');
+  }, [isDesktop]);
 
   return (
     <div className='main-container'>
