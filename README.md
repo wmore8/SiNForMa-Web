@@ -6,7 +6,7 @@
 ---
 
 ## ✏️ Estado del Proyecto
-- **Fase Actual** `v0.7.4-beta`: [https://lustrous-creponne-95eb1a.netlify.app](https://lustrous-creponne-95eb1a.netlify.app)  (Lista para pruebas de usuario y revisión pedagógica).
+- **Fase Actual** `v0.7.7-beta`: [https://lustrous-creponne-95eb1a.netlify.app](https://lustrous-creponne-95eb1a.netlify.app)  (Lista para pruebas de usuario y revisión pedagógica).
 - **Prototipo Inicial**: [https://cool-marshmallow-512ba5.netlify.app](https://cool-marshmallow-512ba5.netlify.app/)
 
 ## 🎯 Objetivos Logrados
@@ -15,6 +15,7 @@
 - [x] **Multi-dispositivo**: Interfaz adaptada para ratón y pantallas táctiles mediante componentes como `SwipePicker` y `TecladoBase8`.
 - [x] **Modo Claro/Oscuro**: Soporte nativo para temas visuales con persistencia en `localStorage`.
 - [x] **Navegación Robusta**: Sistema de rutas jerárquico y página de error 404 personalizada.
+- [x] **Tamaño de letra personalizado** : Tres tamaños de texto seleccionables que mejoran la experiencia de usuario
 
 ## 🧩 Actividades Disponibles
 La plataforma organiza las actividades en bloques progresivos:
@@ -30,7 +31,7 @@ La plataforma organiza las actividades en bloques progresivos:
     * **Multiplicación Avanzada**: Metodologías de Producto Clásico, Celosía y Recortados.
 
 ## 📋 Próximos Pasos (ToDo)
-- [ ] Accesibilidad : Tres tamaños de texto seleccionables y control total por teclado (Focus/Tab navigation).
+- [ ] Accesibilidad : control total por teclado (Focus/Tab navigation).
 - [ ] Desarrollar la **Unidad de conversión** (Conversor dinámico Romesco ↔ Decimal).
 - [ ] QA: Pruebas funcionales.
 - [ ] Implementación del diseño de los iconos

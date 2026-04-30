@@ -1,10 +1,11 @@
-// src/pages/ActividadMultiplicacionClasica.jsx
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { SwipePicker } from '../shared/components/SwipePicker';
 import { TecladoBase8 } from '../shared/components/TecladoBase8';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { ActividadLayout } from '../shared/components/ActividadLayout';
 import { TEXTOS } from '../constants/textos';
+import { useNavegacionFlechas } from '../shared/hooks/useNavegacionFlechas';
+import { useAutoFocoInicial } from '../shared/hooks/useAutoFocoInicial';
 import '../styles/ActividadOperaciones.css';
 
 const OPCIONES_DIGITOS = [' ', ...MiNumero.losDigitos];
@@ -72,6 +73,37 @@ export function ActividadMultiplicacionClasica() {
     const [feedbackFinal, setFeedbackFinal] = useState([]);
 
     const [estadoRespuesta, setEstadoRespuesta] = useState('idle');
+
+    // Mapa visual (Las celdas van escalonadas a la izquierda como en papel)
+    const navegacionGrid = [
+        [null, null, 'paso-0-0', 'paso-0-1', 'paso-0-2', 'paso-0-3'], // Paso 0 (Alineado a derecha)
+        [null, 'paso-1-0', 'paso-1-1', 'paso-1-2', 'paso-1-3', null],       // Paso 1
+        ['paso-2-0', 'paso-2-1', 'paso-2-2', 'paso-2-3', null, null],       // Paso 2
+        ['final-0', 'final-1', 'final-2', 'final-3', 'final-4', 'final-5'],  // Total final
+        ['btn-corregir', 'btn-corregir', 'btn-corregir', 'btn-corregir', 'btn-corregir', 'btn-corregir']
+    ];
+
+    // Funcion traductora -> Convierte el 'string' del mapa en el 'objeto' que espera tu estado
+    const activarCeldaClasica = useCallback((idStr) => {
+        if (!idStr || idStr === 'btn-corregir') return;
+
+        if (idStr.startsWith('paso')) {
+            const parts = idStr.split('-');
+            setCeldaActiva({ tipo: 'paso', f: parseInt(parts[1]), c: parseInt(parts[2]) });
+        } else if (idStr.startsWith('final')) {
+            const parts = idStr.split('-');
+            setCeldaActiva({ tipo: 'final', f: 0, c: parseInt(parts[1]) });
+        }
+    }, []);
+
+    const handleFlechas = useNavegacionFlechas(navegacionGrid, activarCeldaClasica);
+
+    // Auto-focus (Solo lo activamos si estamos en nivel Dificil)
+    useAutoFocoInicial(
+        ejercicio,
+        dificultad === '2' ? 'celda-paso-0-3' : null, // Empezamos a escribir por las unidades del Paso 0
+        activarCeldaClasica
+    );
 
     // Estados para los modales
     const [mostrarFeedback, setMostrarFeedback] = useState(false);
@@ -157,11 +189,23 @@ export function ActividadMultiplicacionClasica() {
         const feedback = tipo === 'paso' ? (feedbackPasos[fila]?.[col] || '') : (feedbackFinal[col] || '');
         const estaLlena = (valor !== '' && feedback === '') ? 'llena' : '';
 
+        const idCelda = tipo === 'paso' ? `paso-${fila}-${col}` : `final-${col}`;// id para accesibilidad
+
         return (
             <div
+                id={`celda-${idCelda}`}
                 key={`${tipo}-${fila}-${col}`}
                 className={`celda-digito interactiva ${estaLlena} ${isActive ? 'activa' : ''} ${feedback}`}
                 onClick={() => setCeldaActiva({ tipo, f: fila, c: col })}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setCeldaActiva({ tipo, f: fila, c: col });
+                    } else {
+                        handleFlechas(e, idCelda); // Le pasamos el ID en string al hook
+                    }
+                }}
             >
                 {valor !== '' ? new MiNumero(parseInt(valor, 10)).toString() : ''}
             </div>
@@ -228,6 +272,11 @@ export function ActividadMultiplicacionClasica() {
             }
         }
         setMostrarFeedback(true);
+
+        // Desenfocamos cualquier celda que tuviera el foco amarillo
+        if (document.activeElement) {
+            document.activeElement.blur();
+        }
     };
 
     // Helper visual para Nivel 0 y 1
@@ -342,7 +391,15 @@ export function ActividadMultiplicacionClasica() {
                 {dificultad === '2' && (
                     <div className="panel-derecho-dificil">
                         <TecladoBase8 onTeclaClick={handleTeclaClick} />
-                        <button className="btn-corregir-full hover-primary" onClick={validarEjercicio}>
+                        <button
+                            id="celda-btn-corregir"
+                            className="btn-corregir-full hover-primary"
+                            onClick={validarEjercicio}
+                            onKeyDown={(e) => {
+                                if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                                    handleFlechas(e, 'btn-corregir');
+                                }
+                            }}>
                             {TEXTOS.global.corregir}
                         </button>
                     </div>
@@ -350,7 +407,15 @@ export function ActividadMultiplicacionClasica() {
             </main>
             {dificultad !== '2' && (
                 <footer className="actividad-footer">
-                    <button className="btn-corregir-full hover-primary" onClick={validarEjercicio}>
+                    <button
+                        id="celda-btn-corregir"
+                        className="btn-corregir-full hover-primary"
+                        onClick={validarEjercicio}
+                        onKeyDown={(e) => {
+                            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                                handleFlechas(e, 'btn-corregir');
+                            }
+                        }}>
                         {TEXTOS.global.corregir}
                     </button>
                 </footer>

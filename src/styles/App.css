@@ -1079,6 +1079,9 @@ body.layout-desktop .mobile-menu-btn {
   font-size: calc(1.5rem + 1vw);
   font-weight: 600;
   color: var(--text-color);
+}
+
+.info-secuencia strong {
   text-transform: capitalize;
 }
 
@@ -1300,7 +1303,7 @@ body.layout-desktop .mobile-menu-btn {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 2rem;
-    padding: 2rem;
+    padding: 1rem;
   }
 
   .card-icon {

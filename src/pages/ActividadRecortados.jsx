@@ -3,6 +3,8 @@ import { TecladoBase8 } from '../shared/components/TecladoBase8';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { ActividadLayout } from '../shared/components/ActividadLayout';
 import { TEXTOS } from '../constants/textos';
+import { useNavegacionFlechas } from '../shared/hooks/useNavegacionFlechas';
+import { useAutoFocoInicial } from '../shared/hooks/useAutoFocoInicial';
 import '../styles/ActividadOperaciones.css';
 
 const generarRecortados = () => {
@@ -59,6 +61,19 @@ export function ActividadRecortados() {
 
     const [celdaActiva, setCeldaActiva] = useState(null);
 
+    // map con las posiciones de navegacion de accesibilidad
+    const navegacionGrid = [
+        ['solTotal', 'solTotal', 'solTotal', 'solTotal'],
+        ['s23', 's22', 's21', 's2'],
+        ['s13', 's12', 's11', 's1'],
+        ['btn-corregir', 'btn-corregir', 'btn-corregir', 'btn-corregir']
+    ];
+
+    const handleFlechas = useNavegacionFlechas(navegacionGrid, setCeldaActiva);
+
+    // Auto-focus al Total nada mas entrar
+    useAutoFocoInicial(ejercicio, 'celda-solTotal', setCeldaActiva);
+
     // Estados para los modales
     const [mostrarFeedback, setMostrarFeedback] = useState(false);
     const [esCorrecto, setEsCorrecto] = useState(false);
@@ -113,9 +128,20 @@ export function ActividadRecortados() {
 
         return (
             <div
+                id={`celda-${id}`}
+                tabIndex={0}
                 key={id}
                 className={`celda-ancha ${estaLlena} ${isActive ? 'activa' : ''} ${feed}`}
                 onClick={() => setCeldaActiva(id)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setCeldaActiva(id);
+                    } else {
+                        // Le pasamos el evento y el ID actual a nuestro hook genérico
+                        handleFlechas(e, id);
+                    }
+                }}
             >
                 {valor !== '' ? aSimbolo(valor) : ''}
             </div>
@@ -148,6 +174,11 @@ export function ActividadRecortados() {
             setEsCorrecto(false);
         }
         setMostrarFeedback(true);
+        
+        // Desenfocamos cualquier celda que tuviera el foco amarillo
+        if (document.activeElement) {
+            document.activeElement.blur();
+        }
     };
 
     const valTotal = celdas['solTotal'];
@@ -183,7 +214,20 @@ export function ActividadRecortados() {
                             {aSimbolo(ejercicio.str1Original)} <span className="signo-primario">×</span> {aSimbolo(ejercicio.str2Original)}
                         </span>
                         <div className="etiqueta-recortado signo-primario">=</div>
-                        <div className={`caja-total ${llenaTotal} ${actTotal ? 'activa' : ''} ${feedTotal}`} onClick={() => setCeldaActiva('solTotal')}>
+                        <div
+                            id="celda-solTotal"
+                            className={`caja-total ${llenaTotal} ${actTotal ? 'activa' : ''} ${feedTotal}`}
+                            onClick={() => setCeldaActiva('solTotal')}
+                            tabIndex={0} 
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    setCeldaActiva('solTotal');
+                                } else {
+                                    handleFlechas(e, 'solTotal');
+                                }
+                            }}
+                        >
                             {valTotal !== '' ? aSimbolo(valTotal) : ''}
                         </div>
                     </div>
@@ -221,8 +265,16 @@ export function ActividadRecortados() {
                 </div>
 
                 <div className="panel-derecho-dificil">
-                    <TecladoBase8 onTeclaClick={handleTeclaClick} />
-                    <button className="btn-corregir-full hover-primary" onClick={validarEjercicio}>
+                    <TecladoBase8 onTeclaClick={handleTeclaClick} deshabilitado={mostrarFeedback}/>
+                    <button
+                    id="celda-btn-corregir"
+                        className="btn-corregir-full hover-primary"
+                        onClick={validarEjercicio}
+                        onKeyDown={(e) => {
+                            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                                handleFlechas(e, 'btn-corregir');
+                            }
+                        }}>
                         {TEXTOS.global.corregir}
                     </button>
                 </div>

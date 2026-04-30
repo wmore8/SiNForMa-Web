@@ -3,6 +3,8 @@ import { TecladoBase8 } from '../shared/components/TecladoBase8';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { ActividadLayout } from '../shared/components/ActividadLayout';
 import { TEXTOS } from '../constants/textos';
+import { useNavegacionFlechas } from '../shared/hooks/useNavegacionFlechas';
+import { useAutoFocoInicial } from '../shared/hooks/useAutoFocoInicial';
 import '../styles/ActividadOperaciones.css';
 
 const generarCelosia = () => {
@@ -56,6 +58,22 @@ export function ActividadCelosia() {
     const [celdas, setCeldas] = useState(getCeldasVacias());
     const [feedback, setFeedback] = useState(getCeldasVacias());
     const [celdaActiva, setCeldaActiva] = useState(null);
+
+    // Mapa visual de la Celosia-> Simulamos las posiciones en "zig-zag" de los triangulos
+    const navegacionGrid = [
+        ['solTotal', 'solTotal', 'solTotal', 'solTotal', 'solTotal'], // La caja total arriba del todo
+        [null, 'c_0_0_d', 'c_0_1_d', 'c_0_2_d', null],  // Fila superior (Decenas del Multiplicador 1)
+        ['r_0', 'c_0_0_u', 'c_0_1_u', 'c_0_2_u', null],  // Fila inferior (Unidades del Multiplicador 1)
+        [null, 'c_1_0_d', 'c_1_1_d', 'c_1_2_d', null],  // Fila superior (Decenas del Multiplicador 2)
+        ['r_1', 'c_1_0_u', 'c_1_1_u', 'c_1_2_u', null],  // Fila inferior (Unidades del Multiplicador 2)
+        [null, 'r_2', 'r_3', 'r_4', null],  // Resultados perimetrales de abajo
+        ['btn-corregir', 'btn-corregir', 'btn-corregir', 'btn-corregir', 'btn-corregir']
+    ];
+
+    const handleFlechas = useNavegacionFlechas(navegacionGrid, setCeldaActiva);
+
+    // Auto-focus al Total nada mas entrar
+    useAutoFocoInicial(ejercicio, 'celda-solTotal', setCeldaActiva);
 
     // Estados para los modales
     const [mostrarFeedback, setMostrarFeedback] = useState(false);
@@ -111,7 +129,16 @@ export function ActividadCelosia() {
         const estaLlena = (valor !== '' && feed === '') ? 'llena' : '';
 
         return (
-            <div className={`celosia-input ${tipo} ${estaLlena} ${isActive ? 'activa' : ''} ${feed}`} onClick={() => setCeldaActiva(id)}>
+            <div
+                id={`celda-${id}`}
+                className={`celosia-input ${tipo} ${estaLlena} ${isActive ? 'activa' : ''} ${feed}`}
+                onClick={() => setCeldaActiva(id)}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setCeldaActiva(id); }
+                    else handleFlechas(e, id);
+                }}
+            >
                 {valor !== '' ? aSimbolo(valor) : ''}
             </div>
         );
@@ -126,7 +153,16 @@ export function ActividadCelosia() {
 
         return (
             <div className="celosia-etiqueta">
-                <div className={`celosia-resultado-input ${estaLlena} ${isActive ? 'activa' : ''} ${feed}`} onClick={() => setCeldaActiva(id)} >
+                <div
+                    id={`celda-${id}`} // <-- VITAL
+                    className={`celosia-resultado-input ${estaLlena} ${isActive ? 'activa' : ''} ${feed}`}
+                    onClick={() => setCeldaActiva(id)}
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setCeldaActiva(id); }
+                        else handleFlechas(e, id);
+                    }}
+                >
                     {valor !== '' ? aSimbolo(valor) : ''}
                 </div>
             </div>
@@ -165,6 +201,11 @@ export function ActividadCelosia() {
             setEsCorrecto(false);
         }
         setMostrarFeedback(true);
+
+        // Desenfocamos cualquier celda que tuviera el foco amarillo
+        if (document.activeElement) {
+            document.activeElement.blur();
+        }
     };
 
     // Helper para el cajetin del Total
@@ -203,7 +244,20 @@ export function ActividadCelosia() {
                             {aSimbolo(ejercicio.str1)} <span className="signo-primario">×</span> {aSimbolo(ejercicio.str2)}
                         </span>
                         <span className="signo-primario">=</span>
-                        <div className={`caja-total ${llenaTotal} ${actTotal ? 'activa' : ''} ${feedTotal}`} onClick={() => setCeldaActiva('solTotal')}>
+                        <div
+                            id="celda-solTotal"
+                            className={`caja-total ${llenaTotal} ${actTotal ? 'activa' : ''} ${feedTotal}`}
+                            onClick={() => setCeldaActiva('solTotal')}
+                            tabIndex={0} // <-- Permite el focus
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    setCeldaActiva('solTotal');
+                                } else {
+                                    handleFlechas(e, 'solTotal');
+                                }
+                            }}
+                        >
                             {valTotal !== '' ? aSimbolo(valTotal) : ''}
                         </div>
                     </div>
@@ -244,7 +298,15 @@ export function ActividadCelosia() {
 
                 <div className="panel-derecho-dificil">
                     <TecladoBase8 onTeclaClick={handleTeclaClick} />
-                    <button className="btn-corregir-full hover-primary" onClick={validarEjercicio}>
+                    <button
+                        id="celda-btn-corregir"
+                        className="btn-corregir-full hover-primary"
+                        onClick={validarEjercicio}
+                        onKeyDown={(e) => {
+                            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                                handleFlechas(e, 'btn-corregir');
+                            }
+                        }}>
                         {TEXTOS.global.corregir}
                     </button>
                 </div>
