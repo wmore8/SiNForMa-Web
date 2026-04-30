@@ -1,0 +1,176 @@
+/* -------------------------------- NAVBAR GENERAL -------------------------------- */
+.navbar-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: var(--primary);
+  z-index: 1000;
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-md);
+  color: var(--bg-color);
+  position: relative;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  font-size: 0.5rem;
+  gap: 0.75rem;
+  color: var(--icon-color);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-brand:hover {
+  color: var(--icon-color);
+  opacity: 1;
+  background-color: var(--bg-color-opacity);
+}
+
+.brand-icon {
+  font-size: 2.25rem;
+}
+
+.content-area {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  padding: 0.5rem;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 1.5rem;
+}
+
+/* --- MENU HAMBURGUESA --- */
+.hamburger-icon {
+  transition: transform 0.3s ease-in-out;
+}
+
+.hamburger-icon.rotated {
+  transform: rotate(-90deg);
+}
+
+.nav-links-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--primary);
+  display: flex;
+  justify-content: center;
+  max-height: 0;
+  overflow: hidden;
+  /* Retrasamos visibility para que la animacion termine antes de desaparecer */
+  visibility: hidden;
+  transition: max-height 0.3s ease-in-out, padding-bottom 0.3s ease-in-out, visibility 0s linear 0.3s;
+  box-shadow: var(--shadow-md);
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.nav-links-container.open {
+  max-height: 500px;
+  padding-bottom: var(--spacing-md);
+  visibility: visible;
+  /* Al abrir, visibility se aplica inmediatamente */
+  transition: max-height 0.3s ease-in-out, padding-bottom 0.3s ease-in-out, visibility 0s;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  align-items: flex-start;
+  padding: 0 1rem; 
+  width: fit-content; 
+  margin: 0 1rem; 
+}
+
+.nav-links li {
+  width: 100%;
+}
+
+/* ESTILOS REFINADOS PARA LOS NAVLINKS  */
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-sm);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 0.8rem 1.5rem;
+  color: var(--icon-color);
+  opacity: 0.8;
+  border-radius: 0.75rem;
+  margin: 0.2rem 0;
+  transition: color 0.2s, opacity 0.2s, background-color 0.2s ease;
+}
+
+.nav-link:hover, 
+.nav-link.active {
+  color: var(--icon-color);
+  opacity: 1;
+  background-color: var(--bg-color-opacity);
+}
+
+.nav-link-icon {
+  font-size: 1.5rem;
+  color: inherit;
+}
+
+/* -------------------------------- NAVBAR DINAMICA (Desktop) -------------------------------- */
+body.layout-desktop .navbar-header {
+  border-radius: 0;
+}
+
+body.layout-desktop .navbar {
+  padding: 1rem 3rem;
+}
+
+body.layout-desktop .nav-links-container {
+  position: static;
+  max-height: none;
+  overflow: visible;
+  visibility: visible;
+  opacity: 1;
+  background-color: transparent;
+  box-shadow: none;
+  display: flex;
+  justify-content: flex-start;
+}
+
+body.layout-desktop .nav-links {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 2rem;
+  gap: 1rem;
+}
+
+body.layout-desktop .nav-links li {
+  width: auto;
+}
+
+body.layout-desktop .nav-link {
+  padding: 0.5rem 1.25rem;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+body.layout-desktop .mobile-menu-btn {
+  display: none;
+}

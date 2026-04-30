@@ -14,38 +14,6 @@
     width: 100%;
 }
 
-/* -------------------------------- ACCESIBILIDAD - Focus Visible -------------------------------- */
-
-/* Reseteamos el outline por defecto en todos los interactivos */
-button:focus,
-.celda-digito.interactiva:focus,
-.caja-total:focus,
-.celda-ancha:focus,
-.celosia-input:focus,
-.celosia-resultado-input:focus {
-    outline: none;
-}
-
-/* Aplicamos nuestro estilo custom SOLO cuando navegan con teclado (Tab) */
-button:focus-visible,
-.celda-digito.interactiva:focus-visible,
-.caja-total:focus-visible,
-.celda-ancha:focus-visible,
-.celosia-input:focus-visible,
-.celosia-resultado-input:focus-visible {
-    /* El borde amarillo fuerte que propusiste */
-    outline: 4px solid #FFD54F !important;
-    outline-offset: 2px;
-
-    /* Fondo primario con opacidad, como sugeriste */
-    background-color: var(--primary-opacity) !important;
-    border-color: var(--primary) !important;
-
-    /* Asegurar que se vea el texto/icono */
-    color: var(--text-color);
-}
-
-
 /* -------------------------- OPERACION VERTICAL CLASICA -------------------------- */
 
 .operacion-vertical {

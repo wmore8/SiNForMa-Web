@@ -133,6 +133,7 @@ export function ActividadRecortados() {
                 key={id}
                 className={`celda-ancha ${estaLlena} ${isActive ? 'activa' : ''} ${feed}`}
                 onClick={() => setCeldaActiva(id)}
+                onFocus={() => setCeldaActiva(id)}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
@@ -218,6 +219,7 @@ export function ActividadRecortados() {
                             id="celda-solTotal"
                             className={`caja-total ${llenaTotal} ${actTotal ? 'activa' : ''} ${feedTotal}`}
                             onClick={() => setCeldaActiva('solTotal')}
+                            onFocus={() => setCeldaActiva('solTotal')}
                             tabIndex={0} 
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' || e.key === ' ') {

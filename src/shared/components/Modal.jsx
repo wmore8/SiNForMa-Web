@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
 import { Icon } from './Icon';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 
-export function Modal({ isOpen, onClose, titulo, icono, children }) {
+export function Modal({ isOpen, onClose, titulo, icono, children, id = "modal-principal" }) {
+    // Atrapa el foco dentro del modal
+    useFocusTrap(isOpen, id, onClose);
+
     // EFECTO PARA BLOQUEAR EL SCROLL
     useEffect(() => {
         if (isOpen) {
@@ -20,12 +24,20 @@ export function Modal({ isOpen, onClose, titulo, icono, children }) {
 
     return (
         <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div 
+                id={id}
+                className="modal-content" 
+                onClick={(e) => e.stopPropagation()}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-title"
+                tabIndex="-1"
+            >
                 <div className="modal-header">
-                    <h2 className='modal-title'>
+                    <h2 id="modal-title" className='modal-title'>
                         {icono && <Icon name={icono} />} {titulo}
                     </h2>
-                    <button className="icon-btn close-btn hover-danger" onClick={onClose} >
+                    <button className="icon-btn close-btn hover-danger" onClick={onClose} aria-label="Cerrar modal">
                         <Icon name="icon-close" />
                     </button>
                 </div>

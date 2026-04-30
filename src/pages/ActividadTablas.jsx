@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '../shared/components/Icon';
 import { MiNumero } from '../shared/utils/MiNumero';
@@ -8,6 +8,8 @@ import { Header } from '../shared/components/Header';
 import { ActividadControles } from '../shared/components/ActividadControles';
 import { ModalInfo } from '../shared/components/ModalInfo';
 import { ModalFeedback } from '../shared/components/ModalFeedback';
+import { useNavegacionFlechas } from '../shared/hooks/useNavegacionFlechas';
+import { useControlDoblePicker } from '../shared/hooks/useControlDoblePicker';
 import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadTablas.css';
 
@@ -147,6 +149,31 @@ export function ActividadTablas() {
   const [idxDecenas, setIdxDecenas] = useState(0);
   const [idxUnidades, setIdxUnidades] = useState(0);
 
+  // Mapa de navegacion dinamico basado en las casillas adivinables actuales
+  const navegacionGrid = useMemo(() => {
+    let nGrid = [];
+    for (let i = 0; i < 8; i++) {
+      let fila = [];
+      for (let j = 0; j < 8; j++) {
+        const c = grid[i * 8 + j]; // Como grid es flat y de 8x8, la formula directa sirve
+        if (c && c.type === TIPO_CASILLA.ADIVINABLE) {
+          fila.push(c.id);
+        } else {
+          fila.push(null);
+        }
+      }
+      nGrid.push(fila);
+    }
+    nGrid.push(Array(8).fill('btn-corregir'));
+    return nGrid;
+  }, [grid]);
+
+  // Pasamos 'null' como onActivarCelda ya que no tenemos estado celdaActiva
+  const handleFlechas = useNavegacionFlechas(navegacionGrid, null, mostrarFeedback || mostrarInfo);
+
+  // Manejador del teclado exclusivo para la cuadricula
+  const handleKeyDownGrid = useControlDoblePicker(idxDecenas, setIdxDecenas, idxUnidades, setIdxUnidades, handleFlechas);
+
   // Handler del evento
   const cambiarDificultad = (e) => {
     const nuevoNivel = e.target.value;
@@ -221,10 +248,10 @@ export function ActividadTablas() {
   return (
     <>
       <div className="actividad-layout tablas-layout-custom">
-        {/* Contenedor de la izquierda (Cuadrícula) */}
+        {/* Contenedor de la izquierda (Cuadricula) */}
         <div className="panel-cuadricula">
           <div className="tablas-grid-container">
-            <TableroGrid grid={grid} onCellClick={handleCellClick} />
+            <TableroGrid grid={grid} onCellClick={handleCellClick} onKeyDown={handleKeyDownGrid} />
           </div>
         </div>
 
@@ -249,7 +276,12 @@ export function ActividadTablas() {
               />
             </div>
             <div className="actividad-footer">
-              <button className="btn-corregir-full" onClick={validarEjercicio}>
+              <button 
+                id="celda-btn-corregir"
+                className="btn-corregir-full hover-primary" 
+                onClick={validarEjercicio}
+                onKeyDown={(e) => handleFlechas(e, 'btn-corregir')}
+              >
                 {TEXTOS.global.corregir}
               </button>
             </div>

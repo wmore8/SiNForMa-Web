@@ -1,0 +1,42 @@
+/* ==========================================================================
+   ACCESIBILIDAD Y NAVEGACION ESPACIAL GLOBALES
+   ========================================================================== */
+
+/* Reseteamos el outline por defecto en TODOS los elementos interactivos del DOM */
+button:focus,
+a:focus,
+textarea:focus,
+[tabindex="0"]:focus,
+[tabindex="-1"]:focus,
+.celda-digito.interactiva:focus,
+.caja-total:focus,
+.celda-ancha:focus,
+.celosia-input:focus,
+.celosia-resultado-input:focus,
+.swipe-picker-wrapper:focus,
+.my-number-picker:focus {
+    outline: none;
+}
+
+/* Aplicamos nuestro estilo custom SOLO cuando navegan con teclado (Tab o Flechas) */
+button:focus-visible,
+a:focus-visible,
+textarea:focus-visible,
+[tabindex="0"]:focus-visible,
+.celda-digito.interactiva:focus-visible,
+.caja-total:focus-visible,
+.celda-ancha:focus-visible,
+.celosia-input:focus-visible,
+.celosia-resultado-input:focus-visible,
+.swipe-picker-wrapper:focus-visible,
+.my-number-picker:focus-visible {
+    outline: 4px solid #FFD54F !important;
+    outline-offset: 2px;
+
+    border-color: var(--primary) !important;
+    
+    transform: scale(1.05);
+    transition: transform 0.2s ease, background-color 0.2s ease, outline 0.1s ease;
+     /* Para que el scale no se solape por debajo de celdas adyacentes */
+     z-index: 10;
+}

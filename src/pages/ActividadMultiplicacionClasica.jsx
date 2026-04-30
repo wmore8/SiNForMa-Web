@@ -197,6 +197,7 @@ export function ActividadMultiplicacionClasica() {
                 key={`${tipo}-${fila}-${col}`}
                 className={`celda-digito interactiva ${estaLlena} ${isActive ? 'activa' : ''} ${feedback}`}
                 onClick={() => setCeldaActiva({ tipo, f: fila, c: col })}
+                onFocus={() => setCeldaActiva({ tipo, f: fila, c: col })}
                 tabIndex={0}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {

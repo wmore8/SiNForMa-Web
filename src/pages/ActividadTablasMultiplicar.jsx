@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Header } from '../shared/components/Header';
 import { ActividadControles } from '../shared/components/ActividadControles';
 import { TableroGrid } from '../shared/components/TableroGrid';
@@ -6,6 +6,8 @@ import { SwipePicker } from '../shared/components/SwipePicker';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { ModalInfo } from '../shared/components/ModalInfo';
 import { ModalFeedback } from '../shared/components/ModalFeedback';
+import { useNavegacionFlechas } from '../shared/hooks/useNavegacionFlechas';
+import { useControlDoblePicker } from '../shared/hooks/useControlDoblePicker';
 import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadTablas.css';
 
@@ -113,6 +115,27 @@ export function ActividadTablasMultiplicar() {
     const [esCorrecto, setEsCorrecto] = useState(false);
     const [mensajeFeedback, setMensajeFeedback] = useState("");
 
+    const navegacionGrid = useMemo(() => {
+        let nGrid = [];
+        for (let i = 0; i < 9; i++) {
+            let fila = [];
+            for (let j = 0; j < 9; j++) {
+                const c = grid[i * 9 + j];
+                if (c && c.type === TIPO_CASILLA.ADIVINABLE) {
+                    fila.push(c.id);
+                } else {
+                    fila.push(null);
+                }
+            }
+            nGrid.push(fila);
+        }
+        nGrid.push(Array(9).fill('btn-corregir'));
+        return nGrid;
+    }, [grid]);
+
+    const handleFlechas = useNavegacionFlechas(navegacionGrid, null, mostrarFeedback || mostrarInfo);
+    const handleKeyDownGrid = useControlDoblePicker(idxDecenas, setIdxDecenas, idxUnidades, setIdxUnidades, handleFlechas);
+
     const cambiarDificultad = (e) => {
         const nuevoNivel = e.target.value;
         setDificultad(nuevoNivel);
@@ -182,7 +205,7 @@ export function ActividadTablasMultiplicar() {
             <div className="actividad-layout tablas-layout-custom">
                 <div className="panel-cuadricula">
                     <div className="tablas-grid-container tablas-multiplicar">
-                        <TableroGrid grid={grid} onCellClick={handleCellClick} />
+                        <TableroGrid grid={grid} onCellClick={handleCellClick} onKeyDown={handleKeyDownGrid} />
                     </div>
                 </div>
 
@@ -206,7 +229,12 @@ export function ActividadTablasMultiplicar() {
                             <SwipePicker opciones={OPCIONES_UNIDADES} value={idxUnidades} onChange={setIdxUnidades} />
                         </div>
                         <div className="actividad-footer">
-                            <button className="btn-corregir-full" onClick={validarEjercicio}>
+                            <button 
+                                id="celda-btn-corregir"
+                                className="btn-corregir-full hover-primary" 
+                                onClick={validarEjercicio}
+                                onKeyDown={(e) => handleFlechas(e, 'btn-corregir')}
+                            >
                                 {TEXTOS.global.corregir}
                             </button>
                         </div>

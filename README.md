@@ -16,6 +16,8 @@
 - [x] **Modo Claro/Oscuro**: Soporte nativo para temas visuales con persistencia en `localStorage`.
 - [x] **Navegación Robusta**: Sistema de rutas jerárquico y página de error 404 personalizada.
 - [x] **Tamaño de letra personalizado** : Tres tamaños de texto seleccionables que mejoran la experiencia de usuario
+- [x] **Accesibilidad** : control total por teclado (Focus/Tab navigation).
+
 
 ## 🧩 Actividades Disponibles
 La plataforma organiza las actividades en bloques progresivos:
@@ -31,7 +33,6 @@ La plataforma organiza las actividades en bloques progresivos:
     * **Multiplicación Avanzada**: Metodologías de Producto Clásico, Celosía y Recortados.
 
 ## 📋 Próximos Pasos (ToDo)
-- [ ] Accesibilidad : control total por teclado (Focus/Tab navigation).
 - [ ] Desarrollar la **Unidad de conversión** (Conversor dinámico Romesco ↔ Decimal).
 - [ ] QA: Pruebas funcionales.
 - [ ] Implementación del diseño de los iconos

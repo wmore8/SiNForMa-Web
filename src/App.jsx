@@ -21,6 +21,8 @@ import { ActividadMultiplicacionClasica } from './pages/ActividadMultiplicacionC
 import { ActividadDivisiones } from './pages/ActividadDivisiones';
 
 import './styles/App.css'
+import './styles/Accesibilidad.css'
+import './styles/Navbar.css'
 
 function AppLayout() {
   const [isModalOpen, setIsModalOpen] = useState(false);

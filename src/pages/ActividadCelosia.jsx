@@ -133,6 +133,7 @@ export function ActividadCelosia() {
                 id={`celda-${id}`}
                 className={`celosia-input ${tipo} ${estaLlena} ${isActive ? 'activa' : ''} ${feed}`}
                 onClick={() => setCeldaActiva(id)}
+                onFocus={() => setCeldaActiva(id)}
                 tabIndex={0}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setCeldaActiva(id); }
@@ -157,6 +158,7 @@ export function ActividadCelosia() {
                     id={`celda-${id}`} // <-- VITAL
                     className={`celosia-resultado-input ${estaLlena} ${isActive ? 'activa' : ''} ${feed}`}
                     onClick={() => setCeldaActiva(id)}
+                    onFocus={() => setCeldaActiva(id)}
                     tabIndex={0}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setCeldaActiva(id); }
@@ -248,6 +250,7 @@ export function ActividadCelosia() {
                             id="celda-solTotal"
                             className={`caja-total ${llenaTotal} ${actTotal ? 'activa' : ''} ${feedTotal}`}
                             onClick={() => setCeldaActiva('solTotal')}
+                            onFocus={() => setCeldaActiva('solTotal')}
                             tabIndex={0} // <-- Permite el focus
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' || e.key === ' ') {

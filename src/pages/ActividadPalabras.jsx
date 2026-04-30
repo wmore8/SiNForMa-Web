@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { Header } from '../shared/components/Header';
 import { ActividadLayout } from '../shared/components/ActividadLayout';
@@ -53,8 +53,13 @@ export function ActividadPalabras() {
     const reiniciarJuego = (idOpcion = dificultad) => {
         setEjercicio(generarSecuencia(idOpcion));
         setInputUsuario("");
-        if (inputRef.current) inputRef.current.focus();
+        if (inputRef.current) inputRef.current.focus({ preventScroll: true, focusVisible: false });
     };
+
+    // Foco inicial sin mostrar el borde amarillo
+    useEffect(() => {
+        if (inputRef.current) inputRef.current.focus({ preventScroll: true, focusVisible: false });
+    }, []);
 
     const cambiarDificultad = (e) => {
         const nuevoNivel = parseInt(e.target.value);
@@ -94,11 +99,10 @@ export function ActividadPalabras() {
         }
     };
 
-    // Al cerrar el modal, devolvemos el foco al input 
     const handleCerrarFeedback = () => {
         setMostrarFeedback(false);
         if (!ejercicio.finalizado && inputRef.current) {
-            setTimeout(() => inputRef.current.focus(), 100);
+            setTimeout(() => inputRef.current.focus({ preventScroll: true, focusVisible: false }), 100);
         }
     };
 
@@ -136,7 +140,6 @@ export function ActividadPalabras() {
                         value={inputUsuario}
                         onChange={(e) => setInputUsuario(e.target.value)}
                         disabled={ejercicio.finalizado}
-                        autoFocus
                     />
                 </form>
             </main>

@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { MiNumero } from '../utils/MiNumero';
+import { usePickerKeyboard } from '../hooks/usePickerKeyboard';
 import '../../styles/SwipePicker.css';
 
 export function SwipePicker({ opciones, value, onChange }) {
@@ -10,6 +11,17 @@ export function SwipePicker({ opciones, value, onChange }) {
     const isProgrammaticScroll = useRef(false);
     const scrollEndTimeout = useRef(null); // para quedarnos con el valor al terminar de scrollear
     const lockTimeout = useRef(null);
+
+    // Logica para el control por teclado (Flechas y +/-)
+    const handleSubir = () => {
+        if (value > 0) onChange(value - 1);
+    };
+    
+    const handleBajar = () => {
+        if (value < opciones.length - 1) onChange(value + 1);
+    };
+
+    const onKeyDown = usePickerKeyboard(handleSubir, handleBajar, handleBajar, handleSubir);
 
     // Escucha el scroll para actualizar el estado en React
     const manejarScroll = () => {
@@ -69,9 +81,9 @@ export function SwipePicker({ opciones, value, onChange }) {
     };
 
     return (
-        <div className="swipe-picker-wrapper">
+        <div className="swipe-picker-wrapper" tabIndex={0} onKeyDown={onKeyDown}>
             <div className="swipe-picker-overlay"></div>
-            <div className="swipe-picker-container" ref={contenedorRef} onScroll={manejarScroll} >
+            <div className="swipe-picker-container" ref={contenedorRef} onScroll={manejarScroll} tabIndex={-1}>
                 {/* Espacio en blanco arriba para que el primer elemento pueda quedar en el centro */}
                 <div className="swipe-padder"></div>
 

@@ -14,7 +14,7 @@ export const useAutoFocoInicial = (dependencia, idElemento, onActivar) => {
         const timeoutId = setTimeout(() => {
             const elemento = document.getElementById(idElemento);
             if (elemento) {
-                elemento.focus();
+                elemento.focus({ preventScroll: true, focusVisible: false });
                 // Si el ID tiene tu prefijo 'celda-', se lo quitamos para guardar el ID real en tu estado
                 const idLimpio = idElemento.replace('celda-', '');
                 if (onActivar) onActivar(idLimpio);

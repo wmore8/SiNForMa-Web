@@ -27,7 +27,7 @@ export function Navbar({ onOpenSettings }) {
                     <h1>SiNForMa</h1>
                 </Link>
 
-                <div className={`nav-links-container ${isMenuOpen ? 'open' : ''}`}>
+                <div id="mobile-menu" className={`nav-links-container ${isMenuOpen ? 'open' : ''}`}>
                     <ul className="nav-links">
                         {navLinks.map((link) => (
                             <li key={link.name}>
@@ -45,7 +45,13 @@ export function Navbar({ onOpenSettings }) {
                         <Icon name={"icon-ajustes"} className="ajustes-icon" />
                     </button>
 
-                    <button className="nav-btn mobile-menu-btn" onClick={toggleMenu} title={isMenuOpen ? 'Cerrar' : 'Abrir'}>
+                    <button 
+                        className="nav-btn mobile-menu-btn" 
+                        onClick={toggleMenu} 
+                        title={isMenuOpen ? 'Cerrar' : 'Abrir'}
+                        aria-expanded={isMenuOpen}
+                        aria-controls="mobile-menu"
+                    >
                         <Icon name="icon-nav-toggle" className={`hamburger-icon ${isMenuOpen ? 'rotated' : ''}`} />
                     </button>
                 </div>
