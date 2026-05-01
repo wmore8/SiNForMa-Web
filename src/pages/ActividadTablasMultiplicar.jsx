@@ -11,6 +11,8 @@ import { useControlDoblePicker } from '../shared/hooks/useControlDoblePicker';
 import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadTablas.css';
 
+// (Base + 1 por las cabeceras)
+const MAX_BASE = MiNumero.baseActual + 1;
 // Constantes de estado
 const TIPO_CASILLA = { VISIBLE: 'visible', ADIVINABLE: 'guessable', CUBIERTA: 'covered', HEADER: 'header', ESQUINA: 'header esquina' };
 const ESTADO_CASILLA = { BASE: 'idle', CORRECTO: 'correct', FALLO: 'error' };
@@ -20,14 +22,14 @@ const DIGITOS = MiNumero.losDigitos;
 const OPCIONES_UNIDADES = [...DIGITOS];
 const OPCIONES_DECENAS = [' ', ...DIGITOS.slice(1)];
 
-// Generador del tablero 9x9
+// Generador del tablero dinamico
 const generarTableroMultiplicar = (nivel) => {
     let tablero = [];
 
     // Generamos el tablero base con todos los resultados
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < MAX_BASE; i++) {
         let fila = [];
-        for (let j = 0; j < 9; j++) {
+        for (let j = 0; j < MAX_BASE; j++) {
             let tipo = TIPO_CASILLA.VISIBLE;
             let texto = '';
 
@@ -63,16 +65,16 @@ const generarTableroMultiplicar = (nivel) => {
 
     // Aplicamos la logica de ocultar celdas segun la dificultad
     if (nivel === '0') {
-        // Facil: Oculta 1 columna entera (entre la 1 y la 8)
-        const colAleatoria = Math.floor(Math.random() * 8) + 1;
-        for (let i = 1; i < 9; i++) {
+        // Facil: Oculta 1 columna entera
+        const colAleatoria = Math.floor(Math.random() * (MAX_BASE - 1)) + 1;
+        for (let i = 1; i < MAX_BASE; i++) {
             tablero[i][colAleatoria].type = TIPO_CASILLA.ADIVINABLE;
             tablero[i][colAleatoria].currentText = '?';
         }
     } else if (nivel === '1') {
         // Medio: Oculta un 20% de las celdas interiores aleatoriamente
-        for (let i = 1; i < 9; i++) {
-            for (let j = 1; j < 9; j++) {
+        for (let i = 1; i < MAX_BASE; i++) {
+            for (let j = 1; j < MAX_BASE; j++) {
                 if (Math.random() < 0.20) {
                     tablero[i][j].type = TIPO_CASILLA.ADIVINABLE;
                     tablero[i][j].currentText = '?';
@@ -81,16 +83,16 @@ const generarTableroMultiplicar = (nivel) => {
         }
     } else if (nivel === '2') {
         // Dificil: Oculta TODAS las celdas interiores y pide adivinar 7 aleatorias
-        for (let i = 1; i < 9; i++) {
-            for (let j = 1; j < 9; j++) {
+        for (let i = 1; i < MAX_BASE; i++) {
+            for (let j = 1; j < MAX_BASE; j++) {
                 tablero[i][j].type = TIPO_CASILLA.CUBIERTA;
                 tablero[i][j].currentText = ''; // Se veran tapadas
             }
         }
         let puestas = 0;
         while (puestas < 7) {
-            let r = Math.floor(Math.random() * 8) + 1;
-            let c = Math.floor(Math.random() * 8) + 1;
+            let r = Math.floor(Math.random() * (MAX_BASE - 1)) + 1;
+            let c = Math.floor(Math.random() * (MAX_BASE - 1)) + 1;
             if (tablero[r][c].type !== TIPO_CASILLA.ADIVINABLE) {
                 tablero[r][c].type = TIPO_CASILLA.ADIVINABLE;
                 tablero[r][c].currentText = '?';
@@ -117,10 +119,11 @@ export function ActividadTablasMultiplicar() {
 
     const navegacionGrid = useMemo(() => {
         let nGrid = [];
-        for (let i = 0; i < 9; i++) {
+
+        for (let i = 0; i < MAX_BASE; i++) {
             let fila = [];
-            for (let j = 0; j < 9; j++) {
-                const c = grid[i * 9 + j];
+            for (let j = 0; j < MAX_BASE; j++) {
+                const c = grid[i * MAX_BASE + j];
                 if (c && c.type === TIPO_CASILLA.ADIVINABLE) {
                     fila.push(c.id);
                 } else {
@@ -129,7 +132,7 @@ export function ActividadTablasMultiplicar() {
             }
             nGrid.push(fila);
         }
-        nGrid.push(Array(9).fill('btn-corregir'));
+        nGrid.push(Array(MAX_BASE).fill('btn-corregir'));
         return nGrid;
     }, [grid]);
 
@@ -229,9 +232,9 @@ export function ActividadTablasMultiplicar() {
                             <SwipePicker opciones={OPCIONES_UNIDADES} value={idxUnidades} onChange={setIdxUnidades} />
                         </div>
                         <div className="actividad-footer">
-                            <button 
+                            <button
                                 id="celda-btn-corregir"
-                                className="btn-corregir-full hover-primary" 
+                                className="btn-corregir-full hover-primary"
                                 onClick={validarEjercicio}
                                 onKeyDown={(e) => handleFlechas(e, 'btn-corregir')}
                             >

@@ -9,24 +9,25 @@ const OPCIONES_DIGITOS = [' ', ...MiNumero.losDigitos];
 const OPCIONES_SIGNO = [' ', '−']
 
 const generarResta = (nivel) => {
+    const base = MiNumero.baseActual;
     const rand = (max) => Math.floor(Math.random() * max);
     let c1 = 0, d1 = 0, u1 = 0;
     let c2 = 0, d2 = 0, u2 = 0;
 
     if (nivel === '0') {
         // Facil: 1 digito. n1 >= n2
-        u1 = rand(8);
+        u1 = rand(base);
         u2 = rand(u1 + 1);
     } else if (nivel === '1') {
         // Medio: 3 digitos, SIN llevadas. Cada digito n2 <= digito n1
-        c1 = rand(8); c2 = rand(c1 + 1);
-        d1 = rand(8); d2 = rand(d1 + 1);
-        u1 = rand(8); u2 = rand(u1 + 1);
+        c1 = rand(base); c2 = rand(c1 + 1);
+        d1 = rand(base); d2 = rand(d1 + 1);
+        u1 = rand(base); u2 = rand(u1 + 1);
     } else {
         // Dificil: 3 digitos aleatorios. (Puede dar llevadas y negativos)
-        c1 = rand(8); c2 = rand(8);
-        d1 = rand(8); d2 = rand(8);
-        u1 = rand(8); u2 = rand(8);
+        c1 = rand(base); c2 = rand(base);
+        d1 = rand(base); d2 = rand(base);
+        u1 = rand(base); u2 = rand(base);
     }
 
     // Construimos los strings (quitando ceros a la izquierda)
@@ -34,16 +35,16 @@ const generarResta = (nivel) => {
     const strN2 = `${c2}${d2}${u2}`.replace(/^0+/, '') || '0';
 
     // Pasamos a decimal para operar matematicamente
-    const val1 = parseInt(strN1, 8);
-    const val2 = parseInt(strN2, 8);
-    // Calculamos si es negativo y sacamos el valor absoluto en Base 8
+    const val1 = parseInt(strN1, base);
+    const val2 = parseInt(strN2, base);
+    // Calculamos si es negativo y sacamos el valor absoluto en la Base actual
     const esNegativo = val1 < val2;
-    const resStrBase8 = Math.abs(val1 - val2).toString(8);
+    const resStrBaseActual = Math.abs(val1 - val2).toString(base);
 
     return {
         num1Str: strN1,
         num2Str: strN2,
-        solucionAbsoluta: resStrBase8,
+        solucionAbsoluta: resStrBaseActual,
         esNegativo: esNegativo
     };
 };

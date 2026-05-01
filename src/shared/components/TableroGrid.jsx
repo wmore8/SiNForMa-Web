@@ -2,7 +2,7 @@
 
 export function TableroGrid({ grid, onCellClick, onKeyDown }) {
   return (
-    <div className="tablas-grid">
+    <div className="tablas-grid" style={{ "--columnas": Math.sqrt(grid.length) }}>
       {grid.map(casilla => {
         const isAdivinable = casilla.type === 'guessable';
         return (

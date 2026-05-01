@@ -14,25 +14,43 @@ const generarDivision = (nivel) => {
 
     if (nivel === '0') {
         // Facil: 1 cifra / 1 cifra (divisor siempre > 0)
-        val1 = rand(8);
-        val2 = rand(7) + 1;
+        val1 = rand(MiNumero.baseActual);
+        val2 = rand(MiNumero.baseActual - 1) + 1;
     } else if (nivel === '1') {
-        // Medio: 3 cifras (hasta 777 base 8 = 511 decimal) / 1 cifra
-        val1 = rand(512);
-        val2 = rand(7) + 1;
+        const base = MiNumero.baseActual;
+        const minVal = base;
+        const maxVal = base * base;
+
+        // Generamos dos numeros para que la division sea exacta (dividendo = divisor * cociente)
+        const divisor = Math.floor(Math.random() * (base - 2)) + 2; // de 2 al maximo de base (ej: 2 a 7)
+        const cociente = Math.floor(Math.random() * (maxVal - minVal)) + minVal; 
+        const dividendo = divisor * cociente;
+
+        return {
+            num1Str: dividendo.toString(base), 
+            num2Str: divisor.toString(base),
+            solucionStr: cociente.toString(base)
+        };
     } else {
-        // Difícil: 3 cifras / 2 cifras (hasta 77 base 8 = 63 decimal)
-        val1 = rand(512);
-        val2 = rand(63) + 1;
+        // Dificil: 3 cifras / 2 cifras
+        const base = MiNumero.baseActual;
+        val1 = rand(Math.pow(base, 3));
+        val2 = rand(Math.pow(base, 2) - 1) + 1;
+        const resultadoDecimal = Math.floor(val1 / val2);
+        return {
+            num1Str: val1.toString(base),
+            num2Str: val2.toString(base),
+            solucionStr: resultadoDecimal.toString(base)
+        };
     }
 
     // Division entera (sin decimales)
     const resultadoDecimal = Math.floor(val1 / val2);
 
     return {
-        num1Str: val1.toString(8), // Convertimos a Base 8 para mostrar
-        num2Str: val2.toString(8),
-        solucionStr: resultadoDecimal.toString(8)
+        num1Str: val1.toString(MiNumero.baseActual),
+        num2Str: val2.toString(MiNumero.baseActual),
+        solucionStr: resultadoDecimal.toString(MiNumero.baseActual)
     };
 };
 

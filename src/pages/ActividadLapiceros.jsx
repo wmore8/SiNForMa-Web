@@ -9,9 +9,11 @@ import '../styles/ActividadLapiceros.css';
 export function ActividadLapiceros() {
     const [dificultad, setDificultad] = useState('0');
 
+    const getBase = () => MiNumero.baseActual;
+    const getMaxLapices = () => Math.pow(getBase(), 3);
+
     // Lazy initialization: Calculamos los valores aleatorios desde el principio
-    // simulacion de aleatoriedad de Java a JS -> R.nextInt(512) o Math.pow(8,3) (es 3 elevado a 8 : 3^8)
-    const [objetivo, setObjetivo] = useState(() => Math.floor(Math.random() * 513));
+    const [objetivo, setObjetivo] = useState(() => Math.floor(Math.random() * (getMaxLapices() + 1)));
     // posibilidad de desactivar las UNIDADES en un 50%
     const [unidadesHabilitadas, setUnidadesHabilitadas] = useState(() => Math.random() < 0.5);
     // Inicializamos los valores de los inputs
@@ -23,15 +25,12 @@ export function ActividadLapiceros() {
     const [esCorrecto, setEsCorrecto] = useState(false);
 
     const generarEjercicio = () => {
-        // Simulacion de aleatoriedad de Java a JS -> R.nextInt(512) o Math.pow(8,3) (es 3 elevado a 8 : 3^8)
-        setObjetivo(Math.floor(Math.random() * 513));
-        // Posibilidad de desactivar las UNIDADES en un 50%
+        setObjetivo(Math.floor(Math.random() * (getMaxLapices() + 1)));
         setUnidadesHabilitadas(Math.random() < 0.5);
         // Reiniciamos los valores de los inputs
         setCajas(0);
         setEstuches(0);
         setLapices(0);
-
     };
 
     // Handler del evento
@@ -41,19 +40,20 @@ export function ActividadLapiceros() {
     };
 
 
-    const addCaja = () => setCajas(prev => prev < 8 ? prev + 1 : prev);
+    const addCaja = () => setCajas(prev => prev < getBase() ? prev + 1 : prev);
     const delCaja = () => setCajas(prev => prev > 0 ? prev - 1 : prev);
 
-    const addEstuche = () => setEstuches(prev => prev < 64 ? prev + 1 : prev);
+    const addEstuche = () => setEstuches(prev => prev < Math.pow(getBase(), 2) ? prev + 1 : prev);
     const delEstuche = () => setEstuches(prev => prev > 0 ? prev - 1 : prev);
 
-    const addLapiz = () => setLapices(prev => prev < 512 ? prev + 1 : prev);
+    const addLapiz = () => setLapices(prev => prev < getMaxLapices() ? prev + 1 : prev);
     const delLapiz = () => setLapices(prev => prev > 0 ? prev - 1 : prev);
 
     const validarEjercicio = () => {
-        const total = lapices + (estuches * 8) + (cajas * 64);
+        const base = getBase();
+        const total = lapices + (estuches * base) + (cajas * Math.pow(base, 2));
         const dif = total - objetivo;
-        const acierto = (unidadesHabilitadas && dif === 0) || (!unidadesHabilitadas && dif >= 0 && dif <= 7);
+        const acierto = (unidadesHabilitadas && dif === 0) || (!unidadesHabilitadas && dif >= 0 && dif <= base - 1);
 
         setEsCorrecto(acierto);
         setMostrarFeedback(true);
@@ -113,7 +113,7 @@ export function ActividadLapiceros() {
                                 valorMostrado={aRomesco(lapices)}
                                 onSubir={addLapiz}
                                 onBajar={delLapiz}
-                                disableSubir={!unidadesHabilitadas || lapices >= 512}
+                                disableSubir={!unidadesHabilitadas || lapices >= getMaxLapices()}
                                 disableBajar={!unidadesHabilitadas || lapices <= 0}
                             />
                         </div>
@@ -129,7 +129,7 @@ export function ActividadLapiceros() {
                                 valorMostrado={aRomesco(estuches)}
                                 onSubir={addEstuche}
                                 onBajar={delEstuche}
-                                disableSubir={estuches >= 64}
+                                disableSubir={estuches >= Math.pow(getBase(), 2)}
                                 disableBajar={estuches <= 0}
                             />
                         </div>
@@ -145,7 +145,7 @@ export function ActividadLapiceros() {
                                 valorMostrado={aRomesco(cajas)}
                                 onSubir={addCaja}
                                 onBajar={delCaja}
-                                disableSubir={cajas >= 8}
+                                disableSubir={cajas >= getBase()}
                                 disableBajar={cajas <= 0}
                             />
                         </div>

@@ -55,6 +55,32 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, c
           {TEXTOS.ui.opciones.oscuro}
         </button>
       </div>
+
+      {import.meta.env.SINFORMA_MODO_DEBUG === 'true' && (
+        <>
+          {/* SECCION DEBUG BASE */}
+          <div className='modal-legend' style={{ marginTop: '1.5rem', color: 'var(--danger)' }}>Debug: Sistema Numérico</div>
+          <div className="theme-toggle-buttons">
+            <button
+              className={`theme-btn ${localStorage.getItem('debugBase') === '8' || (!localStorage.getItem('debugBase') && import.meta.env.SINFORMA_APP_SISTEMA_NUMERACION === '8') ? 'active' : ''}`}
+              onClick={() => { localStorage.setItem('debugBase', '8'); window.location.reload(); }}
+            >
+              Romesco (Base 8)
+            </button>
+            <button
+              className={`theme-btn ${localStorage.getItem('debugBase') === '10' || (!localStorage.getItem('debugBase') && import.meta.env.SINFORMA_APP_SISTEMA_NUMERACION === '10') ? 'active' : ''}`}
+              onClick={() => { localStorage.setItem('debugBase', '10'); window.location.reload(); }}
+            >
+              Decimal (Base 10)
+            </button>
+          </div>
+
+          {/* VERSION TEXT */}
+          <div style={{ marginTop: '2rem', textAlign: 'center', fontStyle: 'italic', fontSize: '0.9rem', color: 'var(--text-color)', opacity: 0.7 }}>
+            SiNForMa Web Development version 0.8.0
+          </div>
+        </>
+      )}
     </Modal>
   );
 }

@@ -4,18 +4,25 @@ import { SwipePicker } from '../shared/components/SwipePicker';
 import { ActividadLayout } from '../shared/components/ActividadLayout';
 import { TEXTOS } from '../constants/textos';
 
-const OPCIONES_NIVELES = [
-    { id: 0, from: 1, incr: 1, asc: true, label: "De ro en ro (Ascendente)", sec: "+ ro" },
-    { id: 1, from: 1, incr: 2, asc: true, label: "De mes en mes (Ascendente)", sec: "+ mes" },
-    { id: 2, from: 0, incr: 2, asc: true, label: "Pares (Ascendente)", sec: "+ mes" },
-    { id: 3, from: 0, incr: 4, asc: true, label: "De cleta en cleta (Ascendente)", sec: "+ cleta" },
-    { id: 4, from: 0, incr: 8, asc: true, label: "De moel en moel (Ascendente)", sec: "+ moel" },
-    { id: 5, from: -1, incr: 1, asc: true, label: "Aleatorio + ro (Ascendente)", sec: "+ ro" },
-    { id: 6, from: -1, incr: 1, asc: false, label: "Aleatorio − ro (Descendente)", sec: "− ro" },
-    { id: 7, from: -1, incr: 2, asc: true, label: "Aleatorio + mes (Ascendente)", sec: "+ mes" },
-    { id: 8, from: -1, incr: 4, asc: true, label: "Aleatorio + cleta (Ascendente)", sec: "+ cleta" },
-    { id: 9, from: -1, incr: 8, asc: true, label: "Aleatorio + moel (Ascendente)", sec: "+ moel" }
-];
+const getOpcionesNiveles = () => {
+    const base = MiNumero.baseActual;
+    const mitad = Math.floor(base / 2);
+    const n = (num) => new MiNumero(num, 10);
+    const word = (num) => n(num).toLongString();
+    
+    return [
+        { id: 0, from: 1, incr: 1, asc: true, label: `De ${word(1)} en ${word(1)} (Ascendente)`, sec: `+ ${word(1)}` },
+        { id: 1, from: 1, incr: 2, asc: true, label: `De ${word(2)} en ${word(2)} (Ascendente)`, sec: `+ ${word(2)}` },
+        { id: 2, from: 0, incr: 2, asc: true, label: "Pares (Ascendente)", sec: `+ ${word(2)}` },
+        { id: 3, from: 0, incr: mitad, asc: true, label: `De ${word(mitad)} en ${word(mitad)} (Ascendente)`, sec: `+ ${word(mitad)}` },
+        { id: 4, from: 0, incr: base, asc: true, label: `De ${word(base)} en ${word(base)} (Ascendente)`, sec: `+ ${word(base)}` },
+        { id: 5, from: -1, incr: 1, asc: true, label: `Aleatorio + ${word(1)} (Ascendente)`, sec: `+ ${word(1)}` },
+        { id: 6, from: -1, incr: 1, asc: false, label: `Aleatorio − ${word(1)} (Descendente)`, sec: `− ${word(1)}` },
+        { id: 7, from: -1, incr: 2, asc: true, label: `Aleatorio + ${word(2)} (Ascendente)`, sec: `+ ${word(2)}` },
+        { id: 8, from: -1, incr: mitad, asc: true, label: `Aleatorio + ${word(mitad)} (Ascendente)`, sec: `+ ${word(mitad)}` },
+        { id: 9, from: -1, incr: base, asc: true, label: `Aleatorio + ${word(base)} (Ascendente)`, sec: `+ ${word(base)}` }
+    ];
+};
 
 // Arrays de opciones para los Pickers (Basado en MiNumero.java)
 const DIGITOS = MiNumero.losDigitos;
@@ -32,18 +39,20 @@ export function ActividadNumeros() {
     const [mensajeFeedback, setMensajeFeedback] = useState("");
 
     const generarSecuencia = (idOpcion) => {
-        const opc = OPCIONES_NIVELES[idOpcion];
+        const opciones = getOpcionesNiveles();
+        const opc = opciones[idOpcion];
         let howMany = Math.floor(Math.random() * 11) + 5;
         let fromNum = opc.from;
         let toNum, curNum, prevNum;
 
+        const limite = Math.pow(MiNumero.baseActual, 3);
         if (opc.asc) {
-            if (fromNum === -1) fromNum = Math.floor(Math.random() * (512 - howMany * opc.incr));
+            if (fromNum === -1) fromNum = Math.floor(Math.random() * (limite - howMany * opc.incr));
             curNum = fromNum;
             toNum = fromNum + howMany * opc.incr;
             prevNum = fromNum - opc.incr;
         } else {
-            if (fromNum === -1) fromNum = Math.floor(Math.random() * (512 - howMany * opc.incr)) + howMany * opc.incr;
+            if (fromNum === -1) fromNum = Math.floor(Math.random() * (limite - howMany * opc.incr)) + howMany * opc.incr;
             curNum = fromNum;
             toNum = fromNum - howMany * opc.incr;
             prevNum = fromNum + opc.incr;
@@ -111,10 +120,10 @@ export function ActividadNumeros() {
 
     return (
         <ActividadLayout
-            rutas={[{ label: `${TEXTOS.titulos.numeros} (${OPCIONES_NIVELES[dificultad].sec})` }]}
+            rutas={[{ label: `${TEXTOS.titulos.numeros} (${getOpcionesNiveles()[dificultad].sec})` }]}
             backPath="/"
             dificultad={dificultad}
-            opcionesDificultad={OPCIONES_NIVELES}
+            opcionesDificultad={getOpcionesNiveles()}
             onChangeDificultad={cambiarDificultad}
             onReiniciar={() => reiniciarJuego(dificultad)}
             textoInfo={TEXTOS.infoActividades.secuenciasNum}

@@ -671,6 +671,10 @@ html.text-size-lg {
   width: 100%;
 }
 
+.teclado-contenedor.base-10 .teclado-grid {
+  grid-template-columns: repeat(6, 1fr);
+}
+
 .teclado-btn {
   aspect-ratio: 1;
   display: flex;
@@ -785,14 +789,29 @@ html.text-size-lg {
     border-left: none;
   }
 
+  .teclado-contenedor.base-10 .teclado-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* Orden para escritorio: C, 0, DEL */
+  .teclado-contenedor.base-10 .btn-clear {
+    order: 10;
+  }
+  .teclado-contenedor.base-10 .btn-cero {
+    order: 11;
+  }
+  .teclado-contenedor.base-10 .btn-del {
+    order: 12;
+  }
+
   /* Transformamos el teclado en una calculadora (3 columnas) */
   .multiplicacion-layout-custom.modo-dificil .teclado-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
 
-  /* Hacemos que el ultimo boton 'C' ocupe las 3 columnas enteras por abajo */
-  .multiplicacion-layout-custom.modo-dificil .teclado-btn:last-child {
+  /* Hacemos que el ultimo boton 'C' ocupe las 3 columnas enteras por abajo SOLO en Base 8 */
+  .multiplicacion-layout-custom.modo-dificil .teclado-contenedor.base-8 .teclado-btn:last-child {
     grid-column: span 3;
     aspect-ratio: auto;
     padding: 0.5rem;
@@ -856,8 +875,7 @@ html.text-size-lg {
 .actividad-layout {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 80px);
-  /* 80px aprox de la navbar */
+  flex: 1;
   padding: var(--spacing-md);
   gap: var(--spacing-md);
   max-width: 1000px;

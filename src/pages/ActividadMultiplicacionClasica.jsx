@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { SwipePicker } from '../shared/components/SwipePicker';
-import { TecladoBase8 } from '../shared/components/TecladoBase8';
+import { TecladoBase } from '../shared/components/TecladoBase';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { ActividadLayout } from '../shared/components/ActividadLayout';
 import { TEXTOS } from '../constants/textos';
@@ -11,43 +11,44 @@ import '../styles/ActividadOperaciones.css';
 const OPCIONES_DIGITOS = [' ', ...MiNumero.losDigitos];
 
 const generarMultiplicacion = (nivel) => {
-    const rand = (max) => Math.floor(Math.random() * max);
+    const base = MiNumero.baseActual;
+    const rand = (min, max) => Math.floor(Math.random() * (max - min)) + min;
     let val1 = 0;
     let val2 = 0;
 
     if (nivel === '0') {
-        val1 = rand(8); val2 = rand(8);
+        val1 = rand(0, base); val2 = rand(0, base);
     } else if (nivel === '1') {
-        val1 = rand(512); val2 = rand(8);
+        val1 = rand(0, Math.pow(base, 3)); val2 = rand(0, base);
     } else {
-        // Dificil: 3 cifras x 3 cifras (minimo 64 en decimal para garantizar 3 cifras)
-        val1 = Math.floor(Math.random() * (512 - 64)) + 64;
-        val2 = Math.floor(Math.random() * (512 - 64)) + 64;
+        // Dificil: 3 cifras x 3 cifras
+        val1 = rand(Math.pow(base, 2), Math.pow(base, 3));
+        val2 = rand(Math.pow(base, 2), Math.pow(base, 3));
     }
 
-    const str1Base8 = val1.toString(8);
+    const str1BaseActual = val1.toString(base);
     // Para el nivel 2, necesitamos que el multiplicador siempre tenga 3 cifras en texto (ej. "124")
-    const str2Base8 = val2.toString(8).padStart(3, '0');
+    const str2BaseActual = val2.toString(base).padStart(3, '0');
 
     // Calculamos las soluciones parciales (cada fila de la multiplicacion larga)
-    const digitoU = parseInt(str2Base8[2], 8);
-    const digitoD = parseInt(str2Base8[1], 8);
-    const digitoC = parseInt(str2Base8[0], 8);
+    const digitoU = parseInt(str2BaseActual[2], base);
+    const digitoD = parseInt(str2BaseActual[1], base);
+    const digitoC = parseInt(str2BaseActual[0], base);
 
     // Los productos parciales tienen como maximo 4 cifras. Los rellenamos con espacios a la izquierda.
-    const paso0 = (val1 * digitoU).toString(8).padStart(4, ' ');
-    const paso1 = (val1 * digitoD).toString(8).padStart(4, ' ');
-    const paso2 = (val1 * digitoC).toString(8).padStart(4, ' ');
+    const paso0 = (val1 * digitoU).toString(base).padStart(4, ' ');
+    const paso1 = (val1 * digitoD).toString(base).padStart(4, ' ');
+    const paso2 = (val1 * digitoC).toString(base).padStart(4, ' ');
 
     // El resultado final tiene como maximo 6 cifras.
-    const resultadoFinal = (val1 * val2).toString(8).padStart(6, ' ');
+    const resultadoFinal = (val1 * val2).toString(base).padStart(6, ' ');
 
     return {
-        num1Str: str1Base8,
-        num2Str: val2.toString(8), // Sin ceros a la izquierda para mostrar arriba
+        num1Str: str1BaseActual,
+        num2Str: val2.toString(base), // Sin ceros a la izquierda para mostrar arriba
         pasosEsperados: [paso0, paso1, paso2],
         solucionFinal: resultadoFinal,
-        solucionStr: (val1 * val2).toString(8) // Para validacion de nivel 0 y 1
+        solucionStr: (val1 * val2).toString(base) // Para validacion de nivel 0 y 1
     };
 };
 
@@ -391,7 +392,7 @@ export function ActividadMultiplicacionClasica() {
                 </div>
                 {dificultad === '2' && (
                     <div className="panel-derecho-dificil">
-                        <TecladoBase8 onTeclaClick={handleTeclaClick} />
+                        <TecladoBase onTeclaClick={handleTeclaClick} />
                         <button
                             id="celda-btn-corregir"
                             className="btn-corregir-full hover-primary"

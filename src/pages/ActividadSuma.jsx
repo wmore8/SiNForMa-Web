@@ -8,24 +8,25 @@ import '../styles/ActividadOperaciones.css';
 const OPCIONES_DIGITOS = [' ', ...MiNumero.losDigitos];
 
 const generarSuma = (nivel) => {
-    let u1 = 0, d1 = 0, c1 = 0;
-    let u2 = 0, d2 = 0, c2 = 0;
-
+    const base = MiNumero.baseActual;
     const rand = (max) => Math.floor(Math.random() * max);
+    let c1 = 0, d1 = 0, u1 = 0;
+    let c2 = 0, d2 = 0, u2 = 0;
 
     if (nivel === '0') {
-        // Facil: Unidades y Decenas
-        u1 = rand(8); u2 = rand(8);
+        // Facil: 1 digito. La suma de ambos NO supera la base (sin llevadas)
+        u1 = rand(base);
+        u2 = rand(base - u1);
     } else if (nivel === '1') {
-        // Medio: SIN llevadas (u1 + u2 nunca pasa de 7)
-        c1 = rand(8); c2 = rand(8 - c1);
-        d1 = rand(8); d2 = rand(8 - d1);
-        u1 = rand(8); u2 = rand(8 - u1);
+        // Medio: 3 digitos, SIN llevadas.
+        c1 = rand(base); c2 = rand(base - c1);
+        d1 = rand(base); d2 = rand(base - d1);
+        u1 = rand(base); u2 = rand(base - u1);
     } else {
-        // Dificil: CON llevadas
-        c1 = rand(8); c2 = rand(8);
-        d1 = rand(8); d2 = rand(8);
-        u1 = rand(8); u2 = rand(8);
+        // Dificil: 3 digitos aleatorios. (Seguro que hay llevadas)
+        c1 = rand(base); c2 = rand(base);
+        d1 = rand(base); d2 = rand(base);
+        u1 = rand(base); u2 = rand(base);
     }
 
     // Construimos los strings numericos. Quitamos ceros a la izquierda.
@@ -33,14 +34,14 @@ const generarSuma = (nivel) => {
     const strN2 = `${c2}${d2}${u2}`.replace(/^0+/, '') || '0';
 
     // Convertimos a decimal para sumar, y volvemos a pasar a Base 8
-    const val1 = parseInt(strN1, 8);
-    const val2 = parseInt(strN2, 8);
-    const sumStrBase8 = (val1 + val2).toString(8);
+    const val1 = parseInt(strN1, base);
+    const val2 = parseInt(strN2, base);
+    const sumStrBaseActual = (val1 + val2).toString(base);
 
     return {
         num1Str: strN1,
         num2Str: strN2,
-        solucionStr: sumStrBase8
+        solucionStr: sumStrBaseActual
     };
 };
 

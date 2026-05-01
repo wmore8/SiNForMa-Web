@@ -69,14 +69,14 @@ function AppLayout() {
   // Estado para saber si estamos en modo escritorio
   const [isDesktop, setIsDesktop] = useState(false);
 
-  // Efecto para calcular en que tamaño se colapasa la nabar
+  // Efecto para calcular en que tamaño se colapasa la navbar
   useEffect(() => {
     const checkDesktop = () => {
       const width = window.innerWidth;
 
-      if (textSize === 'sm' && width >= 1100) setIsDesktop(true);
-      else if (textSize === 'md' && width >= 1250) setIsDesktop(true);
-      else if (textSize === 'lg' && width >= 1600) setIsDesktop(true);
+      if (textSize === 'sm' && width >= 1200) setIsDesktop(true);
+      else if (textSize === 'md' && width >= 1350) setIsDesktop(true);
+      else if (textSize === 'lg' && width >= 1700) setIsDesktop(true);
       else setIsDesktop(false);
     };
 

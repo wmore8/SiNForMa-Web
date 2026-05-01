@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TecladoBase8 } from '../shared/components/TecladoBase8';
+import { TecladoBase } from '../shared/components/TecladoBase';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { ActividadLayout } from '../shared/components/ActividadLayout';
 import { TEXTOS } from '../constants/textos';
@@ -8,46 +8,52 @@ import { useAutoFocoInicial } from '../shared/hooks/useAutoFocoInicial';
 import '../styles/ActividadOperaciones.css';
 
 const generarRecortados = () => {
-    // Generamos: 3 cifras x 2 cifras (Base 8)
-    const val1 = Math.floor(Math.random() * (512 - 64)) + 64;
-    const val2 = Math.floor(Math.random() * (64 - 8)) + 8;
+    // Generamos: 3 cifras x 2 cifras (Base 8 o 10)
+    const base = MiNumero.baseActual;
+    const maxVal1 = Math.pow(base, 3);
+    const minVal1 = Math.pow(base, 2);
+    const maxVal2 = Math.pow(base, 2);
+    const minVal2 = base;
 
-    const str1 = val1.toString(8).padStart(3, '0');
-    const str2 = val2.toString(8).padStart(2, '0');
+    const val1 = Math.floor(Math.random() * (maxVal1 - minVal1)) + minVal1;
+    const val2 = Math.floor(Math.random() * (maxVal2 - minVal2)) + minVal2;
+
+    const str1 = val1.toString(base).padStart(3, '0');
+    const str2 = val2.toString(base).padStart(2, '0');
 
     // Descomponemos matematicamente
-    const v1C = parseInt(str1[0], 8) * 64; // Centenas
-    const v1D = parseInt(str1[1], 8) * 8;  // Decenas
-    const v1U = parseInt(str1[2], 8);      // Unidades
+    const v1C = parseInt(str1[0], base) * minVal1; // Centenas
+    const v1D = parseInt(str1[1], base) * base;  // Decenas
+    const v1U = parseInt(str1[2], base);      // Unidades
 
-    const v2D = parseInt(str2[0], 8) * 8;  // Decenas del multiplicador
-    const v2U = parseInt(str2[1], 8);      // Unidades del multiplicador
+    const v2D = parseInt(str2[0], base) * base;  // Decenas del multiplicador
+    const v2U = parseInt(str2[1], base);      // Unidades del multiplicador
 
     return {
         // Textos de la operacion original
         str1Original: str1,
         str2Original: str2,
 
-        // Textos a mostrar en los encabezados (convertidos a Base 8)
-        lbl1C: v1C.toString(8),
-        lbl1D: v1D.toString(8),
-        lbl1U: v1U.toString(8),
-        lbl2D: v2D.toString(8),
-        lbl2U: v2U.toString(8),
+        // Textos a mostrar en los encabezados (convertidos a Base)
+        lbl1C: v1C.toString(base),
+        lbl1D: v1D.toString(base),
+        lbl1U: v1U.toString(base),
+        lbl2D: v2D.toString(base),
+        lbl2U: v2U.toString(base),
 
-        // Soluciones esperadas en Base 8
+        // Soluciones esperadas en Base
         soluciones: {
-            s13: (v1C * v2U).toString(8),
-            s12: (v1D * v2U).toString(8),
-            s11: (v1U * v2U).toString(8),
-            s1: (val1 * v2U).toString(8), // Total Fila Unidades
+            s13: (v1C * v2U).toString(base),
+            s12: (v1D * v2U).toString(base),
+            s11: (v1U * v2U).toString(base),
+            s1: (val1 * v2U).toString(base), // Total Fila Unidades
 
-            s23: (v1C * v2D).toString(8),
-            s22: (v1D * v2D).toString(8),
-            s21: (v1U * v2D).toString(8),
-            s2: (val1 * v2D).toString(8), // Total Fila Decenas
+            s23: (v1C * v2D).toString(base),
+            s22: (v1D * v2D).toString(base),
+            s21: (v1U * v2D).toString(base),
+            s2: (val1 * v2D).toString(base), // Total Fila Decenas
 
-            solTotal: (val1 * val2).toString(8) // Total Final
+            solTotal: (val1 * val2).toString(base) // Total Final
         }
     };
 };
@@ -267,7 +273,7 @@ export function ActividadRecortados() {
                 </div>
 
                 <div className="panel-derecho-dificil">
-                    <TecladoBase8 onTeclaClick={handleTeclaClick} deshabilitado={mostrarFeedback}/>
+                    <TecladoBase onTeclaClick={handleTeclaClick} deshabilitado={mostrarFeedback}/>
                     <button
                     id="celda-btn-corregir"
                         className="btn-corregir-full hover-primary"

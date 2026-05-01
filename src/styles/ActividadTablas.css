@@ -18,8 +18,8 @@
 .tablas-grid {
     display: grid;
     /* minmax(0, 1fr) permite a la cuadricula encogerse sin limite */
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    grid-template-rows: repeat(8, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--columnas, 8), minmax(0, 1fr));
+    grid-template-rows: repeat(var(--columnas, 8), minmax(0, 1fr));
     gap: clamp(2px, 0.1vw, 6px);
     background-color: var(--card-border);
     border: 2px solid var(--card-border);
@@ -143,7 +143,8 @@
 
 /* Hacemos que esta cuadricula especifica tenga 9 columnas */
 .tablas-multiplicar .tablas-grid {
-    grid-template-columns: repeat(9, 1fr);
+    grid-template-columns: repeat(var(--columnas, 9), minmax(0, 1fr));
+    grid-template-rows: repeat(var(--columnas, 9), minmax(0, 1fr));
 }
 
 /* Estilo para las cabeceras (Fila superior y columna izquierda) */

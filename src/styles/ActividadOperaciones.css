@@ -101,13 +101,14 @@
 /* -------------------------- OPERACION HORIZONTAL (Para Divisiones) -------------------------- */
 
 .operacion-horizontal {
-    display: inline-flex;
-    height: 100%;
+    display: flex;
+    width: 100%;
+    min-height: clamp(150px, 30vh, 300px);
     flex-direction: row;
-    align-items: baseline;
+    align-items: center;
     justify-content: center;
     gap: clamp(0.5rem, 2vw, 1.5rem);
-    padding: clamp(var(--spacing-md), 3vw, var(--spacing-xl));
+    padding: clamp(1.5rem, 4vw, 2.5rem);
     border: 3px solid transparent;
     border-radius: 1rem;
     transition: border-color 0.3s ease, background-color 0.3s ease;

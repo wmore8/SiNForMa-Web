@@ -13,6 +13,8 @@ import { useControlDoblePicker } from '../shared/hooks/useControlDoblePicker';
 import { TEXTOS } from '../constants/textos';
 import '../styles/ActividadTablas.css';
 
+// La base numerica en la que estamos
+const MAX_BASE = MiNumero.baseActual;
 //Constantes de estado
 const TIPO_CASILLA = { VISIBLE: 'visible', ADIVINABLE: 'guessable', CUBIERTA: 'covered' };
 const ESTADO_CASILLA = { BASE: 'idle', CORRECTO: 'correct', FALLO: 'error' }
@@ -25,10 +27,11 @@ const OPCIONES_DECENAS = [' ', ...DIGITOS.slice(1)]; // Blanco + 1 a 7
 const generarTablero = (tipo, estado, texto) => {
   //Tablero inicial -> todo visible
   let tablero = [];
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < MAX_BASE; i++) {
     let fila = [];
-    for (let j = 0; j < 8; j++) {
-      const numeroReal = new MiNumero(i * 10 + j).toString();
+    for (let j = 0; j < MAX_BASE; j++) {
+      const numDecimal = i * MAX_BASE + j;
+      const numeroReal = new MiNumero(numDecimal, 10).toString();
       fila.push({
         id: `${i}-${j}`, i, j, realText: numeroReal,
         currentText: texto === null ? numeroReal : texto,
@@ -51,8 +54,8 @@ const newExercise0 = () => {
   // Facil: 20% aleatorio para adivinar, el resto sigue visible
   let tablero = generarTablero(TIPO_CASILLA.VISIBLE, ESTADO_CASILLA.BASE, null);
 
-  for (let i = 0; i < 8; i++) {
-    for (let j = 0; j < 8; j++) {
+  for (let i = 0; i < MAX_BASE; i++) {
+    for (let j = 0; j < MAX_BASE; j++) {
       if (Math.random() < 0.20) {
         modificarCasilla(tablero, i, j, TIPO_CASILLA.ADIVINABLE, ESTADO_CASILLA.BASE, '?');
       }
@@ -62,16 +65,16 @@ const newExercise0 = () => {
 };
 
 const newExercise1 = () => {
-  //Borra dos cuadrados de tamaño 3. Pueden solaparse
+  //Borra dos cuadrados de tamaño 3. Pueden solaparse  
   let tablero = generarTablero(TIPO_CASILLA.VISIBLE, ESTADO_CASILLA.BASE, null);
   let sizeSquare = 3;
   let variante = Math.floor(Math.random() * 2); //variable para decidir que tipo variante sale
 
   if (variante === 0) {
     //Borrar una fila y columna entera
-    let posFila = Math.floor(Math.random() * 8);
-    let posColumna = Math.floor(Math.random() * 8);
-    for (let k = 0; k < 8; k++) {
+    let posFila = Math.floor(Math.random() * MAX_BASE);
+    let posColumna = Math.floor(Math.random() * MAX_BASE);
+    for (let k = 0; k < MAX_BASE; k++) {
       modificarCasilla(tablero, posFila, k, TIPO_CASILLA.CUBIERTA, ESTADO_CASILLA.BASE, '');
       modificarCasilla(tablero, k, posColumna, TIPO_CASILLA.CUBIERTA, ESTADO_CASILLA.BASE, '');
     }
@@ -82,8 +85,8 @@ const newExercise1 = () => {
 
     //Borrar los dos cuadrados
     for (let cuadrado = 1; cuadrado <= 2; cuadrado++) {
-      let posFila = Math.floor(Math.random() * (8 - sizeSquare));
-      let posColumna = Math.floor(Math.random() * (8 - sizeSquare));
+      let posFila = Math.floor(Math.random() * (MAX_BASE - sizeSquare));
+      let posColumna = Math.floor(Math.random() * (MAX_BASE - sizeSquare));
       //borramos todas las posiciones del cuadrado
       for (let i = posFila; i < posFila + sizeSquare; i++) {
         for (let j = posColumna; j < posColumna + sizeSquare; j++) {
@@ -97,24 +100,25 @@ const newExercise1 = () => {
 
   // Borrar otras tres posiciones aleatorias
   for (let i = 0; i < 3; i++) {
-    let posFila = Math.floor(Math.random() * (8 - sizeSquare));
-    let posColumna = Math.floor(Math.random() * (8 - sizeSquare));
+    let posFila = Math.floor(Math.random() * (MAX_BASE - sizeSquare));
+    let posColumna = Math.floor(Math.random() * (MAX_BASE - sizeSquare));
     modificarCasilla(tablero, posFila, posColumna, TIPO_CASILLA.ADIVINABLE, ESTADO_CASILLA.BASE, '?');
   }
   return tablero;
 };
 
 const newExercise2 = () => {
+
   //inicializamos el tablero entero sin casillas visibles
   let tablero = generarTablero(TIPO_CASILLA.CUBIERTA, ESTADO_CASILLA.BASE, '?');
   //la casilla inicial siempre es visible
-  modificarCasilla(tablero, 0, 0, TIPO_CASILLA.VISIBLE, ESTADO_CASILLA.BASE, new MiNumero(0).toString());
+  modificarCasilla(tablero, 0, 0, TIPO_CASILLA.VISIBLE, ESTADO_CASILLA.BASE, new MiNumero(0, 10).toString());
   let min = 5, max = 7;
   let numGuessables = Math.floor(Math.random() * (max - min) + min);
   let puestas = 0;
   while (puestas < numGuessables) {
-    let posFila = Math.floor(Math.random() * 8);
-    let posColumna = Math.floor(Math.random() * 8);
+    let posFila = Math.floor(Math.random() * MAX_BASE);
+    let posColumna = Math.floor(Math.random() * MAX_BASE);
     modificarCasilla(tablero, posFila, posColumna, TIPO_CASILLA.ADIVINABLE, ESTADO_CASILLA.BASE, '?');
     puestas++;
   }
@@ -152,10 +156,11 @@ export function ActividadTablas() {
   // Mapa de navegacion dinamico basado en las casillas adivinables actuales
   const navegacionGrid = useMemo(() => {
     let nGrid = [];
-    for (let i = 0; i < 8; i++) {
+
+    for (let i = 0; i < MAX_BASE; i++) {
       let fila = [];
-      for (let j = 0; j < 8; j++) {
-        const c = grid[i * 8 + j]; // Como grid es flat y de 8x8, la formula directa sirve
+      for (let j = 0; j < MAX_BASE; j++) {
+        const c = grid[i * MAX_BASE + j];
         if (c && c.type === TIPO_CASILLA.ADIVINABLE) {
           fila.push(c.id);
         } else {
@@ -164,7 +169,8 @@ export function ActividadTablas() {
       }
       nGrid.push(fila);
     }
-    nGrid.push(Array(8).fill('btn-corregir'));
+    // Añadimos una fila extra entera con 'btn-corregir' para que al bajar desde la ultima fila caiga en el boton
+    nGrid.push(Array(MAX_BASE).fill('btn-corregir'));
     return nGrid;
   }, [grid]);
 
@@ -276,9 +282,9 @@ export function ActividadTablas() {
               />
             </div>
             <div className="actividad-footer">
-              <button 
+              <button
                 id="celda-btn-corregir"
-                className="btn-corregir-full hover-primary" 
+                className="btn-corregir-full hover-primary"
                 onClick={validarEjercicio}
                 onKeyDown={(e) => handleFlechas(e, 'btn-corregir')}
               >

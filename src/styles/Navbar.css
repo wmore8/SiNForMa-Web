@@ -93,10 +93,10 @@
   display: flex;
   flex-direction: column;
   list-style: none;
-  align-items: flex-start;
-  padding: 0 1rem; 
-  width: fit-content; 
-  margin: 0 1rem; 
+  align-items: center;
+  padding: 0;
+  width: fit-content;
+  margin:0;
 }
 
 .nav-links li {
@@ -120,7 +120,7 @@
   transition: color 0.2s, opacity 0.2s, background-color 0.2s ease;
 }
 
-.nav-link:hover, 
+.nav-link:hover,
 .nav-link.active {
   color: var(--icon-color);
   opacity: 1;
@@ -157,7 +157,7 @@ body.layout-desktop .nav-links {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 2rem;
+  padding-left: 1.5rem;
   gap: 1rem;
 }
 

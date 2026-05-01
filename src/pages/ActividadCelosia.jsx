@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TecladoBase8 } from '../shared/components/TecladoBase8';
+import { TecladoBase } from '../shared/components/TecladoBase';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { ActividadLayout } from '../shared/components/ActividadLayout';
 import { TEXTOS } from '../constants/textos';
@@ -8,27 +8,33 @@ import { useAutoFocoInicial } from '../shared/hooks/useAutoFocoInicial';
 import '../styles/ActividadOperaciones.css';
 
 const generarCelosia = () => {
-    // 3 cifras x 2 cifras
-    const val1 = Math.floor(Math.random() * (512 - 64)) + 64;
-    const val2 = Math.floor(Math.random() * (64 - 8)) + 8;
+    const base = MiNumero.baseActual;
+    const maxVal1 = Math.pow(base, 3);
+    const minVal1 = Math.pow(base, 2);
+    const maxVal2 = Math.pow(base, 2);
+    const minVal2 = base;
 
-    const str1 = val1.toString(8).padStart(3, '0');
-    const str2 = val2.toString(8).padStart(2, '0');
+    // 3 cifras x 2 cifras
+    const val1 = Math.floor(Math.random() * (maxVal1 - minVal1)) + minVal1;
+    const val2 = Math.floor(Math.random() * (maxVal2 - minVal2)) + minVal2;
+
+    const str1 = val1.toString(base).padStart(3, '0');
+    const str2 = val2.toString(base).padStart(2, '0');
 
     let soluciones = {};
 
-    // Calcular la cuadricula interior (Decenas y Unidades en Romesco)
+    // Calcular la cuadricula interior (Decenas y Unidades en la base numerica esperada)
     for (let i = 0; i < 2; i++) { // Filas (multiplicador)
         for (let j = 0; j < 3; j++) { // Columnas (multiplicando)
-            const p = parseInt(str1[j], 8) * parseInt(str2[i], 8); // Multiplicamos los digitos en decimal
-            //los almacenamos y parseamos a Romesco 
-            soluciones[`c_${i}_${j}_d`] = Math.floor(p / 8).toString();
-            soluciones[`c_${i}_${j}_u`] = (p % 8).toString();
+            const p = parseInt(str1[j], base) * parseInt(str2[i], base); // Multiplicamos los digitos en decimal
+            //los almacenamos y parseamos a string
+            soluciones[`c_${i}_${j}_d`] = Math.floor(p / base).toString();
+            soluciones[`c_${i}_${j}_u`] = (p % base).toString();
         }
     }
 
     // Calcular el resultado final esperado en cada casilla
-    const resTotal = (val1 * val2).toString(8).padStart(5, '0');
+    const resTotal = (val1 * val2).toString(base).padStart(5, '0');
     for (let i = 0; i < 5; i++) {
         soluciones[`r_${i}`] = resTotal[i];
     }
@@ -300,7 +306,7 @@ export function ActividadCelosia() {
                 </div>
 
                 <div className="panel-derecho-dificil">
-                    <TecladoBase8 onTeclaClick={handleTeclaClick} />
+                    <TecladoBase onTeclaClick={handleTeclaClick} />
                     <button
                         id="celda-btn-corregir"
                         className="btn-corregir-full hover-primary"
