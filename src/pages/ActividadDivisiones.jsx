@@ -119,8 +119,8 @@ export function ActividadDivisiones() {
     return (
         <ActividadLayout
             rutas={[
-                { label: TEXTOS.titulos.operaciones, path: '/operaciones' },
-                { label: TEXTOS.titulos.divisiones }
+                { label: TEXTOS.titulos.operaciones, path: '/operaciones', icon: 'icon-operaciones' },
+                { label: TEXTOS.titulos.divisiones, icon: 'icon-division' }
             ]}
             backPath="/operaciones"
             dificultad={dificultad}

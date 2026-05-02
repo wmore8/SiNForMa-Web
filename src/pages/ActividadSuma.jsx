@@ -110,7 +110,9 @@ export function ActividadSuma() {
 
     return (
         <ActividadLayout
-            rutas={[{ label: TEXTOS.titulos.operaciones, path: '/operaciones' }, { label: TEXTOS.titulos.suma }]}
+            rutas={[
+                { label: TEXTOS.titulos.operaciones, path: '/operaciones', icon: 'icon-operaciones' },
+                { label: TEXTOS.titulos.suma, icon: 'icon-suma' }]}
             backPath="/operaciones"
             dificultad={dificultad}
             onChangeDificultad={cambiarDificultad}

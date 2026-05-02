@@ -6,14 +6,14 @@ import '../styles/ActividadOperaciones.css'
 
 export function ActividadOperaciones() {
     const operaciones = [
-        { id: 1, title: TEXTOS.titulos.suma, icon: 'icon-default', path: '/operaciones/suma' },
-        { id: 2, title: TEXTOS.titulos.resta, icon: 'icon-default', path: '/operaciones/resta' },
-        { id: 3, title: TEXTOS.titulos.multiplicaciones, icon: 'icon-default', path: '/operaciones/multiplicaciones' },
-        { id: 4, title: TEXTOS.titulos.divisiones, icon: 'icon-default', path: '/operaciones/divisiones' },
+        { id: 1, title: TEXTOS.titulos.suma, icon:'icon-suma', path: '/operaciones/suma' },
+        { id: 2, title: TEXTOS.titulos.resta, icon: 'icon-resta', path: '/operaciones/resta' },
+        { id: 3, title: TEXTOS.titulos.multiplicaciones, icon: 'icon-multiplicaciones', path: '/operaciones/multiplicaciones' },
+        { id: 4, title: TEXTOS.titulos.divisiones, icon: 'icon-division', path: '/operaciones/divisiones' },
     ];
     return (
        <div className="actividad-layout operaciones-layout">
-            <Header rutas={[{ label: 'Actividad operaciones' }]} backPath="/" />
+            <Header rutas={[{ label: 'Actividad operaciones', icon: 'icon-operaciones' }]} backPath="/" />
             <main className="operaciones-main">
                 <div className="cards-grid-4">
                     {operaciones.map((op) => (

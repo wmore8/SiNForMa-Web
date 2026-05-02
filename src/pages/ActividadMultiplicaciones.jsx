@@ -5,18 +5,18 @@ import { TEXTOS } from '../constants/textos';
 
 export function ActividadMultiplicaciones() {
     const multiplicaciones = [
-        { id: 1, title: TEXTOS.titulos.tablasMultiplicar, icon: 'icon-default', path: '/operaciones/multiplicaciones/tablas' },
+        { id: 1, title: TEXTOS.titulos.tablasMultiplicar, icon: 'icon-tablas', path: '/operaciones/multiplicaciones/tablas' },
         { id: 2, title: TEXTOS.titulos.recortados, icon: 'icon-default', path: '/operaciones/multiplicaciones/recortados' },
         { id: 3, title: TEXTOS.titulos.celosia, icon: 'icon-default', path: '/operaciones/multiplicaciones/celosia' },
-        { id: 4, title: TEXTOS.titulos.productoClasico, icon: 'icon-default', path: '/operaciones/multiplicaciones/clasico' },
+        { id: 4, title: TEXTOS.titulos.productoClasico, icon: 'icon-multiplicacion-clasica', path: '/operaciones/multiplicaciones/clasico' },
     ];
     
     return (
         <div className="actividad-layout">
             <Header
                 rutas={[
-                    { label: TEXTOS.titulos.operaciones, path: '/operaciones' },
-                    { label: TEXTOS.titulos.multiplicaciones }
+                    { label: TEXTOS.titulos.operaciones, path: '/operaciones', icon: 'icon-operaciones' },
+                    { label: TEXTOS.titulos.multiplicaciones, icon: 'icon-multiplicaciones' }
                 ]}
                 backPath="/operaciones"
             />

@@ -24,7 +24,7 @@ export function Header({ rutas = [], backPath = '/' }) {
                     return (
                         <span key={index} className="breadcrumb-item-wrapper">
                             <Link to={ruta.path} className="breadcrumb-link" title={ruta.label}>
-                                <Icon name="icon-default" className="breadcrumb-icon" />
+                                <Icon name={nombreIcono} className="breadcrumb-icon" />
                                 <span className="breadcrumb-texto-oculto-movil">{ruta.label}</span>
                             </Link>
                             <span className="breadcrumb-separator">/</span>

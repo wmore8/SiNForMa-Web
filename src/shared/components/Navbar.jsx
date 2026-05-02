@@ -3,11 +3,11 @@ import { NavLink, Link } from 'react-router-dom';
 import { Icon } from './Icon';
 
 const navLinks = [
-    { name: 'Tablas', path: '/tablas', icon: 'icon-default' },
+    { name: 'Tablas', path: '/tablas', icon: 'icon-tablas' },
     { name: 'Lapiceros', path: '/lapiceros', icon: 'icon-lapiz' },
     { name: 'Palabras', path: '/palabras', icon: 'icon-default' },
     { name: 'Números', path: '/numeros', icon: 'icon-default' },
-    { name: 'Operaciones', path: '/operaciones', icon: 'icon-default' },
+    { name: 'Operaciones', path: '/operaciones', icon: 'icon-operaciones' },
     { name: 'Conteo', path: '/conteo', icon: 'icon-default' }
 
 ];

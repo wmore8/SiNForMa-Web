@@ -292,9 +292,9 @@ export function ActividadMultiplicacionClasica() {
 
         <ActividadLayout
             rutas={[
-                { label: TEXTOS.titulos.operaciones, path: '/operaciones' },
-                { label: TEXTOS.titulos.multiplicaciones, path: '/operaciones/multiplicaciones' },
-                { label: TEXTOS.titulos.productoClasico }
+                { label: TEXTOS.titulos.operaciones, path: '/operaciones', icon: 'icon-operaciones' },
+                { label: TEXTOS.titulos.multiplicaciones, path: '/operaciones/multiplicaciones', icon: 'icon-multiplicaciones' },
+                { label: TEXTOS.titulos.productoClasico, icon: 'icon-multiplicacion-clasica' }
             ]}
             backPath="/operaciones/multiplicaciones"
             dificultad={dificultad}

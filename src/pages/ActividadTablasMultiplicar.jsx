@@ -214,9 +214,9 @@ export function ActividadTablasMultiplicar() {
 
                 <div className="panel-derecho breadcrumb-tablas">
                     <Header rutas={[
-                        { label: 'Actividad operaciones', path: '/operaciones' },
-                        { label: 'Multiplicaciones', path: '/operaciones/multiplicaciones' },
-                        { label: 'Tablas de multiplicar' }]}
+                        { label: 'Actividad operaciones', path: '/operaciones',icon: 'icon-operaciones' },
+                        { label: 'Multiplicaciones', path: '/operaciones/multiplicaciones', icon: 'icon-multiplicaciones' },
+                        { label: 'Tablas de multiplicar', icon: 'icon-tablas' }]}
                         backPath="/operaciones/multiplicaciones" />
 
                     <ActividadControles

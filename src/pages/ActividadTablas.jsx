@@ -264,7 +264,7 @@ export function ActividadTablas() {
         {/* Contenedor de la derecha (Header y Controles) */}
         <div className="panel-derecho">
           <Header
-            rutas={[{ label: TEXTOS.titulos.tablas }]} backPath="/" />
+            rutas={[{ label: TEXTOS.titulos.tablas, icon: 'icon-tablas' }]} backPath="/" />
 
           <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={reiniciarJuego} onInfoClick={() => setMostrarInfo(true)} />
 
