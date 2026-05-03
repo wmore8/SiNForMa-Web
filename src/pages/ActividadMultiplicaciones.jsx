@@ -6,7 +6,7 @@ import { TEXTOS } from '../constants/textos';
 export function ActividadMultiplicaciones() {
     const multiplicaciones = [
         { id: 1, title: TEXTOS.titulos.tablasMultiplicar, icon: 'icon-tablas', path: '/operaciones/multiplicaciones/tablas' },
-        { id: 2, title: TEXTOS.titulos.recortados, icon: 'icon-default', path: '/operaciones/multiplicaciones/recortados' },
+        { id: 2, title: TEXTOS.titulos.recortados, icon: 'icon-recortados', path: '/operaciones/multiplicaciones/recortados' },
         { id: 3, title: TEXTOS.titulos.celosia, icon: 'icon-default', path: '/operaciones/multiplicaciones/celosia' },
         { id: 4, title: TEXTOS.titulos.productoClasico, icon: 'icon-multiplicacion-clasica', path: '/operaciones/multiplicaciones/clasico' },
     ];

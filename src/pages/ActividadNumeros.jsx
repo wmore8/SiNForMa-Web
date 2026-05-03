@@ -120,7 +120,7 @@ export function ActividadNumeros() {
 
     return (
         <ActividadLayout
-            rutas={[{ label: `${TEXTOS.titulos.numeros} (${getOpcionesNiveles()[dificultad].sec})` }]}
+            rutas={[{ label: `${TEXTOS.titulos.numeros} (${getOpcionesNiveles()[dificultad].sec})`, icon: 'icon-numeros' }]}
             backPath="/"
             dificultad={dificultad}
             opcionesDificultad={getOpcionesNiveles()}

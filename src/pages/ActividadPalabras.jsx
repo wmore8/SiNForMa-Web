@@ -117,7 +117,7 @@ export function ActividadPalabras() {
 
     return (
         <ActividadLayout
-            rutas={[{ label: `${TEXTOS.titulos.palabras} (${getOpcionesNiveles()[dificultad].sec})` }]}
+            rutas={[{ label: `${TEXTOS.titulos.palabras} (${getOpcionesNiveles()[dificultad].sec})`, icon: 'icon-palabras' }]}
             backPath="/"
             dificultad={dificultad}
             opcionesDificultad={getOpcionesNiveles()}

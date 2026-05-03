@@ -225,7 +225,7 @@ html.text-size-lg {
 .modal-content {
   background-color: var(--bg-color);
   color: var(--text-color);
-  padding: clamp(1.5rem, 5vw, 2rem);
+  padding: clamp(1rem, 5vw, 2rem);
   border-radius: 1rem;
   width: 90%;
   max-width: 1000px;
@@ -245,7 +245,7 @@ html.text-size-lg {
   display: flex;
   gap: 1rem;
   align-items: center;
-  font-size: clamp(1.5rem, 5vw, 1.8rem);
+  font-size: clamp(1.25rem, 5vw, 1.8rem);
   margin: 0;
   line-height: 1.2;
 }
@@ -620,6 +620,7 @@ html.text-size-lg {
   opacity: 0.6;
   transition: opacity 0.2s, color 0.2s;
   min-width: 0;
+  gap: 0.25rem;
   /* Para que el outline de accesibilidad sea redondo */
   border-radius: 0.25rem;
 }
@@ -641,7 +642,7 @@ html.text-size-lg {
   align-items: center;
   color: var(--text-color);
   line-height: 1.2;
-
+  gap: 0.25rem;
 }
 
 .breadcrumb-icon {
@@ -680,7 +681,7 @@ html.text-size-lg {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: clamp(1.25rem, 5vw, 2rem);
+  font-size: clamp(0.5rem, 5vw, 2rem);
   font-weight: bold;
   border-radius: 0.5rem;
   border: 2px solid var(--card-border);
@@ -792,14 +793,16 @@ html.text-size-lg {
   .teclado-contenedor.base-10 .teclado-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   /* Orden para escritorio: C, 0, DEL */
   .teclado-contenedor.base-10 .btn-clear {
     order: 10;
   }
+
   .teclado-contenedor.base-10 .btn-cero {
     order: 11;
   }
+
   .teclado-contenedor.base-10 .btn-del {
     order: 12;
   }
@@ -986,7 +989,7 @@ html.text-size-lg {
 .input-palabra {
   width: 100%;
   padding: clamp(1rem, 3vh, 1.5rem);
-  font-size: clamp(1.2rem, 4vh, 2rem);
+  font-size: clamp(1rem, 4vh, 2rem);
   text-align: center;
   border: 2px solid var(--card-border);
   border-radius: 0.75rem;

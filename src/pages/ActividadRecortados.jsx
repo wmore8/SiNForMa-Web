@@ -199,7 +199,7 @@ export function ActividadRecortados() {
             rutas={[
                 { label: TEXTOS.titulos.operaciones, path: '/operaciones', icon: 'icon-operaciones' },
                 { label: TEXTOS.titulos.multiplicaciones, path: '/operaciones/multiplicaciones',icon: 'icon-multiplicaciones' },
-                { label: TEXTOS.titulos.recortados }
+                { label: TEXTOS.titulos.recortados, icon: 'icon-recortados' }
             ]}
             backPath="/operaciones/multiplicaciones"
             dificultad={0}

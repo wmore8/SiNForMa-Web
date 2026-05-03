@@ -5,8 +5,8 @@ import { Icon } from './Icon';
 const navLinks = [
     { name: 'Tablas', path: '/tablas', icon: 'icon-tablas' },
     { name: 'Lapiceros', path: '/lapiceros', icon: 'icon-lapiz' },
-    { name: 'Palabras', path: '/palabras', icon: 'icon-default' },
-    { name: 'Números', path: '/numeros', icon: 'icon-default' },
+    { name: 'Palabras', path: '/palabras', icon: 'icon-palabras' },
+    { name: 'Números', path: '/numeros', icon: 'icon-numeros' },
     { name: 'Operaciones', path: '/operaciones', icon: 'icon-operaciones' },
     { name: 'Conteo', path: '/conteo', icon: 'icon-default' }
 
