@@ -23,7 +23,7 @@ export function Navbar({ onOpenSettings }) {
             <nav className="navbar">
 
                 <Link to={'/'} className="nav-brand" onClick={closeMenu}>
-                    <Icon name='icon-default' className="brand-icon" />
+                    <Icon name='icon-brand' className="brand-icon" />
                     <h1>SiNForMa</h1>
                 </Link>
 

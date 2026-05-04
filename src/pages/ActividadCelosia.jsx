@@ -228,7 +228,7 @@ export function ActividadCelosia() {
             rutas={[
                 { label: TEXTOS.titulos.operaciones, path: '/operaciones', icon: 'icon-operaciones' },
                 { label: TEXTOS.titulos.multiplicaciones, path: '/operaciones/multiplicaciones', icon: 'icon-multiplicaciones' },
-                { label: TEXTOS.titulos.celosia }
+                { label: TEXTOS.titulos.celosia, icon: 'icon-celosia' }
             ]}
             backPath="/operaciones/multiplicaciones"
             dificultad={0}
