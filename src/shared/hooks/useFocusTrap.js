@@ -1,47 +1,58 @@
 import { useEffect } from 'react';
 
-
 export const useFocusTrap = (isActive, idModal, onClose) => {
+
+    // EFECTO Foco Inicial (Solo se ejecuta cuando cambia isActive o el ID)
     useEffect(() => {
         if (!isActive) return;
-
-        // Guardamos el elemento que tenia el foco antes de abrir el modal
-        const elementoAnterior = document.activeElement;
 
         const modalElement = document.getElementById(idModal);
         if (!modalElement) return;
 
-        // Selector para encontrar elementos enfocables
+        // Comprobamos si el foco ya esta dentro del modal para no robarlo
+        if (modalElement.contains(document.activeElement)) return;
+
         const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable]';
-        
         let focusableElements = Array.from(modalElement.querySelectorAll(focusableElementsString));
-        let firstElement;
-        let lastElement;
 
         if (focusableElements.length > 0) {
-            firstElement = focusableElements[0];
-            lastElement = focusableElements[focusableElements.length - 1];
-            // Focuseamos el primer elemento por defecto
-            firstElement.focus();
+            // Aplicamos el preventScroll para que el navegador no mueva la camara de golpe
+            focusableElements[0].focus({ preventScroll: true });
         } else {
-            // Si el modal no tuviera elementos enfocables, ponemos el foco en el propio contenedor
-            modalElement.focus();
+            modalElement.focus({ preventScroll: true });
         }
+        
+    }, [isActive, idModal]); // NO incluimos onClose. Asi no se re-ejecuta.
+
+
+    // EFECTO Atrapado de Teclado (Se re-ejecuta si cambia onClose, pero no mueve el foco)
+    useEffect(() => {
+        if (!isActive) return;
+
+        // Guardamos el elemento anterior solo para restaurarlo al cerrar
+        const elementoAnterior = document.activeElement;
+        const modalElement = document.getElementById(idModal);
 
         const handleKeyDown = (e) => {
-            // Cerrar con Escape
             if (e.key === 'Escape' && onClose) {
                 e.preventDefault();
                 onClose();
                 return;
             }
 
-            // Atrapar el Tabulador
             if (e.key === 'Tab') {
+                if (!modalElement) return;
+                
+                const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable]';
+                let focusableElements = Array.from(modalElement.querySelectorAll(focusableElementsString));
+                
                 if (focusableElements.length === 0) {
                     e.preventDefault();
                     return;
                 }
+
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
 
                 if (e.shiftKey) { // Shift + Tab
                     if (document.activeElement === firstElement || document.activeElement === modalElement) {
@@ -61,10 +72,11 @@ export const useFocusTrap = (isActive, idModal, onClose) => {
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
-            // Al desmontar, devolvemos el foco a quien lo abrio
-            if (elementoAnterior) {
-                elementoAnterior.focus();
+            // Al desmontar (cerrar modal), devolvemos el foco a quien lo abrio
+            // Solo lo devolvemos si realmente estamos cerrando el modal (isActive pasa a false)
+            if (elementoAnterior && typeof elementoAnterior.focus === 'function') {
+                elementoAnterior.focus({ preventScroll: true });
             }
         };
-    }, [isActive, idModal, onClose]);
+    }, [isActive, idModal, onClose]); // Este si necesita el onClose para el Escape
 };

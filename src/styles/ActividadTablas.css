@@ -50,7 +50,7 @@
 .tabla-celda.guessable {
     background-color: var(--warning);
     cursor: pointer;
-    color: #000;
+    color: var(--warning-text);
     transition: all 0.2s;
     font-weight: 600;
 }
@@ -60,7 +60,7 @@
 }
 
 .tabla-celda.covered {
-    background-color: #FFA726;
+    background-color: var(--covered-bg);
     color: transparent;
     cursor: not-allowed;
 }
@@ -68,12 +68,12 @@
 .tabla-celda.correct {
     background-color: var(--success);
     font-weight: 700;
-    color: #fff;
+    color: var(--bg-color);
 }
 
 .tabla-celda.error {
     background-color: var(--danger);
-    color: #FFF;
+    color: var(--bg-color);
 }
 
 /* --- PANEL DE INPUTS --- */
@@ -159,7 +159,7 @@
 /* La celda superior izquierda (El signo de multiplicar) */
 .tabla-celda.header.esquina {
     font-size: clamp(1rem, 5vw, 2.25rem);
-    color: white;
+    color: var(--bg-color);
     background: var(--success);
 }
 

@@ -33,6 +33,16 @@ function AppLayout() {
     return savedTheme === 'dark'; // Si guardamos 'dark', empieza en true
   });
 
+  // Estado para el Modo de Vision
+  const [visionMode, setVisionMode] = useState(() => {
+    return localStorage.getItem('appVisionMode') || 'monocromatico';
+  });
+
+  // Estado para darle relleno a la navbar
+  const [navFill, setNavFill] = useState(() => {
+    return localStorage.getItem('appNavFill') === 'true'
+  });
+
   // Estado para el tamaño de texto
   const [textSize, setTextSize] = useState(() => {
     return localStorage.getItem('appTextSize') || 'md'; // md por defecto
@@ -47,6 +57,31 @@ function AppLayout() {
     }
   }, [isDark]);
 
+  // Efecto para inyectar la clase del modo de vision en el body
+  useEffect(() => {
+    // Limpiamos todas las clases de vision posibles para no acumularlas
+    document.body.classList.remove(
+      'vision-monocromatico',
+      'vision-protanopia',
+      'vision-deuteranopia',
+      'vision-tritanopia'
+    );
+
+    // Añadimos la clase del modo actual
+    if (visionMode) {
+      document.body.classList.add(`vision-${visionMode}`);
+    }
+  }, [visionMode]);
+
+  // Efecto para inyectar la clase del relleno de la navbar al body
+  useEffect(() => {
+    if (navFill) {
+      document.body.classList.add('nav-filled');
+    } else {
+      document.body.classList.remove('nav-filled');
+    }
+  }, [navFill]);
+
   // Efecto para cambiar el tamaño de letra raiz
   useEffect(() => {
     const html = document.documentElement;
@@ -58,6 +93,18 @@ function AppLayout() {
   const toggleTheme = (theme) => {
     setIsDark(theme === 'dark');
     localStorage.setItem('appTheme', theme); // Guardamos la preferencia
+  };
+
+  // Funcion para cambiar la paleta
+  const changeVisionMode = (mode) => {
+    setVisionMode(mode);
+    localStorage.setItem('appVisionMode', mode);
+  };
+
+  // Funcion para rellenar o no la navbar
+  const changeNavFill = (filled) => {
+    setNavFill(filled);
+    localStorage.setItem('appNavFill', filled);
   };
 
   // Funcion para cambiar tamaño
@@ -124,6 +171,10 @@ function AppLayout() {
         isDark={isDark}
         textSize={textSize}
         changeTextSize={changeTextSize}
+        visionMode={visionMode}
+        changeVisionMode={changeVisionMode}
+        navFill={navFill}
+        changeNavFill={changeNavFill}
       />
     </div>
   );

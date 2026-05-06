@@ -6,7 +6,7 @@
 ---
 
 ## ✏️ Estado del Proyecto
-- **Fase Actual** `v0.8.0-beta`: [https://lustrous-creponne-95eb1a.netlify.app](https://lustrous-creponne-95eb1a.netlify.app)  (Lista para pruebas de usuario y revisión pedagógica).
+- **Fase Actual** `v0.8.4-beta`: [https://lustrous-creponne-95eb1a.netlify.app](https://lustrous-creponne-95eb1a.netlify.app)  (Lista para pruebas de usuario y revisión pedagógica).
 - **Prototipo Inicial**: [https://cool-marshmallow-512ba5.netlify.app](https://cool-marshmallow-512ba5.netlify.app/)
 
 ## 🎯 Objetivos Logrados
@@ -17,8 +17,10 @@
 - [x] **Navegación Robusta**: Sistema de rutas jerárquico y página de error 404 personalizada.
 - [x] **Tamaño de letra personalizado** : Tres tamaños de texto seleccionables que mejoran la experiencia de usuario
 - [x] **Accesibilidad** : control total por teclado (Focus/Tab navigation).
+- [x] **Colores accesibles** : Implementación de una paleta que aborde los distintos problemas de visión que pueda tener el usuario.
 - [x] **Sistemas Decimal**: Conversor dinámico entre Romesco y Decimal.
-
+- [x] Implementación del **diseño de los iconos**
+- [x] QA: Pruebas funcionales.
 
 
 ## 🧩 Actividades Disponibles
@@ -35,8 +37,6 @@ La plataforma organiza las actividades en bloques progresivos:
     * **Multiplicación Avanzada**: Metodologías de Producto Clásico, Celosía y Recortados.
 
 ## 📋 Próximos Pasos (ToDo)
-- [ ] QA: Pruebas funcionales.
-- [ ] Implementación del diseño de los iconos
 - [ ] Nueva feature: Actividad de conteo mediante gestos táctiles (swipe sobre objetos).
 
 ## 🛠️ Tecnologías

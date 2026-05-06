@@ -85,13 +85,21 @@ export const TEXTOS = {
             mensaje: "Parece que la página que buscas se ha perdido en otra base numérica o ha dejado de existir.",
             botonHome: "Volver al inicio"
         },opciones: {
+            tituloNavBar:"Barra de navegación",
+            plano:"Plano",
+            relleno: "Relleno",
             tituloFuente: "Tamaño de fuente",
             pequeno: "Pequeño",
             medio: "Medio",
             grande: "Grande",
             tituloTema: "Tema de la aplicación",
             claro: "Claro",
-            oscuro: "Oscuro"
+            oscuro: "Oscuro",
+            tituloAccesibilidad : "Accesibilidad Visual",
+            acromatopsia:"Acromatopsia",
+            protanopia:"Protanopía",
+            deuteranopia:"Deuteranopía",
+            tritanopia:"Tritanopía",
         },
         lapiceros: {
             lapiz: "Lápiz",

@@ -37,32 +37,12 @@
   font-display: swap;
 }
 
-/* Paleta de colores */
 :root {
   /* Fuente de texto */
   --font-principal: 'Quicksand', sans-serif;
-  /* Color primario y fondo */
-  --primary: #32DE84;
-  --bg-color: #f0fdf4;
-  --bg-color-opacity: #f0fdf47f;
-  --icon-color: #f9fafb;
-
-  /* Colores varios y utilidades*/
-  --success: #32DE84;
-  --success-opacity-5: #32de850c;
-  --success-opacity-15: #32de852c;
-  --danger: #DE328B;
-  --danger-opacity-5: #de328b0a;
-  --danger-opacity-15: #de328b2c;
-  --warning: #DEDB32;
 
   /* Utilidades*/
   --modal-overlay: rgba(0, 0, 0, 0.5);
-
-
-  /* Variables para el color del texto */
-  --text-color: #1f2937;
-  --card-border: #000000;
 
   /* Variables para el efecto de sombra */
   --shadow-sm: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
@@ -86,16 +66,177 @@
   --global-font-size-sm: 14px;
   --global-font-size-md: 16px;
   --global-font-size-lg: 20px;
+
+  /* Color primario y fondo */
+  --primary: #0F52BA;
+  --bg-color: #f9fafb;
+  --bg-color-opacity: rgba(0, 0, 0, 0.2);
+  --icon-color: #f9fafb;
+  /* Variables para el color del texto */
+  /* --text-color: #1f2937;
+  --card-border: #1f2937; */
+  --text-color: #262626;
+  --card-border: #262626;
+  --warning-text: #262626;
+  --input-box-shadow: rgba(0, 0, 0, 0.3);
+  /* Colores varios y utilidades*/
+  --success: #32DE84;
+  --success-opacity-5: #32de850c;
+  --success-opacity-15: #32de852c;
+  --danger: #DE328B;
+  --danger-opacity-5: #de328b0a;
+  --danger-opacity-15: #de328b2c;
+  --warning: #DEDB32;
+  --primary-text: #ffffff;
+
+  --nav-bg: var(--bg-color);
+  --nav-text: var(--text-color);
+  --nav-shadow: var(--shadow-sm);
+  --nav-color-opacity: var(--bg-color-opacity);
+
+  --covered-bg: #E5E7EB;
+
+  /* Paleta de colores */
+
 }
 
 .dark-mode {
   /* --bg-color: #111827; */
   --bg-color: #000000;
+  --bg-color-opacity: rgba(255, 255, 255, 0.2);
   --text-color: #f9fafb;
   --icon-color: #f9fafb;
-  --card-border: #ffffff;
+  --card-border: #f9fafb;
+  --nav-bg: var(--bg-color);
+  --nav-text: var(--text-color);
+  --nav-shadow: var(--shadow-sm);
+  --nav-color-opacity: var(--bg-color-opacity);
 }
 
+/* --- MODO ACROMATOPSIA (Sin colores, solo blanco y negro) ---*/
+
+/* En modo claro: Primary es Negro */
+body.vision-monocromatico {
+  --primary: #000000;
+  --primary-text: #f9fafb;
+  --success: #000000;
+  --success-opacity-5: rgba(0, 0, 0, 0.05);
+  --success-opacity-15: rgba(0, 0, 0, 0.15);
+  --danger: #555555;
+  --danger-opacity-5: rgba(85, 85, 85, 0.05);
+  --danger-opacity-15: rgba(85, 85, 85, 0.15);
+  --warning: #B5B5B5;
+  --covered-bg: #7a7a7a;
+}
+
+/* En modo oscuro Primary es Blanco */
+body.dark-mode.vision-monocromatico {
+  --primary: #f9fafb;
+  --primary-text: #262626;
+  --success: #f9fafb;
+  --success-opacity-5: rgba(255, 255, 255, 0.05);
+  --success-opacity-15: rgba(255, 255, 255, 0.15);
+  --danger: #aaaaaa;
+  --danger-opacity-5: rgba(170, 170, 170, 0.05);
+  --danger-opacity-15: rgba(170, 170, 170, 0.15);
+  --warning: #B5B5B5;
+  --covered-bg: #7a7a7a;
+}
+
+/* --- MODO PROTANOPIA (Deficiencia rojo/verde) ---*/
+
+body.vision-protanopia {
+  --primary: #005EB8;
+  --primary-text: #ffffff;
+  --success: #005EB8;
+  --success-opacity-5: rgba(0, 94, 184, 0.05);
+  --success-opacity-15: rgba(0, 94, 184, 0.15);
+  --danger: #A65100;
+  --danger-opacity-5: rgba(166, 81, 0, 0.05);
+  --danger-opacity-15: rgba(166, 81, 0, 0.15);
+  --warning: #8B6508;
+  --covered-bg: #c6c8cd;
+}
+
+body.dark-mode.vision-protanopia {
+  --primary: #64B5F6;
+  --primary-text: #000000;
+  --success: #64b5f6;
+  --success-opacity-5: rgba(100, 181, 246, 0.05);
+  --success-opacity-15: rgba(100, 181, 246, 0.15);
+  --danger: rgb(246, 166, 100);
+  --danger-opacity-5: rgba(246, 166, 100, 0.05);
+  --danger-opacity-15: rgba(246, 166, 100, 0.15);
+  --warning: #FFD54F;
+  --covered-bg: #374151;
+}
+
+/* --- MODO DEUTERANOPIA (Deficiencia del color Verde) ---*/
+
+body.vision-deuteranopia {
+  --primary: #303F9F;
+  --primary-text: #ffffff;
+  --success: rgb(48, 63, 159);
+  --success-opacity-5: rgba(48, 63, 159, 0.05);
+  --success-opacity-15: rgba(48, 63, 159, 0.15);
+  --danger: #c54e00;
+  --danger-opacity-5: rgba(197, 78, 0, 0.05);
+  --danger-opacity-15: rgba(197, 78, 0 0.15);
+  --warning: #997000;
+  --covered-bg: #c6c8cd;
+}
+
+body.dark-mode.vision-deuteranopia {
+  --primary: #8C9EFF;
+  --primary-text: #000000;
+  --success: rgb(140, 158, 255);
+  --success-opacity-5: rgba(140, 158, 255, 0.05);
+  --success-opacity-15: rgba(140, 158, 255, 0.15);
+  --danger: rgb(255, 145, 0);
+  --danger-opacity-5: rgba(255, 145, 0, 0.05);
+  --danger-opacity-15: rgba(255, 145, 0, 0.15);
+  --warning: #FFE57F;
+  --covered-bg: #374151;
+}
+
+
+/* --- MODO TRITANOPIA (Deficiencia del color Azul / Amarillo) ---*/
+
+body.vision-tritanopia {
+  --primary: #00695C;
+  --primary-text: #ffffff;
+  --success: #00695c;
+  --success-opacity-5: rgba(0, 105, 92, 0.05);
+  --success-opacity-15: rgba(0, 105, 92, 0.15);
+  --danger: #c2185b;
+  --danger-opacity-5: rgba(194, 24, 91, 0.05);
+  --danger-opacity-15: rgba(194, 24, 91, 0.15);
+  --warning: #D32F2F;
+  --covered-bg: #c6c8cd;
+}
+
+body.dark-mode.vision-tritanopia {
+  --primary: #4db6ac;
+  --primary-text: #000000;
+  --success: #4DB6AC;
+  --success-opacity-5: rgba(77, 182, 172, 0.05);
+  --success-opacity-15: rgba(77, 182, 172, 0.15);
+  --danger: #f06292;
+  --danger-opacity-5: rgba(240, 98, 146, 0.05);
+  --danger-opacity-15: rgba(240, 98, 146, 0.15);
+  --warning: #EF5350;
+  --covered-bg: #374151;
+}
+
+/* --- NAVBAR CON RELLENO (O NO) ---*/
+
+/* Si el usuario activa el relleno la Navbar usa las variables de tu paleta actual */
+body.nav-filled {
+  --nav-bg: var(--primary);
+  --nav-text: var(--primary-text);
+  --nav-shadow: var(--shadow-sm);
+  --nav-color-opacity: var(--bg-color-opacity);
+}
 
 html,
 #root {
@@ -231,6 +372,18 @@ html.text-size-lg {
   max-width: 1000px;
   box-shadow: var(--shadow-lg);
   border: 2px solid var(--card-border);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+  height: 2px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: var(--card-border);
+  border-radius: 4px;
 }
 
 .modal-header {
@@ -245,13 +398,14 @@ html.text-size-lg {
   display: flex;
   gap: 1rem;
   align-items: center;
-  font-size: clamp(1.25rem, 5vw, 1.8rem);
+  /* font-size: clamp(1.25rem, 5vw, 1.8rem); */
   margin: 0;
   line-height: 1.2;
 }
 
 .modal-legend {
   margin-bottom: 1rem;
+  margin-top: 2rem;
   font-weight: 600;
 }
 
@@ -330,8 +484,8 @@ html.text-size-lg {
 .slider-step.active {
   width: 30px;
   height: 30px;
-  background-color: var(--primary);
-  border: 5px solid var(--text-color);
+  /* background-color: var(--bg-color); */
+  border: 6px solid var(--primary);
   /* Borde oscuro como en el mockup */
 }
 
@@ -351,7 +505,7 @@ html.text-size-lg {
   transition: all 0.2s;
 }
 
-.slider-labels span:hover {
+.slider-labels h4:hover {
   color: var(--primary);
 }
 
@@ -380,10 +534,12 @@ html.text-size-lg {
   color: var(--text-color);
   cursor: pointer;
   font-weight: bold;
+  transition: transform 0.2s;
 }
 
 .theme-btn:hover {
   border-color: var(--primary);
+  transform: scale(1.01);
 }
 
 .theme-btn:focus {
@@ -393,7 +549,7 @@ html.text-size-lg {
 .theme-btn.active {
   background-color: var(--primary);
   border-color: var(--primary);
-  color: var(--icon-color);
+  color: var(--primary-text);
 }
 
 
@@ -414,47 +570,22 @@ html.text-size-lg {
 /* Efecto Hover Primary */
 .hover-primary:hover {
   background-color: var(--primary) !important;
-  color: #ffffff !important;
+  color: var(--primary-text) !important;
   border-color: var(--primary) !important;
 }
 
 /* Efecto Hover Danger */
 .hover-danger:hover {
   background-color: var(--danger) !important;
-  color: #ffffff !important;
+  color: var(--bg-color) !important;
   border-color: var(--danger) !important;
 }
 
 /* Efecto Hover Success*/
 .hover-success:hover {
   background-color: var(--success) !important;
-  color: #ffffff !important;
+  color: var(--primary-text) !important;
   border-color: var(--success) !important;
-}
-
-.nav-btn {
-  background: none;
-  /* border: 2px solid var(--bg-color); */
-  color: white;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.25rem;
-  transition: background-color 0.2s;
-}
-
-.nav-btn:focus {
-  outline: none;
-}
-
-.nav-btn:hover {
-  /* background-color: var(--bg-color);
-  border-color: var(--primary);
-  color: var(--primary); */
-  background-color: var(--bg-color-opacity);
-  border-color: var(--bg-color-opacity);
 }
 
 .icon-btn {
@@ -490,7 +621,7 @@ html.text-size-lg {
 .btn-secundario.danger:hover {
   background-color: var(--danger);
   border-color: var(--danger);
-  color: white;
+  color: var(--primary-text);
 }
 
 /* Boton Primario Ancho (Boton Corregir o Siguiente) */
@@ -499,7 +630,7 @@ html.text-size-lg {
   padding: clamp(1rem, 3vh, 1.5rem);
   border-radius: 0.5rem;
   background-color: var(--primary);
-  color: white;
+  color: var(--primary-text);
   border: none;
   font-size: 1.2rem;
   cursor: pointer;
@@ -617,7 +748,7 @@ html.text-size-lg {
   align-items: center;
   color: var(--text-color);
   text-decoration: none;
-  opacity: 0.6;
+  opacity: 0.75;
   transition: opacity 0.2s, color 0.2s;
   min-width: 0;
   gap: 0.25rem;
@@ -632,7 +763,7 @@ html.text-size-lg {
 
 .breadcrumb-separator {
   color: var(--text-color);
-  opacity: 0.4;
+  opacity: 0.75;
   font-weight: normal;
   flex-shrink: 0;
 }
@@ -725,14 +856,14 @@ html.text-size-lg {
 .teclado-btn:active {
   transform: scale(0.95);
   background-color: var(--primary);
-  color: white;
+  color: var(--primary-text);
   border-color: var(--primary);
 }
 
 .teclado-btn.accion:active {
   transform: scale(0.95);
   background-color: var(--danger);
-  color: white;
+  color: var(--primary-text);
 }
 
 /* -------------------------------- PANEL DERECHO -------------------------------- */
@@ -855,7 +986,7 @@ html.text-size-lg {
 .card:hover {
   transform: scale(1.02);
   background-color: var(--primary);
-  color: var(--bg-color);
+  color: var(--primary-text);
   border-color: var(--primary);
   --icon-color: var(--bg-color);
 }
@@ -1001,7 +1132,7 @@ html.text-size-lg {
 .input-palabra:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(50, 222, 132, 0.2);
+  box-shadow: 0 0 0 3px var(--input-box-shadow);
 }
 
 .input-palabra:disabled {
@@ -1076,7 +1207,7 @@ html.text-size-lg {
 .picker-botones-stack button:hover:not(:disabled) {
   background-color: var(--primary);
   border-color: var(--primary);
-  color: white;
+  color: var(--primary-text);
 }
 
 .picker-botones-stack button:disabled {
@@ -1126,9 +1257,9 @@ html.text-size-lg {
     font-size: 0.65rem;
   }
 
-  .brand-icon {
+  /* .brand-icon {
     font-size: 2.5rem;
-  }
+  } */
 
   .nav-actions {
     display: flex;
