@@ -90,14 +90,13 @@
   --primary-text: #ffffff;
 
   --nav-bg: var(--bg-color);
-  --nav-text: var(--text-color);
+  --nav-text: var(--primary);
   --nav-shadow: var(--shadow-sm);
   --nav-color-opacity: var(--bg-color-opacity);
 
   --covered-bg: #E5E7EB;
 
   /* Paleta de colores */
-
 }
 
 .dark-mode {
@@ -108,7 +107,7 @@
   --icon-color: #f9fafb;
   --card-border: #f9fafb;
   --nav-bg: var(--bg-color);
-  --nav-text: var(--text-color);
+  --nav-text: var(--primary);
   --nav-shadow: var(--shadow-sm);
   --nav-color-opacity: var(--bg-color-opacity);
 }
@@ -228,16 +227,6 @@ body.dark-mode.vision-tritanopia {
   --covered-bg: #374151;
 }
 
-/* --- NAVBAR CON RELLENO (O NO) ---*/
-
-/* Si el usuario activa el relleno la Navbar usa las variables de tu paleta actual */
-body.nav-filled {
-  --nav-bg: var(--primary);
-  --nav-text: var(--primary-text);
-  --nav-shadow: var(--shadow-sm);
-  --nav-color-opacity: var(--bg-color-opacity);
-}
-
 html,
 #root {
   height: 100%;
@@ -251,6 +240,21 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   min-height: 100vh;
+
+  --nav-bg: var(--bg-color);
+  --nav-text: var(--primary);
+  --nav-shadow: var(--shadow-sm);
+  --nav-color-opacity: var(--bg-color-opacity);
+}
+
+/* --- NAVBAR CON RELLENO (O NO) ---*/
+
+/* Si el usuario activa el relleno la Navbar usa las variables de tu paleta actual */
+body.nav-filled {
+  --nav-bg: var(--primary);
+  --nav-text: var(--primary-text);
+  --nav-shadow: var(--shadow-sm);
+  --nav-color-opacity: var(--bg-color-opacity);
 }
 
 input,
@@ -771,7 +775,7 @@ html.text-size-lg {
 .breadcrumb-current {
   display: flex;
   align-items: center;
-  color: var(--text-color);
+  color: var(--primary);
   line-height: 1.2;
   gap: 0.25rem;
 }
@@ -1079,9 +1083,9 @@ html.text-size-lg {
   color: var(--text-color);
 }
 
-.info-secuencia strong {
+/*Para las mayusculas .info-secuencia strong {
   text-transform: capitalize;
-}
+} */
 
 .info-secuencia strong {
   color: var(--primary);
@@ -1100,7 +1104,7 @@ html.text-size-lg {
   font-size: calc(2rem + 1vw);
   font-weight: bold;
   color: var(--primary);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   text-shadow: var(--shadow-sm);
 }
 

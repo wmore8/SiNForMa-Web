@@ -11,16 +11,16 @@ const getOpcionesNiveles = () => {
     const sym = (num) => n(num).toString();
     
     return [
-        { id: 0, from: 1, incr: 1, asc: true, label: `De ${sym(1)} en ${sym(1)} (Ascendente)`, sec: `+ ${sym(1)}` },
-        { id: 1, from: 1, incr: 2, asc: true, label: `De ${sym(2)} en ${sym(2)} (Ascendente)`, sec: `+ ${sym(2)}` },
-        { id: 2, from: 0, incr: 2, asc: true, label: "Pares (Ascendente)", sec: `+ ${sym(2)}` },
-        { id: 3, from: 0, incr: mitad, asc: true, label: `De ${sym(mitad)} en ${sym(mitad)} (Ascendente)`, sec: `+ ${sym(mitad)}` },
-        { id: 4, from: 0, incr: base, asc: true, label: `De ${sym(base)} en ${sym(base)} (Ascendente)`, sec: `+ ${sym(base)}` },
-        { id: 5, from: -1, incr: 1, asc: true, label: `Aleatorio + ${sym(1)} (Ascendente)`, sec: `+ ${sym(1)}` },
-        { id: 6, from: -1, incr: 1, asc: false, label: `Aleatorio − ${sym(1)} (Descendente)`, sec: `− ${sym(1)}` },
-        { id: 7, from: -1, incr: 2, asc: true, label: `Aleatorio + ${sym(2)} (Ascendente)`, sec: `+ ${sym(2)}` },
-        { id: 8, from: -1, incr: mitad, asc: true, label: `Aleatorio + ${sym(mitad)} (Ascendente)`, sec: `+ ${sym(mitad)}` },
-        { id: 9, from: -1, incr: base, asc: true, label: `Aleatorio + ${sym(base)} (Ascendente)`, sec: `+ ${sym(base)}` }
+        { id: 0, from: 1, incr: 1, asc: true, label: `De ${sym(1)} en ${sym(1)} (Ascendente)`, sec: `+${sym(1)}` },
+        { id: 1, from: 1, incr: 2, asc: true, label: `De ${sym(2)} en ${sym(2)} (Ascendente)`, sec: `+${sym(2)}` },
+        { id: 2, from: 0, incr: 2, asc: true, label: "Pares (Ascendente)", sec: `+${sym(2)}` },
+        { id: 3, from: 0, incr: mitad, asc: true, label: `De ${sym(mitad)} en ${sym(mitad)} (Ascendente)`, sec: `+${sym(mitad)}` },
+        { id: 4, from: 0, incr: base, asc: true, label: `De ${sym(base)} en ${sym(base)} (Ascendente)`, sec: `+${sym(base)}` },
+        { id: 5, from: -1, incr: 1, asc: true, label: `Aleatorio +${sym(1)} (Ascendente)`, sec: `+${sym(1)}` },
+        { id: 6, from: -1, incr: 1, asc: false, label: `Aleatorio −${sym(1)} (Descendente)`, sec: `−${sym(1)}` },
+        { id: 7, from: -1, incr: 2, asc: true, label: `Aleatorio +${sym(2)} (Ascendente)`, sec: `+${sym(2)}` },
+        { id: 8, from: -1, incr: mitad, asc: true, label: `Aleatorio +${sym(mitad)} (Ascendente)`, sec: `+${sym(mitad)}` },
+        { id: 9, from: -1, incr: base, asc: true, label: `Aleatorio +${sym(base)} (Ascendente)`, sec: `+${sym(base)}` }
     ];
 };
 
@@ -117,7 +117,7 @@ export function ActividadPalabras() {
 
     return (
         <ActividadLayout
-            rutas={[{ label: `${TEXTOS.titulos.palabras} (${getOpcionesNiveles()[dificultad].sec})`, icon: 'icon-palabras' }]}
+            rutas={[{ label: `${TEXTOS.titulos.palabras} ${getOpcionesNiveles()[dificultad].sec}`, icon: 'icon-palabras' }]}
             backPath="/"
             dificultad={dificultad}
             opcionesDificultad={getOpcionesNiveles()}
