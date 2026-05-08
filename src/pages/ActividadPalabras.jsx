@@ -24,6 +24,11 @@ const getOpcionesNiveles = () => {
     ];
 };
 
+// Normaliza un texto: minusculas y sin tildes/diacriticos
+// Permite que "dieciseis" sea aceptado como "dieciséis", etc.
+const normalizarTexto = (texto) =>
+    texto.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
 export function ActividadPalabras() {
     const [dificultad, setDificultad] = useState(0);
     const inputRef = useRef(null);
@@ -80,8 +85,8 @@ export function ActividadPalabras() {
         e.preventDefault();
         // Parseamos el numero del input
         const miNumCorrecto = new MiNumero(ejercicio.curNum, 10);
-        const palabraCorrecta = miNumCorrecto.toLongString().toLowerCase().trim();
-        const palabraUsuario = inputUsuario.toLowerCase().trim();
+        const palabraCorrecta = normalizarTexto(miNumCorrecto.toLongString());
+        const palabraUsuario = normalizarTexto(inputUsuario);
 
         if (palabraUsuario === palabraCorrecta) {
             if (ejercicio.curNum === ejercicio.toNum) { // Si termina la secuencia mostramos el mensaje
@@ -137,7 +142,7 @@ export function ActividadPalabras() {
 
                 <div className="pantalla-objetivo">
                     <p className="etiqueta">{TEXTOS.ui.secuencias.ultimaPalabra}</p>
-                    <div className="simbolo-actual">{new MiNumero(ejercicio.prevNum, 10).toString()}</div>
+                    <div className="simbolo-actual">{ejercicio.prevNum >= 0 ? new MiNumero(ejercicio.prevNum, 10).toString() : ''}</div>
                 </div>
 
                 <form className="form-escritura" onSubmit={validarPaso}>

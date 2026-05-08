@@ -24,6 +24,14 @@ const DIGITOS = MiNumero.losDigitos;
 const OPCIONES_UNIDADES = [...DIGITOS]; // Del 0 al 7
 const OPCIONES_DECENAS = [' ', ...DIGITOS.slice(1)]; // Blanco + 1 a 7
 
+const NIVELES_DIFICULTAD = [
+  { id: 0, label: "Dificultad Fácil" },
+  { id: 1, label: "Dificultad Media" },
+  { id: 2, label: "Dificultad Difícil" },
+  { id: 3, label: "Dificultad Muy Difícil" },
+  { id: 4, label: "Dificultad Máxima" }
+];
+
 const generarTablero = (tipo, estado, texto) => {
   //Tablero inicial -> todo visible
   let tablero = [];
@@ -107,12 +115,8 @@ const newExercise1 = () => {
   return tablero;
 };
 
-const newExercise2 = () => {
-
-  //inicializamos el tablero entero sin casillas visibles
-  let tablero = generarTablero(TIPO_CASILLA.CUBIERTA, ESTADO_CASILLA.BASE, '?');
-  //la casilla inicial siempre es visible
-  modificarCasilla(tablero, 0, 0, TIPO_CASILLA.VISIBLE, ESTADO_CASILLA.BASE, new MiNumero(0, 10).toString());
+//Funcion para generar las casillas aleatorias (una vez el tablero este tapado)
+const generarCasillasAleatorias = (tablero) => {
   let min = 5, max = 7;
   let numGuessables = Math.floor(Math.random() * (max - min) + min);
   let puestas = 0;
@@ -122,11 +126,55 @@ const newExercise2 = () => {
     modificarCasilla(tablero, posFila, posColumna, TIPO_CASILLA.ADIVINABLE, ESTADO_CASILLA.BASE, '?');
     puestas++;
   }
+}
+
+const mostrarPrimeraLinea = (tablero, mostrarFila, mostrarColumna) => {
+  for (let i = 0; i < MAX_BASE; i++) {
+    if (mostrarFila) {
+      modificarCasilla(tablero, 0, i, TIPO_CASILLA.VISIBLE, ESTADO_CASILLA.BASE, new MiNumero(i, 10).toString());
+    }
+    if (mostrarColumna) {
+      modificarCasilla(tablero, i, 0, TIPO_CASILLA.VISIBLE, ESTADO_CASILLA.BASE, new MiNumero(i, 10).toString());
+    }
+  }
+}
+
+const newExercise2 = () => {
+  //Dificultad Dificil -> Mostramos primera fila y columna
+  const mostrarPrimeraFila = true;
+  const mostrarPrimeraColumna = true;
+  //inicializamos el tablero entero sin casillas visibles
+  let tablero = generarTablero(TIPO_CASILLA.CUBIERTA, ESTADO_CASILLA.BASE, '?');
+  //la casilla inicial siempre es visible
+  mostrarPrimeraLinea(tablero, mostrarPrimeraFila, mostrarPrimeraColumna)
+  generarCasillasAleatorias(tablero);
+  return tablero;
+}
+
+const newExercise3 = () => {
+  //Dificultad MUY Dificil -> Mostramos solo la primera fila
+  const mostrarPrimeraFila = true;
+  const mostrarPrimeraColumna = false;
+  //inicializamos el tablero entero sin casillas visibles
+  let tablero = generarTablero(TIPO_CASILLA.CUBIERTA, ESTADO_CASILLA.BASE, '?');
+  //la casilla inicial siempre es visible
+  mostrarPrimeraLinea(tablero, mostrarPrimeraFila, mostrarPrimeraColumna)
+  generarCasillasAleatorias(tablero);
+  return tablero;
+}
+
+const newExercise4 = () => {
+  //DIFICULTAD MAXIMA
+  //inicializamos el tablero entero sin casillas visibles
+  let tablero = generarTablero(TIPO_CASILLA.CUBIERTA, ESTADO_CASILLA.BASE, '?');
+  // En este modo SOLO la casilla inicial siempre es visible
+  modificarCasilla(tablero, 0, 0, TIPO_CASILLA.VISIBLE, ESTADO_CASILLA.BASE, new MiNumero(0, 10).toString());
+  generarCasillasAleatorias(tablero);
   return tablero;
 }
 
 export function ActividadTablas() {
-  const [dificultad, setDificultad] = useState('0'); // 0: Facil, 1: Medio, 2: Dificil
+  const [dificultad, setDificultad] = useState('0'); // 0: Facil, 1: Medio, 2: Dificil, 3: Muy Dificil, 4: Maxima
 
   // Solo devuelve el tablero, no actualiza estados directamente
   const crearNuevoTablero = (nivelActual) => {
@@ -135,6 +183,8 @@ export function ActividadTablas() {
       case '0': nuevoTablero = newExercise0(); break;
       case '1': nuevoTablero = newExercise1(); break;
       case '2': nuevoTablero = newExercise2(); break;
+      case '3': nuevoTablero = newExercise3(); break;
+      case '4': nuevoTablero = newExercise4(); break;
       default: nuevoTablero = newExercise0(); break;
     }
     return nuevoTablero.flat(); // Devolvemos el tablero con estructura plana
@@ -266,7 +316,13 @@ export function ActividadTablas() {
           <Header
             rutas={[{ label: TEXTOS.titulos.tablas, icon: 'icon-tablas' }]} backPath="/" />
 
-          <ActividadControles dificultad={dificultad} onChange={cambiarDificultad} onReiniciar={reiniciarJuego} onInfoClick={() => setMostrarInfo(true)} />
+          <ActividadControles 
+          dificultad={dificultad} 
+          onChange={cambiarDificultad} 
+          onReiniciar={reiniciarJuego} 
+          onInfoClick={() => setMostrarInfo(true)} 
+          opciones={NIVELES_DIFICULTAD}
+          />
 
           <div className="input-panel-tablas">
             <div className="pickers-container">

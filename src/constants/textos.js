@@ -31,6 +31,7 @@ export const TEXTOS = {
 
     // Textos de Informacion de las Actividades (Para el ModalInfo)
     infoActividades: {
+        titulo:"¿Cómo jugar?",
         tablas: "Adivina los números ocultos en la tabla. Selecciona el número correcto en las ruletas y toca la casilla con el '?'.",
         tablasMultiplicar: "Resuelve las multiplicaciones. Elige el número en la ruleta y toca la casilla con el '?'.",
         lapiceros: "Cuenta los lapiceros, estuches y cajas para alcanzar el objetivo. Usa los botones + y -.",

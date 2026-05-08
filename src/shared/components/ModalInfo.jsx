@@ -3,7 +3,7 @@ import { TEXTOS } from '../../constants/textos';
 
 export function ModalInfo({ isOpen, onClose, mensaje }) {
     return (
-        <Modal isOpen={isOpen} onClose={onClose} titulo="¿Cómo se juega?" icono="icon-info">
+        <Modal isOpen={isOpen} onClose={onClose} titulo={TEXTOS.infoActividades.titulo} icono="icon-info">
             <div className="modal-body-centered">
                 <p className="modal-text-content"> {mensaje} </p>
 

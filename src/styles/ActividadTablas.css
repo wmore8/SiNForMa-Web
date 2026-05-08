@@ -100,8 +100,7 @@
 
 @media (max-width: 767px) {
 
-    .panel-cuadricula,
-    .container-recortados {
+    .panel-cuadricula{
         max-width: 100vw;
         overflow-x: auto;
         /* Activamos el scroll */
@@ -109,9 +108,7 @@
         justify-content: flex-start;
     }
 
-    .tablas-grid-container,
-    .celosia-grid,
-    .recortados-grid {
+    .tablas-grid-container{
         /* Obliga a la tabla a no encogerse por debajo del espacio que necesita su texto */
         min-width: max-content;
     }

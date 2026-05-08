@@ -35,7 +35,7 @@ function AppLayout() {
 
   // Estado para el Modo de Vision
   const [visionMode, setVisionMode] = useState(() => {
-    return localStorage.getItem('appVisionMode') || 'monocromatico';
+    return localStorage.getItem('appVisionMode') || 'protanopia';
   });
 
   // Estado para darle relleno a la navbar

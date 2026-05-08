@@ -61,9 +61,6 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, c
       {/* ACCESIBILIDAD VISUAL */}
       <h3 className='modal-legend'>{TEXTOS.ui.opciones.tituloAccesibilidad}</h3>
       <div className="theme-toggle-buttons">
-        <button className={`theme-btn ${visionMode === 'monocromatico' ? 'active' : ''}`} onClick={() => changeVisionMode('monocromatico')}>
-          {TEXTOS.ui.opciones.acromatopsia}
-        </button>
         <button className={`theme-btn ${visionMode === 'protanopia' ? 'active' : ''}`} onClick={() => changeVisionMode('protanopia')}>
           {TEXTOS.ui.opciones.protanopia}
         </button>
@@ -73,18 +70,21 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, c
         <button className={`theme-btn ${visionMode === 'tritanopia' ? 'active' : ''}`} onClick={() => changeVisionMode('tritanopia')}>
           {TEXTOS.ui.opciones.tritanopia}
         </button>
+        <button className={`theme-btn ${visionMode === 'monocromatico' ? 'active' : ''}`} onClick={() => changeVisionMode('monocromatico')}>
+          {TEXTOS.ui.opciones.acromatopsia}
+        </button>
       </div>
 
       {import.meta.env.SINFORMA_MODO_DEBUG === 'true' && (
         <>
           {/* SECCION DEBUG BASE */}
-          <h3 className='modal-legend' style={{ marginTop: '1.5rem', color: 'var(--danger)' }}>Debug: Sistema Numérico</h3>
+          <h3 className='modal-legend' style={{ marginTop: '1.5rem', color: 'var(--danger)' }}>MODO DESARROLLADOR: Sistema Numérico</h3>
           <div className="theme-toggle-buttons">
             <button
               className={`theme-btn ${localStorage.getItem('debugBase') === '8' || (!localStorage.getItem('debugBase') && import.meta.env.SINFORMA_APP_SISTEMA_NUMERACION === '8') ? 'active' : ''}`}
               onClick={() => { localStorage.setItem('debugBase', '8'); window.location.reload(); }}
             >
-              Romesco (Base 8)
+              Romescus (Base 8)
             </button>
             <button
               className={`theme-btn ${localStorage.getItem('debugBase') === '10' || (!localStorage.getItem('debugBase') && import.meta.env.SINFORMA_APP_SISTEMA_NUMERACION === '10') ? 'active' : ''}`}
@@ -96,7 +96,7 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, c
 
           {/* VERSION TEXT */}
           <p style={{ marginTop: '2rem', textAlign: 'center', fontStyle: 'italic', fontSize: '0.9rem', color: 'var(--text-color)', opacity: 0.7 }}>
-            SiNForMa Web Development version 0.8.4
+            SiNForMa Web Development version 0.8.6
           </p>
         </>
       )}

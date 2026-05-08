@@ -1,24 +1,24 @@
 # SiNForMa-Web
 ### Sistema Interactivo de un Nuevo Sistema Numérico
 
-**SiNForMa-Web** es una plataforma educativa interactiva diseñada para la enseñanza y práctica del sistema de numeración en **Base 8 (Romesco)**. El proyecto busca facilitar la transición cognitiva hacia bases no decimales mediante actividades visuales, algorítmicas y lúdicas.
+**SiNForMa-Web** es una plataforma educativa interactiva diseñada para la enseñanza y práctica del sistema de numeración en **Base 8 (Romescus)**. El proyecto busca facilitar la transición cognitiva hacia bases no decimales mediante actividades visuales, algorítmicas y lúdicas.
 
 ---
 
 ## ✏️ Estado del Proyecto
-- **Fase Actual** `v0.8.5-beta`: [https://lustrous-creponne-95eb1a.netlify.app](https://lustrous-creponne-95eb1a.netlify.app)  (Lista para pruebas de usuario y revisión pedagógica).
+- **Fase Actual** `v0.8.6-beta`: [https://lustrous-creponne-95eb1a.netlify.app](https://lustrous-creponne-95eb1a.netlify.app)  (Lista para pruebas de usuario y revisión pedagógica).
 - **Prototipo Inicial**: [https://cool-marshmallow-512ba5.netlify.app](https://cool-marshmallow-512ba5.netlify.app/)
 
 ## 🎯 Objetivos Logrados
 - [x] **Arquitectura Modular**: Implementación de un `ActividadLayout` centralizado que gestiona Header, Controles, Modales de Información y Feedback.
 - [x] **Diccionario de Constantes**: Centralización de todos los textos de la app en `textos.js` para facilitar el mantenimiento.
-- [x] **Multi-dispositivo**: Interfaz adaptada para ratón y pantallas táctiles mediante componentes como `SwipePicker` y `TecladoBase8`.
+- [x] **Multi-dispositivo**: Interfaz adaptada para ratón y pantallas táctiles mediante componentes como `SwipePicker` y `TecladoBase`.
 - [x] **Modo Claro/Oscuro**: Soporte nativo para temas visuales con persistencia en `localStorage`.
 - [x] **Navegación Robusta**: Sistema de rutas jerárquico y página de error 404 personalizada.
 - [x] **Tamaño de letra personalizado** : Tres tamaños de texto seleccionables que mejoran la experiencia de usuario
 - [x] **Accesibilidad** : control total por teclado (Focus/Tab navigation).
 - [x] **Colores accesibles** : Implementación de una paleta que aborde los distintos problemas de visión que pueda tener el usuario.
-- [x] **Sistemas Decimal**: Conversor dinámico entre Romesco y Decimal.
+- [x] **Sistemas Decimal**: Conversor dinámico entre Romescus y Decimal.
 - [x] Implementación del **diseño de los iconos**
 - [x] QA: Pruebas funcionales.
 
