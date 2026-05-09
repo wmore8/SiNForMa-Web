@@ -6,7 +6,7 @@
 ---
 
 ## ✏️ Estado del Proyecto
-- **Fase Actual** `v0.8.6-beta`: [https://lustrous-creponne-95eb1a.netlify.app](https://lustrous-creponne-95eb1a.netlify.app)  (Lista para pruebas de usuario y revisión pedagógica).
+- **Fase Actual** `v0.9.0-beta`: [https://lustrous-creponne-95eb1a.netlify.app](https://lustrous-creponne-95eb1a.netlify.app)  (Lista para pruebas de usuario y revisión pedagógica).
 - **Prototipo Inicial**: [https://cool-marshmallow-512ba5.netlify.app](https://cool-marshmallow-512ba5.netlify.app/)
 
 ## 🎯 Objetivos Logrados
@@ -20,7 +20,9 @@
 - [x] **Colores accesibles** : Implementación de una paleta que aborde los distintos problemas de visión que pueda tener el usuario.
 - [x] **Sistemas Decimal**: Conversor dinámico entre Romescus y Decimal.
 - [x] Implementación del **diseño de los iconos**
-- [x] QA: Pruebas funcionales.
+- [x] **QA**: Pruebas funcionales.
+- [x] **Nueva feature**: Actividad de conteo mediante **select and move** (no se usa arrastrar y soltar).
+
 
 
 ## 🧩 Actividades Disponibles
@@ -37,7 +39,8 @@ La plataforma organiza las actividades en bloques progresivos:
     * **Multiplicación Avanzada**: Metodologías de Producto Clásico, Celosía y Recortados.
 
 ## 📋 Próximos Pasos (ToDo)
-- [ ] Nueva feature: Actividad de conteo mediante gestos táctiles (swipe sobre objetos).
+- [] En la actividad divisiones, se pondrá el cociente y resto. (con casillas)
+- [] Permitir el uso de tecladoBase en las actividades que usen swipePickers
 
 ## 🛠️ Tecnologías
 - **Core**: React + Vite.

@@ -161,7 +161,7 @@ export function ActividadCelosia() {
         return (
             <div className="celosia-etiqueta">
                 <div
-                    id={`celda-${id}`} // <-- VITAL
+                    id={`celda-${id}`} 
                     className={`celosia-resultado-input ${estaLlena} ${isActive ? 'activa' : ''} ${feed}`}
                     onClick={() => setCeldaActiva(id)}
                     onFocus={() => setCeldaActiva(id)}

@@ -506,7 +506,7 @@ html.text-size-lg {
 /* Ahora los textos tambien tienen hover porque se pueden clicar */
 .slider-labels span {
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .slider-labels h4:hover {
@@ -538,7 +538,7 @@ html.text-size-lg {
   color: var(--text-color);
   cursor: pointer;
   font-weight: bold;
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
 }
 
 .theme-btn:hover {
@@ -619,7 +619,7 @@ html.text-size-lg {
   background-color: transparent;
   color: var(--text-color);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .btn-secundario.danger:hover {
@@ -638,7 +638,7 @@ html.text-size-lg {
   border: none;
   font-size: 1.2rem;
   cursor: pointer;
-  transition: transform 0.1s, opacity 0.2s;
+  transition: transform 0.1s ease, opacity 0.2s;
 }
 
 .btn-corregir-full:active:not(:disabled) {
@@ -753,7 +753,7 @@ html.text-size-lg {
   color: var(--text-color);
   text-decoration: none;
   opacity: 0.75;
-  transition: opacity 0.2s, color 0.2s;
+  transition: opacity 0.2s ease, color 0.2 ease;
   min-width: 0;
   gap: 0.25rem;
   /* Para que el outline de accesibilidad sea redondo */
@@ -986,7 +986,7 @@ html.text-size-lg {
   cursor: pointer;
   height: 100%;
   width: 100%;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   text-decoration: none;
   color: var(--text-color);
 }
@@ -1205,7 +1205,7 @@ html.text-size-lg {
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--text-color);
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .picker-botones-stack button:focus {

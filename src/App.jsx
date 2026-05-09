@@ -19,6 +19,7 @@ import { ActividadRecortados } from './pages/ActividadRecortados';
 import { ActividadCelosia } from './pages/ActividadCelosia';
 import { ActividadMultiplicacionClasica } from './pages/ActividadMultiplicacionClasica';
 import { ActividadDivisiones } from './pages/ActividadDivisiones';
+import { ActividadConteo } from './pages/ActividadConteo';
 
 import './styles/App.css'
 import './styles/Accesibilidad.css'
@@ -161,6 +162,7 @@ function AppLayout() {
         <Route path="/operaciones/multiplicaciones/tablas" element={<ActividadTablasMultiplicar />} />
         <Route path="/operaciones/multiplicaciones/celosia" element={<ActividadCelosia />} />
         <Route path="/operaciones/multiplicaciones/clasico" element={<ActividadMultiplicacionClasica />} />
+        <Route path="/conteo" element={<ActividadConteo />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

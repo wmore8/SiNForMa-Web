@@ -1,0 +1,179 @@
+.conteo-main-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    width: 100%;
+    flex-grow: 1;
+}
+
+
+.zona-inferior {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    margin-top: auto;
+}
+
+/* CAJAS OBJETIVO */
+.conteo-cajas-container {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(1rem, 3vw, var(--spacing-xl));
+    width: 100%;
+}
+
+.caja-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.caja-header-externo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+.caja-header-externo h3 {
+    color: var(--primary);
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    margin: 0;
+}
+
+.conteo-caja {
+    flex: 1;
+    background-color: var(--bg-color);
+    border: 3px solid var(--card-border);
+    border-radius: 1rem;
+    min-height: clamp(180px, 25vh, 300px);
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    outline: none;
+}
+
+/* Cajas Interactivas: El nuevo feedback visual */
+.conteo-caja.activa {
+    border-color: var(--success);
+    background-color: var(--success-opacity-15);
+    box-shadow: 0 0 0 4px var(--success-opacity-15);
+    transform: scale(1.01);
+
+}
+
+.conteo-caja.activa.erronea {
+    box-shadow: 0 0 0 4px var(--danger-opacity-15);
+}
+
+.conteo-caja.erronea {
+    border-color: var(--danger);
+    background-color: var(--danger-opacity-15);
+}
+
+.conteo-caja.correcta {
+    border-color: var(--primary);
+    background-color: var(--success-opacity-15);
+    border-width: 3px;
+}
+
+.caja-zona-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    flex: 1;
+    align-content: flex-start;
+}
+
+/* ALMACEN */
+.conteo-almacen {
+    width: 100%;
+}
+
+.almacen-paneles {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.almacen-paneles {
+    /* Movil: Siempre 1 columna  */
+    grid-template-columns: 1fr;
+}
+
+.almacen-seccion-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.almacen-seccion-header-externo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+
+.almacen-items {
+    background-color: var(--bg-color);
+    border: 2px solid var(--card-border);
+    border-radius: 1rem;
+    padding: var(--spacing-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-height: 5rem;
+    align-content: flex-start;
+}
+
+/* LOS OBJETOS */
+.objeto-conteo {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem;
+    color: var(--text-color);
+}
+
+.objeto-conteo:hover {
+    transform: scale(1.2);
+    color: var(--primary);
+}
+
+.objeto-conteo.lapiz {
+    font-size: clamp(1.8rem, 4vw, 2.2rem);
+    /* color: var(--text-color); */
+}
+
+.objeto-conteo.estuche {
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    /* color: var(--text-color); */
+}
+
+.objeto-conteo.caja {
+    font-size: clamp(2.8rem, 6vw, 3.8rem);
+    /* color: var(--text-color); */
+}
+
+/* Escritorio: Ajuste de columnas segun el nivel de dificultad  */
+@media (min-width: 1024px) {
+    .almacen-paneles.dificultad-0 {
+        grid-template-columns: 1fr;
+    }
+
+    .almacen-paneles.dificultad-1 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .almacen-paneles.dificultad-2 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

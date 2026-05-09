@@ -96,7 +96,7 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, c
 
           {/* VERSION TEXT */}
           <p style={{ marginTop: '2rem', textAlign: 'center', fontStyle: 'italic', fontSize: '0.9rem', color: 'var(--text-color)', opacity: 0.7 }}>
-            SiNForMa Web Development version 0.8.6
+            SiNForMa Web Development version 0.9.0
           </p>
         </>
       )}

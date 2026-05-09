@@ -26,6 +26,7 @@ export const TEXTOS = {
         celosia: "Celosía",
         recortados: "Recortados",
         productoClasico: "Producto clásico",
+        conteo:"Actividad Conteo",
         error404: "Página no encontrada"
     },
 
@@ -44,6 +45,8 @@ export const TEXTOS = {
         productoClasicoDificil: "Toca las casillas vacías y usa el teclado numérico de abajo para rellenar los pasos intermedios y el resultado final.",
         celosia: "Multiplica cada cifra y suma las diagonales para obtener el resultado final. Recuerda que las decenas van arriba y las unidades abajo.",
         recortados: "Multiplica el número de la izquierda por la descomposición de los de arriba y pon el resultado en las casillas. Suma las filas para el total parcial.",
+        conteo : "Reparte los palillos entre los 2 contenedores para alcanzar ambos objetivos. Si no te alcanza, puedes dividir los objetos más grandes.",
+    
     },
 
     // Mensajes de Feedback (Para el ModalFeedback)
@@ -70,13 +73,16 @@ export const TEXTOS = {
         errorTablasMult: "Prueba otra vez, hay resultados incorrectos.",
         incompletoTablasMult: "Aún quedan interrogantes por resolver.",
 
-        exitoSecuenciaFin: "¡Secuencia Completada! :D",
+        exitoSecuenciaFin: "¡Secuencia Completada!",
         exitoSecuenciaNum: "¡Correcto! Introduce el siguiente número.",
         exitoSecuenciaPal: "¡Correcto! Escribe el siguiente número.",
-        errorSecuencia: "Prueba otra vez :(",
+        errorSecuencia: "¡Vaya! Prueba otra vez",
 
-        exitoLapiceros: "¡Perfecto! :D",
-        errorLapiceros: "Prueba otra vez :("
+        exitoLapiceros: "¡Perfecto!",
+        errorLapiceros: "Prueba otra vez",
+
+        exitoConteo : "¡Perfecto! Has distribuido correctamente los palillos",
+        errorConteo : "¡Vaya! Prueba otra vez",
     },
 
     // Textos específicos dentro de la UI de las actividades

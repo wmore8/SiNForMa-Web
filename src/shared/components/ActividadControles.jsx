@@ -1,4 +1,5 @@
 import { Icon } from './Icon';
+import { MiNumero } from '../utils/MiNumero';
 
 // Opciones por defecto para la mayoria de actividades
 const NIVELES_DEFAULT = [
@@ -16,9 +17,12 @@ export function ActividadControles({
 }) {
     return (
         <div className="actividad-controles">
-            <button className="icon-btn btn-info hover-primary" title="Información" onClick={onInfoClick} >
-                <Icon name="icon-info" />
-            </button>
+
+            {MiNumero.baseActual !== 8 && (
+                <button className="icon-btn btn-info hover-primary" title="Información" onClick={onInfoClick} >
+                    <Icon name="icon-info" />
+                </button>
+            )}
 
             <select value={dificultad} name='dificultad-select' className="dificultad-select" onChange={onChange}>
                 {opciones.map(opc => (
