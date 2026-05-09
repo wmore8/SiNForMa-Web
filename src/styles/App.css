@@ -830,30 +830,34 @@ html.text-size-lg {
 }
 
 .teclado-btn.accion {
-  background-color: #f3f4f6;
+  background-color: var(--danger-opacity-5);
   color: var(--danger);
 }
 
 .dark-mode .teclado-btn.accion {
-  background-color: #1f2937;
+  background-color: var(--danger-opacity-15);
 }
 
 .teclado-btn:hover {
   border-color: var(--primary);
+  color: var(--primary);
 }
 
 .teclado-btn.accion:hover {
   border-color: var(--danger);
+  color: var(--danger);
 }
 
 .teclado-btn:focus {
   border-color: var(--primary);
+  color:var(--primary);
   background-color: var(--success-opacity-15);
   outline: none;
 }
 
 .teclado-btn.accion:focus {
   border-color: var(--danger);
+  color: var(--danger);
   background-color: var(--danger-opacity-15);
 }
 

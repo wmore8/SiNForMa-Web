@@ -463,7 +463,7 @@
 .celosia-input.correcta,
 .celosia-resultado-input.correcta {
     background-color: var(--success);
-    color: var(--icon-color);
+    color: var(--primary-text);
     border-color: var(--success);
     border-style: solid;
 }
@@ -475,7 +475,7 @@
 .celosia-input.erronea,
 .celosia-resultado-input.erronea {
     background-color: var(--danger);
-    color: var(--icon-color);
+    color: var(--primary-text);
     border-color: var(--danger);
     border-style: solid;
 }

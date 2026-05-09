@@ -19,14 +19,14 @@ export function TecladoBase({ onTeclaClick, deshabilitado }) {
             { id: '8', display: new MiNumero(8, 10).toString() },
             { id: '9', display: new MiNumero(9, 10).toString() },
             { id: '0', display: new MiNumero(0, 10).toString(), clase: 'btn-cero' },
-            { id: 'DEL', display: '⌫', clase: 'accion btn-del', title: 'Borrar casilla' },
-            { id: 'CLEAR', display: 'C', clase: 'accion btn-clear', title: 'Vaciar casilla' }
+            { id: 'DEL', display: '⌫', clase: 'accion btn-del', title: 'Borrar casilla actual' },
+            { id: 'CLEAR', display: 'C', clase: 'accion btn-clear', title: 'Vaciar todas las casillas' }
         ];
     } else {
         botonesConfig = [
             ...digitos.map(d => ({ id: d.toString(), display: new MiNumero(d, 10).toString() })),
-            { id: 'DEL', display: '⌫', clase: 'accion', title: 'Borrar casilla' },
-            { id: 'CLEAR', display: 'C', clase: 'accion', title: 'Vaciar casilla' }
+            { id: 'CLEAR', display: 'C', clase: 'accion', title: 'Vaciar todas las casillas' },
+            { id: 'DEL', display: '⌫', clase: 'accion', title: 'Borrar casilla actual' }
         ];
     }
 
@@ -41,12 +41,26 @@ export function TecladoBase({ onTeclaClick, deshabilitado }) {
             if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
 
             const key = e.key.toLowerCase();
-            const teclasValidas = digitos.map(d => d.toString());
 
-            // Numeros validos para la base -> Pasan directos al teclado
-            if (teclasValidas.includes(key)) {
-                e.preventDefault();
-                onTeclaClick(key);
+            // Comportamiento segun el sistema numerico (Romescus o Decimal)
+            if (base === 8) {
+                // En base 8, usamos letras para que el alumno deduzca el contexto
+                const mapeoRomescus = {
+                    'q': '0', 'w': '1', 'e': '2', 'r': '3',
+                    'a': '4', 's': '5', 'd': '6', 'f': '7'
+                };
+                
+                if (mapeoRomescus[key]) {
+                    e.preventDefault();
+                    onTeclaClick(mapeoRomescus[key]);
+                }
+            } else {
+                // En sistema decimal, usamos los numeros normales
+                const teclasValidas = digitos.map(d => d.toString());
+                if (teclasValidas.includes(key)) {
+                    e.preventDefault();
+                    onTeclaClick(key);
+                }
             }
 
             // Borrar caracter (Backspace o Delete)
@@ -64,7 +78,7 @@ export function TecladoBase({ onTeclaClick, deshabilitado }) {
 
         window.addEventListener('keydown', handleGlobalKeyDown);
         return () => window.removeEventListener('keydown', handleGlobalKeyDown);
-    }, [onTeclaClick, deshabilitado]); // Dependencia vital para que use la version mas reciente de la funcion
+    }, [onTeclaClick, deshabilitado, base, digitos]); // Dependencia vital para que use la version mas reciente de la funcion
 
     return (
         <div className={`teclado-contenedor base-${base}`}>
