@@ -149,17 +149,17 @@
 }
 
 .objeto-conteo.lapiz {
-    font-size: clamp(1.8rem, 4vw, 2.2rem);
+    font-size: clamp(2rem, 5vw, 3rem);
     /* color: var(--text-color); */
 }
 
 .objeto-conteo.estuche {
-    font-size: clamp(2.2rem, 5vw, 3rem);
+    font-size: clamp(4rem, 5vw, 5rem);
     /* color: var(--text-color); */
 }
 
 .objeto-conteo.caja {
-    font-size: clamp(2.8rem, 6vw, 3.8rem);
+    font-size: clamp(5rem, 6vw, 6rem);
     /* color: var(--text-color); */
 }
 

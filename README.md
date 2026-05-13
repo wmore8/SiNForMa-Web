@@ -6,7 +6,7 @@
 ---
 
 ## ✏️ Estado del Proyecto
-- **Fase Actual** `v0.9.0-beta`: [https://lustrous-creponne-95eb1a.netlify.app](https://lustrous-creponne-95eb1a.netlify.app)  (Lista para pruebas de usuario y revisión pedagógica).
+- **Fase Actual** `v0.9.1-beta`: [https://lustrous-creponne-95eb1a.netlify.app](https://lustrous-creponne-95eb1a.netlify.app)  (Lista para pruebas de usuario y revisión pedagógica).
 - **Prototipo Inicial**: [https://cool-marshmallow-512ba5.netlify.app](https://cool-marshmallow-512ba5.netlify.app/)
 
 ## 🎯 Objetivos Logrados

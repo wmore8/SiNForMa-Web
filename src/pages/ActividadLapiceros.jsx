@@ -70,15 +70,15 @@ export function ActividadLapiceros() {
         let nombreIcono = 'icon-default';
         if (dificultad === '0') { // En Facil o Medio SOLO mostramos el icono
             if (tipo === 'lapiz') nombreIcono = 'icon-lapiz-sm';
-            if (tipo === 'estuche') nombreIcono = 'icon-lapiz-estuche';
-            if (tipo === 'caja') nombreIcono = 'icon-lapiz-caja';
+            if (tipo === 'estuche') nombreIcono = getBase() === 8 ? 'icon-estuche-facil-romescus' : 'icon-estuche-facil-decimal';
+            if (tipo === 'caja') nombreIcono = getBase() === 8 ? 'icon-caja-facil-romescus' : 'icon-caja-facil-decimal';
         } else if (dificultad === '1') {
             if (tipo === 'lapiz') nombreIcono = 'icon-cuadrado';
-            if (tipo === 'estuche') nombreIcono = 'icon-cuadrado-estuche';
-            if (tipo === 'caja') nombreIcono = 'icon-cuadrado-caja';
+             if (tipo === 'estuche') nombreIcono = getBase() === 8 ? 'icon-estuche-medio-romescus' : 'icon-estuche-medio-decimal';
+            if (tipo === 'caja') nombreIcono = getBase() === 8 ? 'icon-caja-medio-romescus' : 'icon-caja-medio-decimal';
         }
 
-        return <Icon name={nombreIcono} className="lapicero-icono" />;
+        return <Icon name={nombreIcono} className={`lapicero-icono ${tipo}`}  />;
     };
 
     return (

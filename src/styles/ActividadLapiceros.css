@@ -64,6 +64,15 @@
     color: var(--text-color);
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.lapicero-icono.estuche {
+    font-size: 8rem;
+}
+
+.lapicero-icono.caja {
+    font-size: 10rem;
 }
 
 .lapicero-texto {
@@ -90,12 +99,13 @@
         padding: var(--spacing-xl);
     }
 
-    .lapicero-icono {
+    /* .lapicero-icono {
         font-size: 6rem;
         color: var(--text-color);
         display: flex;
         justify-content: center;
-    }
+        align-items: center;
+    } */
 
     .lapicero-texto {
         font-size: 1.8rem;
@@ -126,6 +136,12 @@
 
     .lapicero-info {
         width: auto;
+        /* Obligamos a que todos los contenedores midan exactamente lo mismo de alto */
+        height: 11rem; 
+        /* Centramos el contenido (sea un icono de 10rem, uno de 5rem o puro texto) en el medio exacto */
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
 }

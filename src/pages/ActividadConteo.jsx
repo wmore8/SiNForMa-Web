@@ -206,9 +206,9 @@ export function ActividadConteo() {
                             onKeyDown={(e) => handleCajaInteraccion('izq', e)}
                         >
                             <div className="caja-zona-items">
-                                {renderObjetos(cajaIzq.cajas, 'caja', 'icon-lapiz-caja', (e) => devolverAlmacen('izq', 'cajas', e))}
-                                {renderObjetos(cajaIzq.estuches, 'estuche', 'icon-lapiz-estuche', (e) => devolverAlmacen('izq', 'estuches', e))}
-                                {renderObjetos(cajaIzq.lapices, 'lapiz', 'icon-lapiz', (e) => devolverAlmacen('izq', 'lapices', e))}
+                                {renderObjetos(cajaIzq.cajas, 'caja', base === 8 ? 'icon-caja-facil-romescus' : 'icon-caja-facil-decimal' , (e) => devolverAlmacen('izq', 'cajas', e))}
+                                {renderObjetos(cajaIzq.estuches, 'estuche', base === 8 ? 'icon-estuche-facil-romescus' : 'icon-estuche-facil-decimal', (e) => devolverAlmacen('izq', 'estuches', e))}
+                                {renderObjetos(cajaIzq.lapices, 'lapiz', 'icon-lapiz-sm', (e) => devolverAlmacen('izq', 'lapices', e))}
                             </div>
                         </div>
                     </div>
@@ -227,9 +227,9 @@ export function ActividadConteo() {
                             onKeyDown={(e) => handleCajaInteraccion('der', e)}
                         >
                             <div className="caja-zona-items">
-                                {renderObjetos(cajaDer.cajas, 'caja', 'icon-lapiz-caja', (e) => devolverAlmacen('der', 'cajas', e))}
-                                {renderObjetos(cajaDer.estuches, 'estuche', 'icon-lapiz-estuche', (e) => devolverAlmacen('der', 'estuches', e))}
-                                {renderObjetos(cajaDer.lapices, 'lapiz', 'icon-lapiz', (e) => devolverAlmacen('der', 'lapices', e))}
+                                {renderObjetos(cajaDer.cajas, 'caja', base === 8 ? 'icon-caja-facil-romescus' : 'icon-caja-facil-decimal', (e) => devolverAlmacen('der', 'cajas', e))}
+                                {renderObjetos(cajaDer.estuches, 'estuche', base === 8 ? 'icon-estuche-facil-romescus' : 'icon-estuche-facil-decimal', (e) => devolverAlmacen('der', 'estuches', e))}
+                                {renderObjetos(cajaDer.lapices, 'lapiz', 'icon-lapiz-sm', (e) => devolverAlmacen('der', 'lapices', e))}
                             </div>
                         </div>
                     </div>
@@ -245,7 +245,7 @@ export function ActividadConteo() {
                                         <Icon name="icon-lapiz-caja" />
                                         <button className="icon-btn hover-primary" title='Dividir Caja' disabled={almacen.cajas === 0} onClick={() => desarmar('caja')}><Icon name="icon-split" /></button>
                                     </div>
-                                    <div className="almacen-items">{renderObjetos(almacen.cajas, 'caja', 'icon-lapiz-caja', () => moverAActiva('cajas'))}</div>
+                                    <div className="almacen-items">{renderObjetos(almacen.cajas, 'caja', base === 8 ? 'icon-caja-facil-romescus' : 'icon-caja-facil-decimal', () => moverAActiva('cajas'))}</div>
                                 </div>
                             )}
 
@@ -255,7 +255,7 @@ export function ActividadConteo() {
                                         <Icon name="icon-lapiz-estuche" />
                                         <button className="icon-btn hover-primary" title='Dividir Estuche' disabled={almacen.estuches === 0} onClick={() => desarmar('estuche')}><Icon name="icon-split" /></button>
                                     </div>
-                                    <div className="almacen-items">{renderObjetos(almacen.estuches, 'estuche', 'icon-lapiz-estuche', () => moverAActiva('estuches'))}</div>
+                                    <div className="almacen-items">{renderObjetos(almacen.estuches, 'estuche', base === 8 ? 'icon-estuche-facil-romescus' : 'icon-estuche-facil-decimal', () => moverAActiva('estuches'))}</div>
                                 </div>
                             )}
 
@@ -265,7 +265,7 @@ export function ActividadConteo() {
                                     {/* Mantiene la simetria visual y de altura */}
                                     <button className="icon-btn" style={{ visibility: 'hidden' }} disabled><Icon name="icon-split" /></button>
                                 </div>
-                                <div className="almacen-items">{renderObjetos(almacen.lapices, 'lapiz', 'icon-lapiz', () => moverAActiva('lapices'))}</div>
+                                <div className="almacen-items">{renderObjetos(almacen.lapices, 'lapiz', 'icon-lapiz-sm', () => moverAActiva('lapices'))}</div>
                             </div>
                         </div>
                     </div>
