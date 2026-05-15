@@ -81,13 +81,13 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, c
           <h3 className='modal-legend' style={{ marginTop: '1.5rem', color: 'var(--danger)' }}>MODO DESARROLLADOR: Sistema Numérico</h3>
           <div className="theme-toggle-buttons">
             <button
-              className={`theme-btn ${localStorage.getItem('debugBase') === '8' || (!localStorage.getItem('debugBase') && import.meta.env.SINFORMA_APP_SISTEMA_NUMERACION === '8') ? 'active' : ''}`}
+              className={`theme-btn ${localStorage.getItem('debugBase') === '8' || (!localStorage.getItem('debugBase') && import.meta.env.SINFORMA_APP_SISTEMA_NUMERACION === '8') ? 'active' : ''} debug`}
               onClick={() => { localStorage.setItem('debugBase', '8'); window.location.reload(); }}
             >
               Romescus (Base 8)
             </button>
             <button
-              className={`theme-btn ${localStorage.getItem('debugBase') === '10' || (!localStorage.getItem('debugBase') && import.meta.env.SINFORMA_APP_SISTEMA_NUMERACION === '10') ? 'active' : ''}`}
+              className={`theme-btn ${localStorage.getItem('debugBase') === '10' || (!localStorage.getItem('debugBase') && import.meta.env.SINFORMA_APP_SISTEMA_NUMERACION === '10') ? 'active' : ''} debug`}
               onClick={() => { localStorage.setItem('debugBase', '10'); window.location.reload(); }}
             >
               Decimal (Base 10)
@@ -96,7 +96,7 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, c
 
           {/* VERSION TEXT */}
           <p style={{ marginTop: '2rem', textAlign: 'center', fontStyle: 'italic', fontSize: '0.9rem', color: 'var(--text-color)', opacity: 0.7 }}>
-            SiNForMa Web Development version 0.9.1
+            SiNForMa Web Development version 0.9.2
           </p>
         </>
       )}

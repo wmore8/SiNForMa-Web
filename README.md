@@ -21,7 +21,7 @@
 - [x] **Sistemas Decimal**: Conversor dinámico entre Romescus y Decimal.
 - [x] Implementación del **diseño de los iconos**
 - [x] **QA**: Pruebas funcionales.
-- [x] **Nueva feature**: Actividad de conteo mediante **select and move** (no se usa arrastrar y soltar).
+- [x] **Nueva feature**: Actividad de Agrupación mediante **select and move** (no se usa arrastrar y soltar).
 
 
 

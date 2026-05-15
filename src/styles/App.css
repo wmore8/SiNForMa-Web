@@ -543,6 +543,7 @@ html.text-size-lg {
 
 .theme-btn:hover {
   border-color: var(--primary);
+  color: var(--primary);
   transform: scale(1.01);
 }
 
@@ -553,6 +554,18 @@ html.text-size-lg {
 .theme-btn.active {
   background-color: var(--primary);
   border-color: var(--primary);
+  color: var(--primary-text);
+}
+
+.theme-btn.debug:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+  transform: scale(1.01);
+}
+
+.theme-btn.active.debug {
+  background-color: var(--danger);
+  border-color: var(--danger);
   color: var(--primary-text);
 }
 
@@ -996,6 +1009,14 @@ html.text-size-lg {
   background-color: var(--primary);
   color: var(--primary-text);
   border-color: var(--primary);
+  --icon-color: var(--bg-color);
+}
+
+.card.debug:hover {
+  transform: scale(1.02);
+  background-color: var(--danger);
+  color: var(--primary-text);
+  border-color: var(--danger);
   --icon-color: var(--bg-color);
 }
 

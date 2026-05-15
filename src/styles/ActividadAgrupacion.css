@@ -1,0 +1,204 @@
+.agrupacion-layout-custom {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+}
+
+/* --- PANEL IZQUIERDO (MESA) --- */
+.panel-mesa {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.mesa-container {
+    background-color: var(--bg-color);
+    border: 2px solid var(--primary);
+    border-radius: 1rem;
+    padding: var(--spacing-lg);
+    flex: 1;
+    min-height: 0;
+    max-height: 40vh;
+    /* Scroll en la mesa si hay muchos palillos */
+    overflow-y: auto;
+}
+
+.mesa-container::-webkit-scrollbar {
+    width: 8px;
+    height: 2px;
+}
+
+.mesa-container::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 4px;
+}
+
+.mesa-zona-items {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 0.8rem;
+}
+
+/* --- OBJETOS --- */
+.objeto-agrupacion {
+    background-color: var(--bg-color);
+    border: 3px dashed transparent;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem;
+    color: var(--text-color);
+    /* transition: border 0.25s; */
+}
+
+.objeto-agrupacion:hover {
+    border: 3px dashed var(--primary);
+}
+
+.objeto-agrupacion.seleccionado {
+    border-color: var(--primary);
+    border-style: solid;
+    background-color: var(--success-opacity-15);
+    transform: scale(1.1);
+}
+
+.objeto-agrupacion.lapiz {
+    font-size: clamp(1.8rem, 4vw, 2.2rem);
+}
+
+.objeto-agrupacion.estuche {
+    font-size: clamp(2.5rem, 5vw, 3rem);
+    /* color: var(--warning); */
+}
+
+.objeto-agrupacion.caja {
+    font-size: clamp(3rem, 6vw, 3.8rem);
+    /* color: var(--danger); */
+}
+
+/* --- PANEL DERECHO (CONTROLES) --- */
+.panel-controles-agrupacion {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-md);
+    background-color: var(--bg-color);
+    border-radius: 1rem;
+    border: 2px solid var(--card-border);
+}
+
+/* --- BOTONES DE ACCION --- */
+.fila-botones-atar {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-md);
+}
+
+.btn-herramienta {
+    font-size: 3rem;
+    /* Tamaño fijo de icono para que no baile con el texto */
+    padding: var(--spacing-md);
+    background-color: var(--bg-color);
+    border: 2px solid var(--card-border);
+    border-radius: 1rem;
+    transition: all 0.2s ease;
+}
+
+/* BLOQUE RESPUESTA */
+.bloque-respuesta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-top: auto;
+    /* padding-top: var(--spacing-md); */
+}
+
+.unidad-referencia {
+    font-size: 3rem;
+    color: var(--text-color);
+}
+
+.pickers-grid {
+    display: flex;
+    gap: var(--spacing-md);
+    /* background-color: var(--bg-color-opacity); */
+    padding: var(--spacing-md);
+    border-radius: 1rem;
+}
+
+/* --------------------------------Tablet-------------------------------- */
+@media (min-width: 768px) {
+
+    .mesa-container {
+        max-height: 30vh;
+    }
+
+}
+
+/* --------------------------------ESCRITORIO-------------------------------- */
+@media (min-width: 1024px) {
+    .agrupacion-layout-custom {
+        flex-direction: row;
+        align-items: stretch;
+        gap: var(--spacing-xl);
+    }
+
+    .panel-mesa {
+        flex: 2;
+        position: relative;
+    }
+
+    .mesa-container {
+        /* Para que el container no haga crecer la pantalla mas de la cuenta, le damos una posicion absoluta (es decir por "coordenadas") */
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-height: 100%;
+        background-color: var(--bg-color);
+        border: 3px solid var(--primary);
+        border-radius: 1rem;
+        padding: var(--spacing-lg);
+        /* Mantiene su scroll interno intacto */
+        overflow-y: auto;
+    }
+
+    .panel-controles-agrupacion {
+        flex: 1;
+        background-color: var(--bg-color);
+        border: 2px solid var(--card-border);
+        border-radius: 1rem;
+        padding: var(--spacing-lg);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: var(--spacing-xl);
+
+        /* Por si el texto grande rompe el container, cerara su propio scroll */
+        min-height: 0;
+        overflow-y: auto;
+    }
+
+    .bloque-respuesta {
+        margin-top: auto;
+        /* margin-bottom: var(--spacing-lg); */
+    }
+
+    .panel-controles-agrupacion .btn-corregir-full {
+        margin-top: auto;
+        /* Evita que el boton se aplaste si falta espacio */
+        flex-shrink: 0;
+    }
+}

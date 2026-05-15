@@ -8,7 +8,8 @@ const navLinks = [
     { name: 'Palabras', path: '/palabras', icon: 'icon-palabras' },
     { name: 'Números', path: '/numeros', icon: 'icon-numeros' },
     { name: 'Operaciones', path: '/operaciones', icon: 'icon-operaciones' },
-    { name: 'Conteo', path: '/conteo', icon: 'icon-default' }
+    { name: 'Palillos', path: '/agrupacion', icon: 'icon-stack' },
+    // { name: 'Conteo', path: '/conteo', icon: 'icon-default' }
 
 ];
 

@@ -1,40 +1,57 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { VitePWA } from 'vite-plugin-pwa'
+import process from 'node:process'
 
-export default defineConfig({
-  envPrefix: 'SINFORMA_',
-  plugins: [
-    react(),
-    VitePWA({
-      registerType: 'autoUpdate',
-      includeAssets: ['sprite.svg'], // Archivos estaticos offline
-      manifest: {
-        name: 'SiNForMa Web Development Version',
-        short_name: 'SiNForMa',
-        description: 'SiNForMa Web Development y PWA',
-        theme_color: '#32DE84',
-        background_color: '#f0fdf4',
-        display: 'standalone',
-        orientation: 'any',
-        start_url: '/',
-        id: '/',
-        icons: [
-          {
-            src: 'proto_icon_x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'any maskable',
+export default defineConfig(({ mode }) => {
+  // Cargamos las variables de entorno
+  const env = loadEnv(mode, process.cwd(), '');
+  const isDebug = env.SINFORMA_MODO_DEBUG === 'true';
 
-          },
-          {
-            src: 'proto_icon_x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable'
-          }
-        ]
-      }
-    })
-  ],
+  // Definimos el prefijo dinámico
+  const iconPrefix = isDebug ? 'dev_icon' : 'app_icon';
+
+  return {
+    envPrefix: 'SINFORMA_',
+    plugins: [
+      react(),
+      // Mini-plugin custom de Vite para modificar el HTML al vuelo
+      {
+        name: 'html-transform',
+        transformIndexHtml(html) {
+          return html.replace(/%ICON_PREFIX%/g, iconPrefix);
+        }
+      },
+      VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: ['sprite.svg'], // Archivos estaticos offline
+        manifest: {
+          name: 'SiNForMa Web Development Version',
+          short_name: 'SiNForMa',
+          description: 'SiNForMa Web Development y PWA',
+          theme_color: '#000000',
+          background_color: '#ffffff',
+          display: 'standalone',
+          orientation: 'any',
+          start_url: '/',
+          id: '/',
+          icons: [
+            {
+              src: `${iconPrefix}_x192.png`,
+              sizes: '192x192',
+              type: 'image/png',
+              purpose: 'any maskable',
+
+            },
+            {
+              src: `${iconPrefix}_x512.png`,
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'any maskable'
+            }
+          ]
+        }
+      })
+    ],
+  }
 })

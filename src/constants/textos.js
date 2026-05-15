@@ -27,6 +27,7 @@ export const TEXTOS = {
         recortados: "Recortados",
         productoClasico: "Producto clásico",
         conteo:"Actividad Conteo",
+        agrupacion: "Actividad Palillos",
         error404: "Página no encontrada"
     },
 
@@ -46,6 +47,7 @@ export const TEXTOS = {
         celosia: "Multiplica cada cifra y suma las diagonales para obtener el resultado final. Recuerda que las decenas van arriba y las unidades abajo.",
         recortados: "Multiplica el número de la izquierda por la descomposición de los de arriba y pon el resultado en las casillas. Suma las filas para el total parcial.",
         conteo : "Reparte los palillos entre los 2 contenedores para alcanzar ambos objetivos. Si no te alcanza, puedes dividir los objetos más grandes.",
+        agrupacion: "Cuenta cuantos objetos solicitados hay en total. Puedes agrupar o desagrupar objetos para contar más rápido",
     
     },
 
