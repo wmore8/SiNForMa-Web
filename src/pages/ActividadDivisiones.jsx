@@ -1,56 +1,45 @@
 import { useState } from 'react';
-import { SwipePicker } from '../shared/components/SwipePicker';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { ActividadLayout } from '../shared/components/ActividadLayout';
+import { CeldaInteractiva } from '../shared/components/CeldaInteractiva';
+import { PanelTeclado } from '../shared/components/PanelTeclado';
 import { TEXTOS } from '../constants/textos';
+import { useNavegacionFlechas } from '../shared/hooks/useNavegacionFlechas';
+import { useAutoFocoInicial } from '../shared/hooks/useAutoFocoInicial';
 import '../styles/ActividadOperaciones.css';
-
-const OPCIONES_DIGITOS = [' ', ...MiNumero.losDigitos];
 
 const generarDivision = (nivel) => {
     const rand = (max) => Math.floor(Math.random() * max);
-    let val1 = 0; // Dividendo (Base 10)
-    let val2 = 1; // Divisor (Base 10)
+    const base = MiNumero.baseActual;
+    let dividendo = 0;
+    let divisor = 1;
 
     if (nivel === '0') {
         // Facil: 1 cifra / 1 cifra (divisor siempre > 0)
-        val1 = rand(MiNumero.baseActual);
-        val2 = rand(MiNumero.baseActual - 1) + 1;
+        dividendo = rand(base);
+        divisor = rand(base - 1) + 1;
     } else if (nivel === '1') {
-        const base = MiNumero.baseActual;
+        // Medio: División de hasta 2 cifras por 1 (fuerza que sea exacta originalmente)
         const minVal = base;
         const maxVal = base * base;
-
-        // Generamos dos numeros para que la division sea exacta (dividendo = divisor * cociente)
-        const divisor = Math.floor(Math.random() * (base - 2)) + 2; // de 2 al maximo de base (ej: 2 a 7)
-        const cociente = Math.floor(Math.random() * (maxVal - minVal)) + minVal; 
-        const dividendo = divisor * cociente;
-
-        return {
-            num1Str: dividendo.toString(base), 
-            num2Str: divisor.toString(base),
-            solucionStr: cociente.toString(base)
-        };
+        divisor = Math.floor(Math.random() * (base - 2)) + 2;
+        const cociente = Math.floor(Math.random() * (maxVal - minVal)) + minVal;
+        dividendo = divisor * cociente;
     } else {
         // Dificil: 3 cifras / 2 cifras
-        const base = MiNumero.baseActual;
-        val1 = rand(Math.pow(base, 3));
-        val2 = rand(Math.pow(base, 2) - 1) + 1;
-        const resultadoDecimal = Math.floor(val1 / val2);
-        return {
-            num1Str: val1.toString(base),
-            num2Str: val2.toString(base),
-            solucionStr: resultadoDecimal.toString(base)
-        };
+        dividendo = rand(Math.pow(base, 3));
+        divisor = rand(Math.pow(base, 2) - 1) + 1;
     }
 
-    // Division entera (sin decimales)
-    const resultadoDecimal = Math.floor(val1 / val2);
+    // Calculamos cociente y resto exactos en base 10 y luego los convertimos a la base actual
+    const cocienteDecimal = Math.floor(dividendo / divisor);
+    const restoDecimal = dividendo % divisor;
 
     return {
-        num1Str: val1.toString(MiNumero.baseActual),
-        num2Str: val2.toString(MiNumero.baseActual),
-        solucionStr: resultadoDecimal.toString(MiNumero.baseActual)
+        num1Str: dividendo.toString(base),
+        num2Str: divisor.toString(base),
+        solucionCociente: cocienteDecimal.toString(base),
+        solucionResto: restoDecimal.toString(base)
     };
 };
 
@@ -58,62 +47,117 @@ export function ActividadDivisiones() {
     const [dificultad, setDificultad] = useState('0');
     const [ejercicio, setEjercicio] = useState(() => generarDivision('0'));
 
-    // Para la division, el maximo resultado de 777 / 1 es 777 (3 cifras como maximo)
-    const [idxCentenas, setIdxCentenas] = useState(0);
-    const [idxDecenas, setIdxDecenas] = useState(0);
-    const [idxUnidades, setIdxUnidades] = useState(0);
-    // Estado visual para el CSS (borde de la caja)
-    const [estadoRespuesta, setEstadoRespuesta] = useState('idle');
+    const celdasVacias = { cociente: '', resto: '' };
+    const [celdas, setCeldas] = useState(celdasVacias);
+    const [feedback, setFeedback] = useState(celdasVacias);
+    const [celdaActiva, setCeldaActiva] = useState(null);
+
+    // Mapa de navegacion de flechas
+    const navegacionGrid = [
+        ['cociente', 'resto'],
+        ['btn-corregir', 'btn-corregir']
+    ];
+
+    const handleFlechas = useNavegacionFlechas(navegacionGrid, setCeldaActiva);
+    useAutoFocoInicial(ejercicio, 'celda-cociente', setCeldaActiva);
+
     // Estados para los modales
     const [mostrarFeedback, setMostrarFeedback] = useState(false);
     const [esCorrecto, setEsCorrecto] = useState(false);
 
+    const reiniciarTodo = () => {
+        setEjercicio(generarDivision(dificultad));
+        setCeldas(celdasVacias);
+        setFeedback(celdasVacias);
+        setCeldaActiva(null);
+        setMostrarFeedback(false);
+    };
+
+
     const cambiarDificultad = (e) => {
         const nuevoNivel = e.target.value;
         setDificultad(nuevoNivel);
-        setEjercicio(generarDivision(nuevoNivel));
-        resetearPickers();
+        reiniciarTodo(nuevoNivel);
     };
 
-    const reiniciarJuego = () => {
-        setEjercicio(generarDivision(dificultad));
-        resetearPickers();
-    };
-
-    const resetearPickers = () => {
-        setIdxCentenas(0);
-        setIdxDecenas(0);
-        setIdxUnidades(0);
-        setEstadoRespuesta('idle');
-    };
-
-    const validarEjercicio = () => {
-        const c = idxCentenas > 0 ? (idxCentenas - 1).toString() : '';
-        const d = idxDecenas > 0 ? (idxDecenas - 1).toString() : '';
-        const u = idxUnidades > 0 ? (idxUnidades - 1).toString() : '0';
-
-        let respuestaNumStr = `${c}${d}${u}`.trim().replace(/^0+/, '') || '0';
-
-        if (respuestaNumStr === ejercicio.solucionStr) {
-            setEstadoRespuesta('correct');
-            setEsCorrecto(true);
-        } else {
-            setEstadoRespuesta('error');
-            setEsCorrecto(false);
+    const handleTeclaClick = (tecla) => {
+        if (tecla === 'CLEAR') {
+            setCeldas(celdasVacias);
+            setFeedback(celdasVacias);
+            setCeldaActiva(null);
+            return;
         }
-        setMostrarFeedback(true);
+
+        if (!celdaActiva) return;
+
+        setCeldas(prev => {
+            const valorActual = prev[celdaActiva];
+            let nuevoValor = valorActual;
+
+            if (tecla === 'DEL') {
+                nuevoValor = valorActual.slice(0, -1);
+            } else {
+                // Permitimos hasta 5 caracteres por si es una division grande
+                if (valorActual.length < 5) nuevoValor = valorActual + tecla;
+            }
+            return { ...prev, [celdaActiva]: nuevoValor };
+        });
+
+        // Limpiamos el borde de la celda que se esta editando
+        setFeedback(prev => ({ ...prev, [celdaActiva]: '' }));
     };
 
-    const handlePickerChange = (setter) => (val) => {
-        setter(val);
-        setEstadoRespuesta('idle');
-    };
+    const renderCelda = (id) => (
+        <CeldaInteractiva
+            key={id}
+            id={id}
+            textoPersonalizado={celdas[id] !== '' ? renderizarSimbolos(celdas[id]) : ''}
+            isActive={celdaActiva === id}
+            feedback={feedback[id]}
+            onSelect={setCeldaActiva}
+            handleFlechas={handleFlechas}
+            claseBase="celda-ancha"
+        />
+    )
 
     // Helper para convertir un string base 8 en simbolos Romescos
     const renderizarSimbolos = (strBase8) => {
         return strBase8.split('').map((char, i) => (
             <span key={i}>{new MiNumero(parseInt(char, 10)).toString()}</span>
         ));
+    };
+
+    const validarEjercicio = () => {
+        let todoCorrecto = true;
+        const nuevoFeedback = { ...feedback };
+
+        const comprobarCelda = (id, valorEsperado) => {
+            const usuarioLimpiado = celdas[id].replace(/^0+/, '');
+            const esperadoLimpiado = valorEsperado.replace(/^0+/, '');
+
+            // Tolerancia para el cero (la casilla vacia y los 0 a la izquierda son validos)
+            const esCeroLogico = esperadoLimpiado === '0' || esperadoLimpiado === '';
+            const usuarioEsCero = usuarioLimpiado === '0' || usuarioLimpiado === '';
+
+            let esCorrecta = false;
+            if (esCeroLogico && usuarioEsCero) {
+                esCorrecta = true;
+            } else if (usuarioLimpiado === esperadoLimpiado || celdas[id] === valorEsperado) {
+                esCorrecta = true;
+            }
+
+            nuevoFeedback[id] = esCorrecta ? 'correcta' : 'erronea';
+            if (!esCorrecta) todoCorrecto = false;
+        };
+
+        comprobarCelda('cociente', ejercicio.solucionCociente);
+        comprobarCelda('resto', ejercicio.solucionResto);
+
+        setFeedback(nuevoFeedback);
+        setCeldaActiva(null);
+        setEsCorrecto(todoCorrecto);
+        setMostrarFeedback(true);
+        if (document.activeElement) document.activeElement.blur();
     };
 
     return (
@@ -125,41 +169,46 @@ export function ActividadDivisiones() {
             backPath="/operaciones"
             dificultad={dificultad}
             onChangeDificultad={cambiarDificultad}
-            onReiniciar={reiniciarJuego}
+            onReiniciar={reiniciarTodo}
             textoInfo={TEXTOS.infoActividades.divisiones}
             mostrarFeedback={mostrarFeedback}
             esCorrecto={esCorrecto}
             onCerrarFeedback={() => setMostrarFeedback(false)}
+            className="multiplicacion-layout-custom modo-dificil"
         >
             <main className="actividad-zona-juego">
-                <div className={`operacion-horizontal ${estadoRespuesta}`}>
-                    {/* Dividendo */}
-                    <div className="numero-fijo">
-                        {renderizarSimbolos(ejercicio.num1Str)}
-                    </div>
+                <div className='panel-izquierdo'>
+                    <div className={`operacion-original`}>
+                        {/* Dividendo */}
+                        <div className="numero-fijo">
+                            {renderizarSimbolos(ejercicio.num1Str)}
+                        </div>
 
-                    <div className="signo-matematico">÷</div>
-                    {/* Divisor */}
-                    <div className="numero-fijo">
-                        {renderizarSimbolos(ejercicio.num2Str)}
+                        <div className="signo-matematico">÷</div>
+                        {/* Divisor */}
+                        <div className="numero-fijo">
+                            {renderizarSimbolos(ejercicio.num2Str)}
+                        </div>
                     </div>
-
-                    <div className="signo-matematico">=</div>
-                    {/* Pickers: Aparecen segun la dificultad */}
-                    <div className="fila-pickers-horizontal">
-                        {dificultad >= '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={idxCentenas} onChange={handlePickerChange(setIdxCentenas)} />}
-                        {dificultad >= '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={idxDecenas} onChange={handlePickerChange(setIdxDecenas)} />}
-                        <SwipePicker opciones={OPCIONES_DIGITOS} value={idxUnidades} onChange={handlePickerChange(setIdxUnidades)} />
+                    {/* Cajas de Cociente y Resto usando las utilidades de Recortados para el Label */}
+                    <div className='division-celdas-container'>
+                        <div className='division-celda'>
+                            <span className="etiqueta-recortado">Resto</span>
+                            {renderCelda('resto')}
+                        </div>
+                        <div  className='division-celda' >
+                            <span className="etiqueta-recortado">Cociente</span>
+                            {renderCelda('cociente')}
+                        </div>
                     </div>
-
                 </div>
+                <PanelTeclado
+                    onTeclaClick={handleTeclaClick}
+                    onCorregir={validarEjercicio}
+                    handleFlechas={handleFlechas}
+                    deshabilitado={mostrarFeedback}
+                />
             </main>
-
-            <footer className="actividad-footer">
-                <button className="btn-corregir-full" onClick={validarEjercicio}>
-                    {TEXTOS.global.corregir}
-                </button>
-            </footer>
         </ActividadLayout>
     );
 }

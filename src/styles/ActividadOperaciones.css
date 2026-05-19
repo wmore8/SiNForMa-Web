@@ -141,14 +141,18 @@
     margin: 0 0.5rem;
 }
 
-.fila-pickers-horizontal {
+.division-celdas-container{
     display: flex;
-    gap: 0.5rem;
-    height: clamp(100px, 20vw, 150px);
+    gap: clamp(1.5rem, 5vw, 4rem);
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.fila-pickers-horizontal>div {
-    width: clamp(45px, 12vw, 70px);
+.division-celda{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
 /* --- MULTIPLICACION CLASICA (Custom Layout) --- */
