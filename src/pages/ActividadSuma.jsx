@@ -1,8 +1,14 @@
 import { useState } from 'react';
+import { ActividadLayout } from '../shared/components/ActividadLayout';
 import { TEXTOS } from '../constants/textos';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { SwipePicker } from '../shared/components/SwipePicker';
-import { ActividadLayout } from '../shared/components/ActividadLayout';
+import { CeldaInteractiva } from '../shared/components/CeldaInteractiva';
+import { PanelTeclado } from '../shared/components/PanelTeclado';
+import { useInputMode } from '../shared/hooks/useInputMode';
+import { useNavegacionFlechas } from '../shared/hooks/useNavegacionFlechas';
+import { useAutoFocoInicial } from '../shared/hooks/useAutoFocoInicial';
+import { useTecladoCeldas } from '../shared/hooks/useTecladoCeldas';
 import '../styles/ActividadOperaciones.css';
 
 const OPCIONES_DIGITOS = [' ', ...MiNumero.losDigitos];
@@ -46,59 +52,117 @@ const generarSuma = (nivel) => {
 };
 
 export function ActividadSuma() {
+    // Iniciamos el hook para manejar Teclado o los swipe Pickers
+    const { inputMode, toggleInputMode, activeCellId, setActiveCellId } = useInputMode('picker');
+    // Estado para guardar el color (correcta/erronea) de cada celda independiente
+    const { valoresCeldas, setValoresCeldas, feedbackCeldas, setFeedbackCeldas, handleKeyPress, limpiarCeldas } = useTecladoCeldas(activeCellId, setActiveCellId);
+
     const [dificultad, setDificultad] = useState('0');
     const [ejercicio, setEjercicio] = useState(() => generarSuma('0'));
-
-    const [idxMillares, setIdxMillares] = useState(0);
-    const [idxCentenas, setIdxCentenas] = useState(0);
-    const [idxDecenas, setIdxDecenas] = useState(0);
-    const [idxUnidades, setIdxUnidades] = useState(0);
 
     const [estadoRespuesta, setEstadoRespuesta] = useState('idle');
 
     const [mostrarFeedback, setMostrarFeedback] = useState(false);
     const [esCorrecto, setEsCorrecto] = useState(false);
 
+    //Mapa visual para las flechas 
+    const navegacionGrid = [
+        [
+            dificultad === '2' ? 'millares' : null,
+            dificultad >= '1' ? 'centenas' : null,
+            'decenas',
+            'unidades'
+        ],
+        ['btn-corregir', 'btn-corregir', 'btn-corregir', 'btn-corregir']
+    ];
+
+    //para manejar el uso de flechas
+    const handleFlechas = useNavegacionFlechas(navegacionGrid, setActiveCellId);
+    //para hacer focus a las unidades
+    useAutoFocoInicial(`${ejercicio.solucionStr}-${inputMode}`, inputMode === 'keyboard' ? 'unidades' : null, setActiveCellId);
+
     const cambiarDificultad = (e) => {
         const nuevoNivel = e.target.value;
         setDificultad(nuevoNivel);
         setEjercicio(generarSuma(nuevoNivel));
-        resetearPickers();
+        resetearInputs();
     };
 
     const reiniciarJuego = () => {
         setEjercicio(generarSuma(dificultad));
-        resetearPickers();
+        resetearInputs();
     };
 
-    const resetearPickers = () => {
-        setIdxMillares(0);
-        setIdxCentenas(0);
-        setIdxDecenas(0);
-        setIdxUnidades(0);
+    const resetearInputs = () => {
+        limpiarCeldas();
         setEstadoRespuesta('idle');
+        setMostrarFeedback(false);
+        setActiveCellId(inputMode === 'keyboard' ? 'unidades' : null);
     };
 
     const validarEjercicio = () => {
-        // Leemos los valores del Picker (si es 0, es un espacio vacio)
-        const m = idxMillares > 0 ? (idxMillares - 1).toString() : '';
-        const c = idxCentenas > 0 ? (idxCentenas - 1).toString() : '';
-        const d = idxDecenas > 0 ? (idxDecenas - 1).toString() : '';
-        const u = idxUnidades > 0 ? (idxUnidades - 1).toString() : '0';
+        let length = 2;
+        if (dificultad === '1') length = 3;
+        if (dificultad === '2') length = 4;
 
-        // Juntamos la respuesta y le quitamos ceros/espacios a la izquierda
-        let respuestaStr = `${m}${c}${d}${u}`.trim().replace(/^0+/, '') || '0';
+        // Rellenamos la solucion con espacios en blanco a la izquierda para poder comparar
+        const solPad = ejercicio.solucionStr.padStart(length, ' ');
 
-        const acierto = respuestaStr === ejercicio.solucionStr;
-        setEstadoRespuesta(acierto ? 'correct' : 'error');
-        setEsCorrecto(acierto);
+        const cellIds = [];
+        if (dificultad === '2') cellIds.push('millares');
+        if (dificultad >= '1') cellIds.push('centenas');
+        cellIds.push('decenas', 'unidades');
+
+        const userVals = cellIds.map(id => {
+            const valorRaw = valoresCeldas[id] || 0;
+            return valorRaw > 0 ? (valorRaw - 1).toString() : ' ';
+        });
+
+        let todoCorrecto = true;
+        const nuevoFeedback = {};
+
+        // Comparamos digito a digito
+        cellIds.forEach((id, index) => {
+            const esperado = solPad[index];
+            const usuario = userVals[index];
+            let esCorrecta = false;
+
+            if (esperado === ' ' || esperado === '0') {
+                // Si la celda debia estar vacia, perdonamos si dejan el espacio o si ponen un '0'
+                esCorrecta = (usuario === ' ' || usuario === '0');
+            } else {
+                esCorrecta = (usuario === esperado);
+            }
+
+            if (!esCorrecta) todoCorrecto = false;
+            nuevoFeedback[id] = esCorrecta ? 'correcta' : 'erronea';
+        });
+
+        setFeedbackCeldas(nuevoFeedback);
+        setEstadoRespuesta(todoCorrecto ? 'correct' : 'error');
+        setEsCorrecto(todoCorrecto);
         setMostrarFeedback(true);
+        setActiveCellId(null);
     };
 
-    const handlePickerChange = (setter) => (val) => {
-        setter(val);
+    //wrapper para reiniciar estado de respuesta para los pickers
+    const handlePickerChange = (id) => (valIdx) => {
+        setValoresCeldas(prev => ({ ...prev, [id]: valIdx }));
         setEstadoRespuesta('idle');
     };
+
+    //wrapper para reiniciar estado de respuesta para las celdas
+    const handleSeleccionarCelda = (id) => {
+        setActiveCellId(id);
+        setEstadoRespuesta('idle');
+    };
+
+    //wrapper para reiniciar estado de respuesta para el teclado
+    const handleTeclaClick = (tecla) => {
+        handleKeyPress(tecla);
+        setEstadoRespuesta('idle');
+    };
+
 
     // Rellena con espacios en blanco para mantener la cuadricula perfecta
     const getDigits = (strNum, nivelDificultad) => {
@@ -121,48 +185,104 @@ export function ActividadSuma() {
             mostrarFeedback={mostrarFeedback}
             esCorrecto={esCorrecto}
             onCerrarFeedback={() => setMostrarFeedback(false)}
+            mostrarToggleInput={true}
+            inputMode={inputMode}
+            onToggleInputMode={toggleInputMode}
+            className={inputMode === 'keyboard' ? 'multiplicacion-layout-custom modo-dificil' : ''}
         >
 
             <main className="actividad-zona-juego">
-                <div className={`operacion-vertical ${estadoRespuesta}`}>
-                    {/* Primer Numero */}
-                    <div className="fila-operacion">
-                        <div className="celda-signo invisible">+</div>
-                        {getDigits(ejercicio.num1Str, dificultad).map((char, index) => (
-                            <div key={`n1-${index}`} className="celda-digito">
-                                {char !== ' ' ? new MiNumero(parseInt(char, 10)).toString() : ''}
+                {/* PANEL IZQUIERDO*/}
+                <div className="panel-izquierdo">
+                    <div className={`operacion-vertical ${estadoRespuesta}`}>
+                        {/* Primer Numero */}
+                        <div className="fila-operacion">
+                            <div className="celda-signo invisible">+</div>
+                            {getDigits(ejercicio.num1Str, dificultad).map((char, index) => (
+                                <div key={`n1-${index}`} className="celda-digito">
+                                    {char !== ' ' ? new MiNumero(parseInt(char, 10)).toString() : ''}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Segundo Numero */}
+                        <div className="fila-operacion">
+                            <div className="celda-signo">+</div>
+                            {getDigits(ejercicio.num2Str, dificultad).map((char, index) => (
+                                <div key={`n2-${index}`} className="celda-digito">
+                                    {char !== ' ' ? new MiNumero(parseInt(char, 10)).toString() : ''}
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="linea-separadora"></div>
+
+                        {/* INPUT TECLADO O PICKERS */}
+                        {inputMode === 'picker' ? (
+                            <div className="fila-operacion fila-pickers">
+                                <div className="celda-signo invisible"></div>
+                                {dificultad === '2' && <SwipePicker opciones={OPCIONES_DIGITOS} value={valoresCeldas['millares'] || 0} onChange={handlePickerChange('millares')} />}
+                                {dificultad >= '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={valoresCeldas['centenas'] || 0} onChange={handlePickerChange('centenas')} />}
+                                <SwipePicker opciones={OPCIONES_DIGITOS} value={valoresCeldas['decenas'] || 0} onChange={handlePickerChange('decenas')} />
+                                <SwipePicker opciones={OPCIONES_DIGITOS} value={valoresCeldas['unidades'] || 0} onChange={handlePickerChange('unidades')} />
                             </div>
-                        ))}
-                    </div>
-
-                    {/* Segundo Numero */}
-                    <div className="fila-operacion">
-                        <div className="celda-signo">+</div>
-                        {getDigits(ejercicio.num2Str, dificultad).map((char, index) => (
-                            <div key={`n2-${index}`} className="celda-digito">
-                                {char !== ' ' ? new MiNumero(parseInt(char, 10)).toString() : ''}
+                        ) : (
+                            <div className="fila-operacion">
+                                <div className="celda-signo invisible"></div>
+                                {dificultad === '2' && (
+                                    <CeldaInteractiva
+                                        id="millares"
+                                        valor={valoresCeldas['millares'] || 0}
+                                        isActive={activeCellId === 'millares'}
+                                        feedback={feedbackCeldas['millares']}
+                                        onSelect={handleSeleccionarCelda}
+                                        handleFlechas={handleFlechas}
+                                    />
+                                )}
+                                {dificultad >= '1' && (
+                                    <CeldaInteractiva
+                                        id="centenas"
+                                        valor={valoresCeldas['centenas'] || 0}
+                                        isActive={activeCellId === 'centenas'}
+                                        feedback={feedbackCeldas['centenas']}
+                                        onSelect={handleSeleccionarCelda}
+                                        handleFlechas={handleFlechas}
+                                    />
+                                )}
+                                <CeldaInteractiva
+                                    id="decenas"
+                                    valor={valoresCeldas['decenas'] || 0}
+                                    isActive={activeCellId === 'decenas'}
+                                    feedback={feedbackCeldas['decenas']}
+                                    onSelect={handleSeleccionarCelda}
+                                    handleFlechas={handleFlechas}
+                                />
+                                <CeldaInteractiva
+                                    id="unidades"
+                                    valor={valoresCeldas['unidades'] || 0}
+                                    isActive={activeCellId === 'unidades'}
+                                    feedback={feedbackCeldas['unidades']}
+                                    onSelect={handleSeleccionarCelda}
+                                    handleFlechas={handleFlechas}
+                                />
                             </div>
-                        ))}
-                    </div>
-
-                    <div className="linea-separadora"></div>
-
-                    {/* Pickers */}
-                    <div className="fila-operacion fila-pickers">
-                        <div className="celda-signo invisible"></div>
-                        {dificultad === '2' && <SwipePicker opciones={OPCIONES_DIGITOS} value={idxMillares} onChange={handlePickerChange(setIdxMillares)} />}
-                        {dificultad >= '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={idxCentenas} onChange={handlePickerChange(setIdxCentenas)} />}
-                        <SwipePicker opciones={OPCIONES_DIGITOS} value={idxDecenas} onChange={handlePickerChange(setIdxDecenas)} />
-                        <SwipePicker opciones={OPCIONES_DIGITOS} value={idxUnidades} onChange={handlePickerChange(setIdxUnidades)} />
+                        )}
                     </div>
                 </div>
-            </main>
 
-            <footer className="actividad-footer">
-                <button className="btn-corregir-full hover-primary" onClick={validarEjercicio}>
-                    {TEXTOS.global.corregir}
-                </button>
-            </footer>
+                {/* PANEL DERECHO */}
+                {inputMode === 'keyboard' && (
+                    <PanelTeclado onTeclaClick={handleTeclaClick} onCorregir={validarEjercicio} handleFlechas={handleFlechas} />
+                )}
+            </main>
+            {/* BOTON INFERIOR PARA PICKERS (Fuera del main, como hacias antes) */}
+            {inputMode === 'picker' && (
+                <footer className="actividad-footer">
+                    <button className="btn-corregir-full hover-primary" onClick={validarEjercicio}>
+                        {TEXTOS.global.corregir}
+                    </button>
+                </footer>
+            )}
         </ActividadLayout>
     );
 }

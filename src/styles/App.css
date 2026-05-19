@@ -690,6 +690,12 @@ html.text-size-lg {
   font-size: 1em;
 }
 
+.btn-info,
+.btn-toggle {
+  font-size: 1.2em;
+  padding: 0 1rem;
+}
+
 .btn-icon-text {
   display: inline-flex;
   align-items: center;
@@ -718,6 +724,9 @@ html.text-size-lg {
   font-size: 1.2em;
 }
 
+.btn-text.action {
+  display: none;
+}
 
 /* -------------------------------- BREADCRUMB -------------------------------- */
 
@@ -805,7 +814,7 @@ html.text-size-lg {
   }
 }
 
-/* -------------------------------- TECLADO ROMESCO --------------------------------*/
+/* -------------------------------- TECLADO ROMESCUS --------------------------------*/
 .teclado-contenedor {
   width: 100%;
   max-width: 400px;
@@ -863,7 +872,7 @@ html.text-size-lg {
 
 .teclado-btn:focus {
   border-color: var(--primary);
-  color:var(--primary);
+  color: var(--primary);
   background-color: var(--success-opacity-15);
   outline: none;
 }
@@ -894,7 +903,7 @@ html.text-size-lg {
   width: 100%;
   margin: 0 auto;
   gap: 1.5rem;
-
+  margin-top: auto;
   align-items: stretch;
 }
 
@@ -906,7 +915,7 @@ html.text-size-lg {
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .panel-derecho-dificil {
-    max-width: 550px;
+    max-width: 650px;
   }
 }
 
@@ -1319,6 +1328,10 @@ html.text-size-lg {
     width: 3.5rem;
     height: 3.5rem;
     font-size: 2rem;
+  }
+
+  .btn-text.action {
+    display: contents;
   }
 
 }

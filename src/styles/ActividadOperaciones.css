@@ -58,7 +58,7 @@
 }
 
 .celda-signo.invisible {
-    color: transparent;
+    display: none;
     user-select: none;
 }
 
@@ -183,6 +183,11 @@
 
 .panel-izquierdo {
     display: contents;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* CONTENEDOR DEL RESULTADO FINAL TOTAL */

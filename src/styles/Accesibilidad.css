@@ -33,7 +33,7 @@ textarea:focus-visible,
     outline: 4px solid #FFD54F !important;
     outline-offset: 2px;
 
-    border-color: var(--primary) !important;
+    /* border-color: var(--primary) !important; */
     
     transform: scale(1.05);
     transition: transform 0.2s ease, background-color 0.2s ease, outline 0.1s ease;

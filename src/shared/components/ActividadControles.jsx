@@ -13,14 +13,30 @@ export function ActividadControles({
     onChange,
     onReiniciar,
     onInfoClick,
-    opciones = NIVELES_DEFAULT // Si no le pasamos 'opciones', usa las 3 por defecto
+    opciones = NIVELES_DEFAULT, // Si no le pasamos 'opciones', usa las 3 por defecto
+    mostrarToggleInput,
+    inputMode,
+    onToggleInputMode,
 }) {
     return (
         <div className="actividad-controles">
 
             {MiNumero.baseActual !== 8 && (
-                <button className="icon-btn btn-info hover-primary" title="Información" onClick={onInfoClick} >
+                <button className="btn-icon-text hover-primary" title="Información" onClick={onInfoClick} >
                     <Icon name="icon-info" />
+                    <span className='btn-text action'>Información</span>
+                </button>
+            )}
+
+            {mostrarToggleInput && (
+                <button
+                    className="btn-icon-text hover-primary btn-toggle"
+                    onClick={onToggleInputMode}
+                    title={inputMode === 'picker' ? "Usar Teclado Numérico" : "Usar Ruedas de Selección"}
+                    aria-label={inputMode === 'picker' ? "Cambiar a teclado" : "Cambiar a ruedas"}
+                >
+                    <Icon name={inputMode === 'picker' ? "icon-keyboard" : "icon-swipe"} />
+                    <span className='btn-text action'>Entrada</span>
                 </button>
             )}
 
@@ -32,9 +48,9 @@ export function ActividadControles({
                 ))}
             </select>
 
-            <button className="btn-icon-text hover-danger" onClick={onReiniciar} >
+            <button className="btn-icon-text hover-danger" title='Reiniciar' onClick={onReiniciar} >
                 <Icon name="icon-reset" />
-                <span>Reiniciar</span>
+                <span className='btn-text action'>Reiniciar</span>
             </button>
         </div>
     );
