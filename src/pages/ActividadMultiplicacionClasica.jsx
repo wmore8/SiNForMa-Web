@@ -168,7 +168,7 @@ export function ActividadMultiplicacionClasica() {
                     const valorRaw = valoresCeldas[id] || 0;
                     const val = valorRaw > 0 ? (valorRaw - 1).toString() : ' ';
 
-                    let esCorrecta = (esperado === ' ' ||  esperado === '0') ? (val === ' ' || val === '0') : (val === esperado);
+                    let esCorrecta = (esperado === ' ' || esperado === '0') ? (val === ' ' || val === '0') : (val === esperado);
                     if (!esCorrecta) todoCorrecto = false;
                     nuevoFeedback[id] = esCorrecta ? 'correcta' : 'erronea';
                 }
@@ -196,6 +196,24 @@ export function ActividadMultiplicacionClasica() {
         if (nivelDificultad === '1') length = 4;
         return strNum.padStart(length, ' ').split('');
     };
+
+    const renderPicker = (id) => (
+        <SwipePicker opciones={OPCIONES_DIGITOS}
+            value={valoresCeldas[id] || 0}
+            onChange={handlePickerChange(id)} />
+    );
+
+    const renderCelda = (id) => (
+        <CeldaInteractiva
+            key={id}
+            id={id}
+            valor={valoresCeldas[id] || 0}
+            isActive={activeCellId === id}
+            feedback={feedbackCeldas[id]}
+            onSelect={handleSeleccionarCelda}
+            handleFlechas={handleFlechas}
+        />
+    );
 
     return (
 
@@ -242,48 +260,18 @@ export function ActividadMultiplicacionClasica() {
                                 {!isKeyboardMode ? (
                                     <div className="fila-operacion fila-pickers">
                                         <div className="celda-signo invisible"></div>
-                                        {dificultad === '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={valoresCeldas['millares'] || 0} onChange={handlePickerChange('millares')} />}
-                                        {dificultad === '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={valoresCeldas['centenas'] || 0} onChange={handlePickerChange('centenas')} />}
-                                        <SwipePicker opciones={OPCIONES_DIGITOS} value={valoresCeldas['decenas'] || 0} onChange={handlePickerChange('decenas')} />
-                                        <SwipePicker opciones={OPCIONES_DIGITOS} value={valoresCeldas['unidades'] || 0} onChange={handlePickerChange('unidades')} />
+                                        {dificultad === '1' && renderPicker('millares')}
+                                        {dificultad === '1' && renderPicker('centenas')}
+                                        {renderPicker('decenas')}
+                                        {renderPicker('unidades')}
                                     </div>
                                 ) : (
                                     <div className="fila-operacion">
                                         <div className="celda-signo invisible"></div>
-                                        {dificultad === '1' &&
-                                            <CeldaInteractiva
-                                                id="millares"
-                                                valor={valoresCeldas['millares'] || 0}
-                                                isActive={activeCellId === 'millares'}
-                                                feedback={feedbackCeldas['millares']}
-                                                onSelect={handleSeleccionarCelda}
-                                                handleFlechas={handleFlechas}
-                                            />}
-                                        {dificultad === '1' &&
-                                            <CeldaInteractiva
-                                                id="centenas"
-                                                valor={valoresCeldas['centenas'] || 0}
-                                                isActive={activeCellId === 'centenas'}
-                                                feedback={feedbackCeldas['centenas']}
-                                                onSelect={handleSeleccionarCelda}
-                                                handleFlechas={handleFlechas}
-                                            />}
-                                        <CeldaInteractiva
-                                            id="decenas"
-                                            valor={valoresCeldas['decenas'] || 0}
-                                            isActive={activeCellId === 'decenas'}
-                                            feedback={feedbackCeldas['decenas']}
-                                            onSelect={handleSeleccionarCelda}
-                                            handleFlechas={handleFlechas}
-                                        />
-                                        <CeldaInteractiva
-                                            id="unidades"
-                                            valor={valoresCeldas['unidades'] || 0}
-                                            isActive={activeCellId === 'unidades'}
-                                            feedback={feedbackCeldas['unidades']}
-                                            onSelect={handleSeleccionarCelda}
-                                            handleFlechas={handleFlechas}
-                                        />
+                                        {dificultad === '1' && renderCelda('millares')}
+                                        {dificultad === '1' && renderCelda('centenas')}
+                                        {renderCelda('decenas')}
+                                        {renderCelda('unidades')}
                                     </div>
                                 )}
                             </>
@@ -315,15 +303,7 @@ export function ActividadMultiplicacionClasica() {
                                         <div className="celda-signo invisible"></div>
                                         {/* Ajustamos los espacios vacios segun el escalonamiento de la fila */}
                                         {Array.from({ length: 2 - fila }).map((_, i) => <div key={`inv-l-${fila}-${i}`} className="celda-invisible"></div>)}
-                                        {[0, 1, 2, 3].map(col => (
-                                            <CeldaInteractiva
-                                                key={`paso-${fila}-${col}`} id={`paso-${fila}-${col}`}
-                                                valor={valoresCeldas[`paso-${fila}-${col}`] || 0}
-                                                isActive={activeCellId === `paso-${fila}-${col}`}
-                                                feedback={feedbackCeldas[`paso-${fila}-${col}`]}
-                                                onSelect={handleSeleccionarCelda}
-                                                handleFlechas={handleFlechas} />
-                                        ))}
+                                        {[0, 1, 2, 3].map(col => renderCelda(`paso-${fila}-${col}`))}
                                         {Array.from({ length: fila }).map((_, i) => <div key={`inv-r-${fila}-${i}`} className="celda-invisible"></div>)}
                                     </div>
                                 ))}
@@ -333,16 +313,7 @@ export function ActividadMultiplicacionClasica() {
 
                                 <div className="fila-operacion">
                                     <div className="celda-signo invisible"></div>
-                                    {[0, 1, 2, 3, 4, 5].map(col => (
-                                        <CeldaInteractiva
-                                            key={`final-${col}`}
-                                            id={`final-${col}`}
-                                            valor={valoresCeldas[`final-${col}`] || 0}
-                                            isActive={activeCellId === `final-${col}`}
-                                            feedback={feedbackCeldas[`final-${col}`]}
-                                            onSelect={handleSeleccionarCelda}
-                                            handleFlechas={handleFlechas} />
-                                    ))}
+                                    {[0, 1, 2, 3, 4, 5].map(col => renderCelda(`final-${col}`))}
                                 </div>
                             </>
                         )}

@@ -72,7 +72,7 @@
       stroke-width="2.5"
       d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
   </symbol>
-
+  <!-- material-symbols:stack-rounded -->
   <symbol id="icon-stack" viewBox="0 0 24 24">
     <path d="M0 0h24v24H0z" fill="none" />
     <path fill="currentColor"
@@ -100,23 +100,18 @@
       d="M9 11.99a3 3 0 1 0 6 0a3 3 0 1 0-6 0M7.38 7.21l4.44-4.44a.24.24 0 0 1 .36 0l4.44 4.44a1.25 1.25 0 0 0 1.76-1.77L13.59.65a2.3 2.3 0 0 0-3.18 0L5.62 5.44a1.25 1.25 0 0 0 1.76 1.77m9.24 9.56l-4.44 4.44a.27.27 0 0 1-.36 0l-4.44-4.44a1.25 1.25 0 0 0-1.76 1.77l4.79 4.79a2.25 2.25 0 0 0 3.18 0l4.79-4.79a1.25 1.25 0 0 0-1.76-1.77" />
   </symbol>
 
-  <!-- Icon "clear-16"" from Qlementine Icons -->
-
-  <symbol id="icon-success" viewBox="0 0 16 16">
-    <path d="M0 0h16v16H0z" fill="none" />
+  <!-- mdi:success-circle-outline -->
+  <symbol id="icon-success" viewBox="0 0 24 24">
+    <path d="M0 0h24v24H0z" fill="none" />
     <path fill="currentColor"
-      d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z" />
-    <path fill="currentColor" fill-rule="evenodd"
-      d="M8 0C3.58 0 0 3.58 0 8s3.58 8 8 8s8-3.58 8-8s-3.58-8-8-8M1 8c0-3.87 3.13-7 7-7s7 3.13 7 7s-3.13 7-7 7s-7-3.13-7-7"
-      clip-rule="evenodd" />
+      d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10s10-4.5 10-10S17.5 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8m4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4l8-8z" />
   </symbol>
 
-  <!-- Icon "close-16"" from Qlementine Icons -->
-  <symbol id="icon-wrong" viewBox="0 0 16 16">
-    <path d="M0 0h16v16H0z" fill="none" />
-    <path fill="currentColor" fill-rule="evenodd"
-      d="M8 0c2.12 0 4.16.843 5.66 2.34C15.16 3.84 16 5.88 16 8a8.02 8.02 0 0 1-2.34 5.66A8 8 0 0 1 8 16a8.02 8.02 0 0 1-5.66-2.34A8 8 0 0 1 0 8c0-2.12.843-4.16 2.34-5.66C3.84.84 5.88 0 8 0m0 1a7.001 7.001 0 1 0 .002 14A7.001 7.001 0 0 0 8 1M5.15 5.15a.5.5 0 0 1 .354-.147a.5.5 0 0 1 .354.147l2.15 2.15l2.15-2.15a.501.501 0 0 1 .815.545a.5.5 0 0 1-.11.162l-2.15 2.15l2.15 2.15a.497.497 0 0 1-.005.701a.503.503 0 0 1-.701.006l-2.15-2.15l-2.14 2.15a.5.5 0 0 1-.71-.707l2.15-2.15l-2.15-2.15a.5.5 0 0 1-.146-.354a.5.5 0 0 1 .147-.354z"
-      clip-rule="evenodd" />
+  <!-- material-symbols:warning-outline-rounded -->
+  <symbol id="icon-warning" viewBox="0 0 24 24">
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path fill="currentColor"
+      d="M2.725 21q-.275 0-.5-.137t-.35-.363t-.137-.488t.137-.512l9.25-16q.15-.25.388-.375T12 3t.488.125t.387.375l9.25 16q.15.25.138.513t-.138.487t-.35.363t-.5.137zm1.725-2h15.1L12 6zm8.263-1.287Q13 17.425 13 17t-.288-.712T12 16t-.712.288T11 17t.288.713T12 18t.713-.288m0-3Q13 14.425 13 14v-3q0-.425-.288-.712T12 10t-.712.288T11 11v3q0 .425.288.713T12 15t.713-.288M12 12.5" />
   </symbol>
 
   <!-- DISEÑOS PROPIOS -->

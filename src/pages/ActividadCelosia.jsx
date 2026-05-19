@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { TecladoBase } from '../shared/components/TecladoBase';
 import { MiNumero } from '../shared/utils/MiNumero';
 import { ActividadLayout } from '../shared/components/ActividadLayout';
+import { CeldaInteractiva } from '../shared/components/CeldaInteractiva';
+import { PanelTeclado } from '../shared/components/PanelTeclado';
 import { TEXTOS } from '../constants/textos';
 import { useNavegacionFlechas } from '../shared/hooks/useNavegacionFlechas';
 import { useAutoFocoInicial } from '../shared/hooks/useAutoFocoInicial';
@@ -92,11 +93,15 @@ export function ActividadCelosia() {
         setCeldaActiva(null);
     };
 
+    const teclaClear = () => {
+        setCeldas(getCeldasVacias());
+        setFeedback(getCeldasVacias());
+        setCeldaActiva(null);
+    }
+
     const handleTeclaClick = (tecla) => {
         if (tecla === 'CLEAR') {
-            setCeldas(getCeldasVacias());
-            setFeedback(getCeldasVacias());
-            setCeldaActiva(null);
+            teclaClear();
             return;
         }
 
@@ -128,54 +133,34 @@ export function ActividadCelosia() {
         return strBase8.split('').map(c => new MiNumero(parseInt(c, 10)).toString()).join('');
     };
 
-    const renderInputCelosia = (id, tipo) => {
-        const valor = celdas[id];
-        const isActive = celdaActiva === id;
-        const feed = feedback[id];
-        const estaLlena = (valor !== '' && feed === '') ? 'llena' : '';
-
-        return (
-            <div
-                id={`celda-${id}`}
-                className={`celosia-input ${tipo} ${estaLlena} ${isActive ? 'activa' : ''} ${feed}`}
-                onClick={() => setCeldaActiva(id)}
-                onFocus={() => setCeldaActiva(id)}
-                tabIndex={0}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setCeldaActiva(id); }
-                    else handleFlechas(e, id);
-                }}
-            >
-                {valor !== '' ? aSimbolo(valor) : ''}
-            </div>
-        );
-    };
+    const renderInputCelosia = (id, tipo) => (
+        <CeldaInteractiva
+            key={id}
+            id={id}
+            textoPersonalizado={celdas[id] !== '' ? aSimbolo(celdas[id]) : ''}
+            isActive={celdaActiva === id}
+            feedback={feedback[id]}
+            onSelect={setCeldaActiva}
+            handleFlechas={handleFlechas}
+            claseBase="celosia-input"
+            claseExtra={tipo} // Para pasar si es decena o unidad
+        />
+    );
 
     // funcion para renderizar la casilla
-    const renderResultado = (id) => {
-        const valor = celdas[id];
-        const isActive = celdaActiva === id;
-        const feed = feedback[id];
-        const estaLlena = (valor !== '' && feed === '') ? 'llena' : '';
-
-        return (
-            <div className="celosia-etiqueta">
-                <div
-                    id={`celda-${id}`} 
-                    className={`celosia-resultado-input ${estaLlena} ${isActive ? 'activa' : ''} ${feed}`}
-                    onClick={() => setCeldaActiva(id)}
-                    onFocus={() => setCeldaActiva(id)}
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setCeldaActiva(id); }
-                        else handleFlechas(e, id);
-                    }}
-                >
-                    {valor !== '' ? aSimbolo(valor) : ''}
-                </div>
-            </div>
-        );
-    };
+    const renderResultado = (id) => (
+        <div className="celosia-etiqueta" key={id}>
+            <CeldaInteractiva
+                id={id}
+                textoPersonalizado={celdas[id] !== '' ? aSimbolo(celdas[id]) : ''}
+                isActive={celdaActiva === id}
+                feedback={feedback[id]}
+                onSelect={setCeldaActiva}
+                handleFlechas={handleFlechas}
+                claseBase="celosia-resultado-input"
+            />
+        </div>
+    );
 
     const validarEjercicio = () => {
         let todoCorrecto = true;
@@ -183,44 +168,36 @@ export function ActividadCelosia() {
 
         Object.keys(ejercicio.soluciones).forEach(id => {
             const esperado = ejercicio.soluciones[id];
-            let usuario = celdas[id];
+            const usuario = celdas[id];
 
-            // Flexibilidad para el 0 a la izquierda
+            let esCorrecta = false;
+
+            // Para dar por valido las casillas vacias como 0
+            const esCeroLogico = esperado === '0' || esperado === '';
+            const usuarioEsCeroLogico = usuario === '0' || usuario === '';
+
+            // Para dar por valida los resultados con 0 a la izquierda (raro pero puedes hacerlo)
             if ((id.startsWith('r_') || id === 'solTotal') && esperado.startsWith('0') && usuario === esperado.slice(1)) {
-                usuario = esperado; // Lo damos por bueno si se comio el 0 a la izquierda
-            } else if (usuario === '') {
-                usuario = ' ';
+                esCorrecta = true;
+            } else if (esCeroLogico && usuarioEsCeroLogico) {
+                // Si ambos representan la ausencia de valor o un cero
+                esCorrecta = true;
+            } else {
+                // Comparacion estricta normal
+                esCorrecta = (usuario === esperado);
             }
 
-            if (usuario === esperado) {
-                nuevoFeedback[id] = 'correcta';
-            } else {
-                nuevoFeedback[id] = 'erronea';
-                todoCorrecto = false;
-            }
+            nuevoFeedback[id] = esCorrecta ? 'correcta' : 'erronea';
+            if (!esCorrecta) todoCorrecto = false;
         });
 
         setFeedback(nuevoFeedback);
         setCeldaActiva(null);
-
-        if (todoCorrecto) {
-            setEsCorrecto(true);
-        } else {
-            setEsCorrecto(false);
-        }
+        setEsCorrecto(todoCorrecto);
         setMostrarFeedback(true);
-
         // Desenfocamos cualquier celda que tuviera el foco amarillo
-        if (document.activeElement) {
-            document.activeElement.blur();
-        }
+        if (document.activeElement) document.activeElement.blur();
     };
-
-    // Helper para el cajetin del Total
-    const valTotal = celdas['solTotal'];
-    const actTotal = celdaActiva === 'solTotal';
-    const feedTotal = feedback['solTotal'];
-    const llenaTotal = (valTotal !== '' && feedTotal === '') ? 'llena' : '';
 
     return (
 
@@ -252,23 +229,16 @@ export function ActividadCelosia() {
                             {aSimbolo(ejercicio.str1)} <span className="signo-primario">×</span> {aSimbolo(ejercicio.str2)}
                         </span>
                         <span className="signo-primario">=</span>
-                        <div
-                            id="celda-solTotal"
-                            className={`caja-total ${llenaTotal} ${actTotal ? 'activa' : ''} ${feedTotal}`}
-                            onClick={() => setCeldaActiva('solTotal')}
-                            onFocus={() => setCeldaActiva('solTotal')}
-                            tabIndex={0} // <-- Permite el focus
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                    e.preventDefault();
-                                    setCeldaActiva('solTotal');
-                                } else {
-                                    handleFlechas(e, 'solTotal');
-                                }
-                            }}
-                        >
-                            {valTotal !== '' ? aSimbolo(valTotal) : ''}
-                        </div>
+
+                        <CeldaInteractiva
+                            id="solTotal"
+                            textoPersonalizado={celdas['solTotal'] !== '' ? aSimbolo(celdas['solTotal']) : ''}
+                            isActive={celdaActiva === 'solTotal'}
+                            feedback={feedback['solTotal']}
+                            onSelect={setCeldaActiva}
+                            handleFlechas={handleFlechas}
+                            claseBase="caja-total"
+                        />
                     </div>
 
                     <div className='container-recortados'>
@@ -304,21 +274,12 @@ export function ActividadCelosia() {
                         </div>
                     </div>
                 </div>
-
-                <div className="panel-derecho-dificil">
-                    <TecladoBase onTeclaClick={handleTeclaClick} />
-                    <button
-                        id="celda-btn-corregir"
-                        className="btn-corregir-full hover-primary"
-                        onClick={validarEjercicio}
-                        onKeyDown={(e) => {
-                            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-                                handleFlechas(e, 'btn-corregir');
-                            }
-                        }}>
-                        {TEXTOS.global.corregir}
-                    </button>
-                </div>
+                <PanelTeclado
+                    onTeclaClick={handleTeclaClick}
+                    onCorregir={validarEjercicio}
+                    handleFlechas={handleFlechas}
+                    deshabilitado={mostrarFeedback}
+                />
             </main>
         </ActividadLayout>
     );

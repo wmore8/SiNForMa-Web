@@ -172,6 +172,24 @@ export function ActividadSuma() {
         return strNum.padStart(length, ' ').split('');
     };
 
+    const renderPicker = (id) => (
+        <SwipePicker opciones={OPCIONES_DIGITOS}
+            value={valoresCeldas[id] || 0}
+            onChange={handlePickerChange(id)} />
+    );
+
+    const renderCelda = (id) => (
+        <CeldaInteractiva
+            key={id}
+            id={id}
+            valor={valoresCeldas[id] || 0}
+            isActive={activeCellId === id}
+            feedback={feedbackCeldas[id]}
+            onSelect={handleSeleccionarCelda}
+            handleFlechas={handleFlechas}
+        />
+    );
+
     return (
         <ActividadLayout
             rutas={[
@@ -221,50 +239,18 @@ export function ActividadSuma() {
                         {inputMode === 'picker' ? (
                             <div className="fila-operacion fila-pickers">
                                 <div className="celda-signo invisible"></div>
-                                {dificultad === '2' && <SwipePicker opciones={OPCIONES_DIGITOS} value={valoresCeldas['millares'] || 0} onChange={handlePickerChange('millares')} />}
-                                {dificultad >= '1' && <SwipePicker opciones={OPCIONES_DIGITOS} value={valoresCeldas['centenas'] || 0} onChange={handlePickerChange('centenas')} />}
-                                <SwipePicker opciones={OPCIONES_DIGITOS} value={valoresCeldas['decenas'] || 0} onChange={handlePickerChange('decenas')} />
-                                <SwipePicker opciones={OPCIONES_DIGITOS} value={valoresCeldas['unidades'] || 0} onChange={handlePickerChange('unidades')} />
+                                {dificultad === '2' && renderPicker('millares')}
+                                {dificultad >= '1' && renderPicker('centenas')}
+                                {renderPicker('decenas')}
+                                {renderPicker('unidades')}
                             </div>
                         ) : (
                             <div className="fila-operacion">
                                 <div className="celda-signo invisible"></div>
-                                {dificultad === '2' && (
-                                    <CeldaInteractiva
-                                        id="millares"
-                                        valor={valoresCeldas['millares'] || 0}
-                                        isActive={activeCellId === 'millares'}
-                                        feedback={feedbackCeldas['millares']}
-                                        onSelect={handleSeleccionarCelda}
-                                        handleFlechas={handleFlechas}
-                                    />
-                                )}
-                                {dificultad >= '1' && (
-                                    <CeldaInteractiva
-                                        id="centenas"
-                                        valor={valoresCeldas['centenas'] || 0}
-                                        isActive={activeCellId === 'centenas'}
-                                        feedback={feedbackCeldas['centenas']}
-                                        onSelect={handleSeleccionarCelda}
-                                        handleFlechas={handleFlechas}
-                                    />
-                                )}
-                                <CeldaInteractiva
-                                    id="decenas"
-                                    valor={valoresCeldas['decenas'] || 0}
-                                    isActive={activeCellId === 'decenas'}
-                                    feedback={feedbackCeldas['decenas']}
-                                    onSelect={handleSeleccionarCelda}
-                                    handleFlechas={handleFlechas}
-                                />
-                                <CeldaInteractiva
-                                    id="unidades"
-                                    valor={valoresCeldas['unidades'] || 0}
-                                    isActive={activeCellId === 'unidades'}
-                                    feedback={feedbackCeldas['unidades']}
-                                    onSelect={handleSeleccionarCelda}
-                                    handleFlechas={handleFlechas}
-                                />
+                                {dificultad === '2' && renderCelda('millares')}
+                                {dificultad >= '1' && renderCelda('centenas')}
+                                {renderCelda('decenas')}
+                                {renderCelda('unidades')}
                             </div>
                         )}
                     </div>
