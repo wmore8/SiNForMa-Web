@@ -21,12 +21,14 @@ import { ActividadMultiplicacionClasica } from './pages/ActividadMultiplicacionC
 import { ActividadDivisiones } from './pages/ActividadDivisiones';
 import { ActividadConteo } from './pages/ActividadConteo';
 import { ActividadAgrupacion } from './pages/ActividadAgrupacion';
+import { usePWA } from './shared/hooks/usePWA';
 
 import './styles/App.css'
 import './styles/Accesibilidad.css'
 import './styles/Navbar.css'
 
 function AppLayout() {
+  const pwa = usePWA();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Uso del LocalStorage: Inicializamos el estado leyendo la memoria del navegador
@@ -179,6 +181,7 @@ function AppLayout() {
         changeVisionMode={changeVisionMode}
         navFill={navFill}
         changeNavFill={changeNavFill}
+        pwa={pwa}
       />
     </div>
   );

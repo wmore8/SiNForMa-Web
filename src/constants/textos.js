@@ -109,6 +109,11 @@ export const TEXTOS = {
             protanopia:"Protanopía",
             deuteranopia:"Deuteranopía",
             tritanopia:"Tritanopía",
+            tituloEstadoApp: "Estado de la App",
+            instalar: "Instalar aplicación",
+            instalada: "Aplicación instalada",
+            actualizar: "Actualizar versión",
+            noCompatible: "Instalación no disponible en este navegador"
         },
         lapiceros: {
             lapiz: "Lápiz",

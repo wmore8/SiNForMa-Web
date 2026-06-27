@@ -137,3 +137,21 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Lighthouse & Audits
+lighthouse-*.json
+lighthouse-*.html
+reports/
+
+# PWA Dev Build Output
+dev-dist/
+
+# IDE Configs
+.agents/
+.vscode/
+.idea/
+*.swp
+*.tmp
+.DS_Store
+
+

@@ -1,8 +1,11 @@
 import { Icon } from './Icon';
 import { Modal } from './Modal';
 import { TEXTOS } from '../../constants/textos';
+import pkg from '../../../package.json';
 
-export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, changeTextSize, visionMode, changeVisionMode, navFill, changeNavFill }) {
+export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, changeTextSize, visionMode, changeVisionMode, navFill, changeNavFill, pwa }) {
+
+  const { canInstall, isInstalled, isInstallSupported, needRefresh, handleInstall, handleUpdate } = pwa || {};
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} titulo="Opciones" icono="icon-ajustes" >
@@ -78,7 +81,7 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, c
       {import.meta.env.SINFORMA_MODO_DEBUG === 'true' && (
         <>
           {/* SECCION DEBUG BASE */}
-          <h3 className='modal-legend' style={{ marginTop: '1.5rem', color: 'var(--danger)' }}>MODO DESARROLLADOR: Sistema Numérico</h3>
+          <h3 className='modal-legend modal-legend-spaced debug-title'>MODO DESARROLLADOR: Sistema Numérico</h3>
           <div className="theme-toggle-buttons">
             <button
               className={`theme-btn ${localStorage.getItem('debugBase') === '8' || (!localStorage.getItem('debugBase') && import.meta.env.SINFORMA_APP_SISTEMA_NUMERACION === '8') ? 'active' : ''} debug`}
@@ -93,13 +96,39 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, c
               Decimal (Base 10)
             </button>
           </div>
-
-          {/* VERSION TEXT */}
-          <p style={{ marginTop: '2rem', textAlign: 'center', fontStyle: 'italic', fontSize: '0.9rem', color: 'var(--text-color)', opacity: 0.7 }}>
-            SiNForMa Web Development version 0.9.2
-          </p>
         </>
       )}
+
+      {/* SECCION ESTADO DE LA APP E INSTALACION */}
+      <h3 className='modal-legend modal-legend-spaced'>{TEXTOS.ui.opciones.tituloEstadoApp}</h3>
+      <div className="theme-toggle-buttons">
+        {needRefresh ? (
+          <button className="theme-btn active update" onClick={handleUpdate}>
+            <Icon name="icon-update" className="theme-btn-icon" />
+            {TEXTOS.ui.opciones.actualizar}
+          </button>
+        ) : isInstalled ? (
+          <button className="theme-btn installed-status" disabled>
+            <Icon name="icon-success" className="theme-btn-icon" />
+            {TEXTOS.ui.opciones.instalada}
+          </button>
+        ) : canInstall ? (
+          <button className="theme-btn active install" onClick={handleInstall}>
+            <Icon name="icon-download" className="theme-btn-icon" />
+            {TEXTOS.ui.opciones.instalar}
+          </button>
+        ) : (
+          <button className="theme-btn disabled" disabled>
+            <Icon name="icon-warning" className="theme-btn-icon" />
+            {TEXTOS.ui.opciones.noCompatible}
+          </button>
+        )}
+      </div>
+
+      {/* VERSION TEXT DINAMICO */}
+      <p className="pwa-version-text">
+        SiNForMa Web {import.meta.env.SINFORMA_MODO_DEBUG === 'true' ? 'Development' : ''} v{pkg.version}
+      </p>
     </Modal>
   );
 }

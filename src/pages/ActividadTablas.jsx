@@ -134,7 +134,7 @@ const mostrarPrimeraLinea = (tablero, mostrarFila, mostrarColumna) => {
       modificarCasilla(tablero, 0, i, TIPO_CASILLA.VISIBLE, ESTADO_CASILLA.BASE, new MiNumero(i, 10).toString());
     }
     if (mostrarColumna) {
-      modificarCasilla(tablero, i, 0, TIPO_CASILLA.VISIBLE, ESTADO_CASILLA.BASE, new MiNumero(i, 10).toString());
+      modificarCasilla(tablero, i, 0, TIPO_CASILLA.VISIBLE, ESTADO_CASILLA.BASE, new MiNumero(i * MAX_BASE, 10).toString());
     }
   }
 }
@@ -316,12 +316,12 @@ export function ActividadTablas() {
           <Header
             rutas={[{ label: TEXTOS.titulos.tablas, icon: 'icon-tablas' }]} backPath="/" />
 
-          <ActividadControles 
-          dificultad={dificultad} 
-          onChange={cambiarDificultad} 
-          onReiniciar={reiniciarJuego} 
-          onInfoClick={() => setMostrarInfo(true)} 
-          opciones={NIVELES_DIFICULTAD}
+          <ActividadControles
+            dificultad={dificultad}
+            onChange={cambiarDificultad}
+            onReiniciar={reiniciarJuego}
+            onInfoClick={() => setMostrarInfo(true)}
+            opciones={NIVELES_DIFICULTAD}
           />
 
           <div className="input-panel-tablas">

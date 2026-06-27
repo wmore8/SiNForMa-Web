@@ -1,7 +1,7 @@
 {
   "name": "sinforma-web",
   "private": true,
-  "version": "0.9.2",
+  "version": "0.9.3",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
-    "host": "vite --host"
+    "host": "vite --host",
+    "audit": "npx lighthouse http://localhost:4173 --output json --output-path ./reports/lighthouse-report.json --chrome-flags=\"--headless\""
   },
   "dependencies": {
     "react": "^19.2.0",

@@ -24,7 +24,15 @@ export default defineConfig(({ mode }) => {
       },
       VitePWA({
         registerType: 'autoUpdate',
+        devOptions: {
+          enabled: true,
+          suppressWarnings: true
+        },
         includeAssets: ['sprite.svg'], // Archivos estaticos offline
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,ttf,woff,woff2}'],
+          maximumFileSizeToCacheInBytes: 4000000
+        },
         manifest: {
           name: 'SiNForMa Web Development Version',
           short_name: 'SiNForMa',

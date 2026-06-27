@@ -576,6 +576,45 @@ html.text-size-lg {
   border-color: gray;
 }
 
+.theme-btn.install {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-text);
+  width: 100%;
+}
+
+.theme-btn.update {
+  background-color: var(--success);
+  border-color: var(--success);
+  color: var(--primary-text);
+  width: 100%;
+}
+
+.theme-btn.installed-status {
+  opacity: 0.85;
+  cursor: default;
+  width: 100%;
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.modal-legend-spaced {
+  margin-top: 1.5rem;
+}
+
+.modal-legend-spaced.debug-title {
+  color: var(--danger);
+}
+
+.pwa-version-text {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
 /* -------------------------------- BOTONES ---------------------------------- */
 
 .hover-primary,
