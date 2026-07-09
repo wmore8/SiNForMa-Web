@@ -19,9 +19,9 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, c
         <div className="custom-discrete-slider">
           <div className="slider-track"></div>
 
-          <button className={`slider-step ${textSize === 'sm' ? 'active' : ''}`} onClick={() => changeTextSize('sm')} />
-          <button className={`slider-step ${textSize === 'md' ? 'active' : ''}`} onClick={() => changeTextSize('md')} />
-          <button className={`slider-step ${textSize === 'lg' ? 'active' : ''}`} onClick={() => changeTextSize('lg')} />
+          <button className={`slider-step ${textSize === 'sm' ? 'active' : ''}`} onClick={() => changeTextSize('sm')} aria-label={TEXTOS.ui.opciones.pequeno} />
+          <button className={`slider-step ${textSize === 'md' ? 'active' : ''}`} onClick={() => changeTextSize('md')} aria-label={TEXTOS.ui.opciones.medio} />
+          <button className={`slider-step ${textSize === 'lg' ? 'active' : ''}`} onClick={() => changeTextSize('lg')} aria-label={TEXTOS.ui.opciones.grande} />
         </div>
 
         <div className="slider-labels">

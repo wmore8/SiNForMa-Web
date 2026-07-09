@@ -36,7 +36,7 @@
     padding: 0 0.5rem;
 }
 
-.caja-header-externo h3 {
+.caja-header-externo h2 {
     color: var(--primary);
     font-size: clamp(1.2rem, 3vw, 2rem);
     margin: 0;
@@ -148,17 +148,17 @@
     color: var(--primary);
 }
 
-.objeto-conteo.lapiz {
+.objeto-conteo.palillo-unidad {
     font-size: clamp(2rem, 5vw, 3rem);
     /* color: var(--text-color); */
 }
 
-.objeto-conteo.estuche {
+.objeto-conteo.palillo-decena {
     font-size: clamp(4rem, 5vw, 5rem);
     /* color: var(--text-color); */
 }
 
-.objeto-conteo.caja {
+.objeto-conteo.palillo-centena {
     font-size: clamp(5rem, 6vw, 6rem);
     /* color: var(--text-color); */
 }

@@ -139,7 +139,7 @@ export function ActividadNumeros() {
                 </div>
 
                 <div className="pantalla-objetivo">
-                    <p className="etiqueta">{TEXTOS.ui.secuencias.ultimoNumero}</p>
+                    <h2 className="etiqueta">{TEXTOS.ui.secuencias.ultimoNumero}</h2>
                     <div className="palabra-actual">
                         {ejercicio.prevNum >= 0 ? new MiNumero(ejercicio.prevNum, 10).toLongString() : ''}
                     </div>

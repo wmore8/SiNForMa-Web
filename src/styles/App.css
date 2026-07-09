@@ -95,6 +95,7 @@
   --nav-color-opacity: var(--bg-color-opacity);
 
   --covered-bg: #E5E7EB;
+  --focus-outline: #ff9100;
 
   /* Paleta de colores */
 }
@@ -126,6 +127,7 @@ body.vision-monocromatico {
   --danger-opacity-15: rgba(85, 85, 85, 0.15);
   --warning: #B5B5B5;
   --covered-bg: #7a7a7a;
+  --focus-outline: #FFD600;
 }
 
 /* En modo oscuro Primary es Blanco */
@@ -140,6 +142,7 @@ body.dark-mode.vision-monocromatico {
   --danger-opacity-15: rgba(170, 170, 170, 0.15);
   --warning: #B5B5B5;
   --covered-bg: #7a7a7a;
+  --focus-outline: #FFD600;
 }
 
 /* --- MODO PROTANOPIA (Deficiencia rojo/verde) ---*/
@@ -155,6 +158,7 @@ body.vision-protanopia {
   --danger-opacity-15: rgba(166, 81, 0, 0.15);
   --warning: #8B6508;
   --covered-bg: #c6c8cd;
+  --focus-outline: #ffc107;
 }
 
 body.dark-mode.vision-protanopia {
@@ -168,6 +172,7 @@ body.dark-mode.vision-protanopia {
   --danger-opacity-15: rgba(246, 166, 100, 0.15);
   --warning: #FFD54F;
   --covered-bg: #374151;
+  --focus-outline: #00E5FF;
 }
 
 /* --- MODO DEUTERANOPIA (Deficiencia del color Verde) ---*/
@@ -183,6 +188,7 @@ body.vision-deuteranopia {
   --danger-opacity-15: rgba(197, 78, 0 0.15);
   --warning: #997000;
   --covered-bg: #c6c8cd;
+  --focus-outline: #ffc107;
 }
 
 body.dark-mode.vision-deuteranopia {
@@ -196,6 +202,7 @@ body.dark-mode.vision-deuteranopia {
   --danger-opacity-15: rgba(255, 145, 0, 0.15);
   --warning: #FFE57F;
   --covered-bg: #374151;
+  --focus-outline: #00E5FF;
 }
 
 
@@ -212,6 +219,7 @@ body.vision-tritanopia {
   --danger-opacity-15: rgba(194, 24, 91, 0.15);
   --warning: #D32F2F;
   --covered-bg: #c6c8cd;
+  --focus-outline: #e91e63;
 }
 
 body.dark-mode.vision-tritanopia {
@@ -225,6 +233,7 @@ body.dark-mode.vision-tritanopia {
   --danger-opacity-15: rgba(240, 98, 146, 0.15);
   --warning: #EF5350;
   --covered-bg: #374151;
+  --focus-outline: #00E5FF;
 }
 
 html,
@@ -808,7 +817,8 @@ html.text-size-lg {
   padding: 0 0.1rem;
 }
 
-.breadcrumb-link {
+.breadcrumb-link,
+.breadcrumb-link-static {
   display: flex;
   align-items: center;
   color: var(--text-color);

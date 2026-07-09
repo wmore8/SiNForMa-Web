@@ -30,7 +30,7 @@ textarea:focus-visible,
 .celosia-resultado-input:focus-visible,
 .swipe-picker-wrapper:focus-visible,
 .my-number-picker:focus-visible {
-    outline: 4px solid #FFD54F !important;
+    outline: 4px solid var(--focus-outline) !important;
     outline-offset: 2px;
 
     /* border-color: var(--primary) !important; */

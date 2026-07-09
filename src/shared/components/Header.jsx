@@ -21,19 +21,28 @@ export function Header({ rutas = [], backPath = '/' }) {
                     }
 
                     // Si NO es el ultimo, es un nivel anterior
+                    const isSameAsBack = ruta.path === backPath;
+
                     return (
                         <span key={index} className="breadcrumb-item-wrapper">
-                            <Link to={ruta.path} className="breadcrumb-link" title={ruta.label}>
-                                <Icon name={nombreIcono} className="breadcrumb-icon" />
-                                <span className="breadcrumb-texto-oculto-movil">{ruta.label}</span>
-                            </Link>
+                            {isSameAsBack || !ruta.path ? (
+                                <span className="breadcrumb-link-static">
+                                    <Icon name={nombreIcono} className="breadcrumb-icon" />
+                                    <span className="breadcrumb-texto-oculto-movil">{ruta.label}</span>
+                                </span>
+                            ) : (
+                                <Link to={ruta.path} className="breadcrumb-link" aria-label={`Ir a ${ruta.label}`}>
+                                    <Icon name={nombreIcono} className="breadcrumb-icon" />
+                                    <span className="breadcrumb-texto-oculto-movil">{ruta.label}</span>
+                                </Link>
+                            )}
                             <span className="breadcrumb-separator">/</span>
                         </span>
                     );
                 })}
             </div>
 
-            <Link to={backPath} className="icon-btn btn-volver hover-danger" title="Volver">
+            <Link to={backPath} className="icon-btn btn-volver hover-danger" aria-label="Volver atrás">
                 <Icon name="icon-back" />
             </Link>
         </header>

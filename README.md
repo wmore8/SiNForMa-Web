@@ -6,8 +6,8 @@
 ---
 
 ## ✏️ Estado del Proyecto
-- **Fase Actual** `v0.9.3`: [https://lustrous-creponne-95eb1a.netlify.app](https://lustrous-creponne-95eb1a.netlify.app) (Lista para pruebas de usuario).
-- **Prototipo Inicial**: [https://cool-marshmallow-512ba5.netlify.app](https://cool-marshmallow-512ba5.netlify.app/)
+- **Fase Actual** `v1.0.0`: [https://sinforma-debug.netlify.app](https://sinforma-debug.netlify.app) (Lista para pruebas de usuario).
+- **Prototipo Inicial**: [https://sinforma-proto.netlify.app](https://sinforma-proto.netlify.app)
 
 ## 🎯 Objetivos Logrados
 - [x] **Arquitectura Modular**: Implementación de un `ActividadLayout` centralizado que gestiona Header, Controles, Modales de Información y Feedback.

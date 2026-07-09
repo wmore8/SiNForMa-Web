@@ -10,9 +10,9 @@ import "../styles/ActividadAgrupacion.css";
 let idCounter = 0;
 const generateId = () => `obj_${idCounter++}`;
 
-const UNIDADES_NAME = 'lapiz';
-const DECENAS_NAME = 'estuche';
-const CENTENAS_NAME = 'caja';
+const UNIDADES_NAME = 'palillo-unidad';
+const DECENAS_NAME = 'palillo-decena';
+const CENTENAS_NAME = 'palillo-centena';
 
 export function ActividadAgrupacion() {
     const base = MiNumero.baseActual;
@@ -155,12 +155,14 @@ export function ActividadAgrupacion() {
     };
 
     const getIconName = (tipo) => {
-        let iconName = "icon-lapiz-sm";
         let baseActual = base === 8 ? "romescus" : "decimal";
-        if (tipo !== "lapiz") {
-            iconName = `icon-${tipo}-facil-${baseActual}`;
+        if (tipo === UNIDADES_NAME) {
+            return "icon-palillo-unidad";
+        } else if (tipo === DECENAS_NAME) {
+            return `icon-palillo-decena-${baseActual}`;
+        } else {
+            return `icon-palillo-centena-${baseActual}`;
         }
-        return iconName;
     };
 
     return (
@@ -185,9 +187,9 @@ export function ActividadAgrupacion() {
                                     key={item.id}
                                     className={`objeto-agrupacion ${item.tipo} ${item.seleccionado ? 'seleccionado' : ''}`}
                                     onClick={() => toggleSeleccion(item.id)}
-                                    aria-label={item.tipo === UNIDADES_NAME ? 'Lápiz' : (item.tipo === DECENAS_NAME ? 'Estuche' : 'Caja')}
+                                    aria-label={item.tipo === UNIDADES_NAME ? 'Unidad de palillo' : (item.tipo === DECENAS_NAME ? 'Decena de palillos' : 'Centena de palillos')}
                                     aria-pressed={item.seleccionado}
-                                    title={item.tipo === UNIDADES_NAME ? 'Lápiz' : (item.tipo === DECENAS_NAME ? 'Estuche' : 'Caja')}
+                                    title={item.tipo === UNIDADES_NAME ? 'Unidad de palillo' : (item.tipo === DECENAS_NAME ? 'Decena de palillos' : 'Centena de palillos')}
                                 >
                                     <Icon name={getIconName(item.tipo)} />
                                 </button>
@@ -208,6 +210,7 @@ export function ActividadAgrupacion() {
                                 disabled={!canAgrupar}
                                 onClick={ejecutarAgrupacion}
                                 title="Agrupar"
+                                aria-label="Agrupar palillos seleccionados"
                             >
                                 <Icon name="icon-stack" />
                             </button>
@@ -218,6 +221,7 @@ export function ActividadAgrupacion() {
                                 disabled={!canDesagrupar}
                                 onClick={ejecutarDesagrupacion}
                                 title="Desagrupar"
+                                aria-label="Desagrupar palillos seleccionados"
                             >
                                 <Icon name="icon-stack-off" />
                             </button>
@@ -227,6 +231,7 @@ export function ActividadAgrupacion() {
                                 className="icon-btn hover-danger btn-herramienta"
                                 onClick={limpiarSeleccion}
                                 title="Quitar Selección"
+                                aria-label="Quitar selección de palillos"
                             >
                                 <Icon name="icon-erase" />
                             </button>
@@ -237,7 +242,7 @@ export function ActividadAgrupacion() {
                     {/* Zona de Respuesta */}
                     <div className="bloque-respuesta">
                         <div className="unidad-referencia">
-                            <Icon name="icon-lapiz-sm" />
+                            <Icon name="icon-palillo-unidad" />
                         </div>
                         <div className="pickers-grid">
                             {dificultad >= 1 && <SwipePicker opciones={MiNumero.losDigitos} value={idxCentenas} onChange={setidxCentenas} />}

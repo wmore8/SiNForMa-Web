@@ -141,7 +141,7 @@ export function ActividadPalabras() {
                 </div>
 
                 <div className="pantalla-objetivo">
-                    <p className="etiqueta">{TEXTOS.ui.secuencias.ultimaPalabra}</p>
+                    <h2 className="etiqueta">{TEXTOS.ui.secuencias.ultimaPalabra}</h2>
                     <div className="simbolo-actual">{ejercicio.prevNum >= 0 ? new MiNumero(ejercicio.prevNum, 10).toString() : ''}</div>
                 </div>
 
@@ -151,6 +151,7 @@ export function ActividadPalabras() {
                         type="text"
                         className="input-palabra"
                         placeholder={TEXTOS.ui.secuencias.placeholderPalabra}
+                        aria-label={TEXTOS.ui.secuencias.placeholderPalabra}
                         value={inputUsuario}
                         onChange={(e) => setInputUsuario(e.target.value)}
                         disabled={ejercicio.finalizado}

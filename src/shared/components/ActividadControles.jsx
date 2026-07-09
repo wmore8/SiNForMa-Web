@@ -22,7 +22,7 @@ export function ActividadControles({
         <div className="actividad-controles">
 
             {MiNumero.baseActual !== 8 && (
-                <button className="btn-icon-text hover-primary" title="Información" onClick={onInfoClick} >
+                <button className="btn-icon-text hover-primary" onClick={onInfoClick} aria-label="Información sobre la actividad">
                     <Icon name="icon-info" />
                     <span className='btn-text action'>Información</span>
                 </button>
@@ -32,15 +32,14 @@ export function ActividadControles({
                 <button
                     className="btn-icon-text hover-primary btn-toggle"
                     onClick={onToggleInputMode}
-                    title={inputMode === 'picker' ? "Usar Teclado Numérico" : "Usar Ruedas de Selección"}
-                    aria-label={inputMode === 'picker' ? "Cambiar a teclado" : "Cambiar a ruedas"}
+                    aria-label={inputMode === 'picker' ? "Cambiar a teclado numérico" : "Cambiar a ruedas de selección"}
                 >
                     <Icon name={inputMode === 'picker' ? "icon-keyboard" : "icon-swipe"} />
                     <span className='btn-text action'>Entrada</span>
                 </button>
             )}
 
-            <select value={dificultad} name='dificultad-select' className="dificultad-select" onChange={onChange}>
+            <select value={dificultad} name='dificultad-select' className="dificultad-select" onChange={onChange} aria-label="Seleccionar nivel de dificultad">
                 {opciones.map(opc => (
                     <option key={opc.id} value={opc.id}>
                         {opc.label}
@@ -48,7 +47,7 @@ export function ActividadControles({
                 ))}
             </select>
 
-            <button className="btn-icon-text hover-danger" title='Reiniciar' onClick={onReiniciar} >
+            <button className="btn-icon-text hover-danger" onClick={onReiniciar} aria-label="Reiniciar ejercicio">
                 <Icon name="icon-reset" />
                 <span className='btn-text action'>Reiniciar</span>
             </button>

@@ -50,7 +50,7 @@
 .tabla-celda.guessable {
     background-color: var(--warning);
     cursor: pointer;
-    color: var(--warning-text);
+    color: var(--primary-text);
     transition: all 0.2s;
     font-weight: 600;
 }

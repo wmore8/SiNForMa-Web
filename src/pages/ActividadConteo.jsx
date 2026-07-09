@@ -15,16 +15,16 @@ const crearNivelAleatorio = (nivelDificultad, base) => {
     const objDer = Math.floor(Math.random() * maxObjetivo) + 1;
     const sumaTotal = objIzq + objDer;
 
-    let configAlmacen = { cajas: 0, estuches: 0, lapices: 0 };
+    let configAlmacen = { centenas: 0, decenas: 0, unidades: 0 };
     if (nivelDificultad === 0) {
-        configAlmacen.lapices = sumaTotal + 3;
+        configAlmacen.unidades = sumaTotal + 3;
     } else if (nivelDificultad === 1) {
-        configAlmacen.estuches = Math.floor(sumaTotal / base) + 2;
-        configAlmacen.lapices = 2;
+        configAlmacen.decenas = Math.floor(sumaTotal / base) + 2;
+        configAlmacen.unidades = 2;
     } else {
-        configAlmacen.cajas = Math.floor(sumaTotal / (base * base)) + 2;
-        configAlmacen.estuches = 0;
-        configAlmacen.lapices = 2;
+        configAlmacen.centenas = Math.floor(sumaTotal / (base * base)) + 2;
+        configAlmacen.decenas = 0;
+        configAlmacen.unidades = 2;
     }
 
     return { objetivos: { izq: objIzq, der: objDer }, almacen: configAlmacen };
@@ -40,13 +40,13 @@ export function ActividadConteo() {
     const [objetivos, setObjetivos] = useState(configInicial.objetivos);
     const [almacen, setAlmacen] = useState(configInicial.almacen);
 
-    const [cajaIzq, setCajaIzq] = useState({ cajas: 0, estuches: 0, lapices: 0 });
-    const [cajaDer, setCajaDer] = useState({ cajas: 0, estuches: 0, lapices: 0 });
+    const [cajaIzq, setCajaIzq] = useState({ centenas: 0, decenas: 0, unidades: 0 });
+    const [cajaDer, setCajaDer] = useState({ centenas: 0, decenas: 0, unidades: 0 });
 
     const [feedbackAbierto, setFeedbackAbierto] = useState(false);
     const [esRespuestaCorrecta, setEsRespuestaCorrecta] = useState(false);
 
-    // Estado para errores de falidacion
+    // Estado para errores de validacion
     const [errores, setErrores] = useState({ izq: false, der: false });
     const [aciertos, setAciertos] = useState({ izq: false, der: false });
 
@@ -57,26 +57,26 @@ export function ActividadConteo() {
         setDificultad(nivelDificultad);
         setObjetivos(nuevaConfig.objetivos);
         setAlmacen(nuevaConfig.almacen);
-        setCajaIzq({ cajas: 0, estuches: 0, lapices: 0 });
-        setCajaDer({ cajas: 0, estuches: 0, lapices: 0 });
+        setCajaIzq({ centenas: 0, decenas: 0, unidades: 0 });
+        setCajaDer({ centenas: 0, decenas: 0, unidades: 0 });
         setFeedbackAbierto(false);
         setErrores({ izq: false, der: false });
         setAciertos({ izq: false, der: false });
     };
 
-    const getValorTotal = (estado) => (estado.cajas * base * base) + (estado.estuches * base) + estado.lapices;
+    const getValorTotal = (estado) => (estado.centenas * base * base) + (estado.decenas * base) + estado.unidades;
 
     const autoCompactar = (estado) => {
-        let { cajas, estuches, lapices } = estado;
-        if (lapices >= base) {
-            estuches += Math.floor(lapices / base);
-            lapices = lapices % base;
+        let { centenas, decenas, unidades } = estado;
+        if (unidades >= base) {
+            decenas += Math.floor(unidades / base);
+            unidades = unidades % base;
         }
-        if (estuches >= base) {
-            cajas += Math.floor(estuches / base);
-            estuches = estuches % base;
+        if (decenas >= base) {
+            centenas += Math.floor(decenas / base);
+            decenas = decenas % base;
         }
-        return { cajas, estuches, lapices };
+        return { centenas, decenas, unidades };
     };
 
     // Limitamos el numero de objetos en el contenedor
@@ -89,7 +89,7 @@ export function ActividadConteo() {
 
     const moverAActiva = (tipo) => {
         const cajaActual = cajaActiva === 'izq' ? cajaIzq : cajaDer;
-        const valorAAgregar = tipo === 'lapices' ? 1 : (tipo === 'estuches' ? base : base * base);
+        const valorAAgregar = tipo === 'unidades' ? 1 : (tipo === 'decenas' ? base : base * base);
 
         if (getValorTotal(cajaActual) + valorAAgregar > maxPermitido) return;
 
@@ -119,22 +119,22 @@ export function ActividadConteo() {
         e.stopPropagation();
         const caja = lado === 'izq' ? cajaIzq : cajaDer;
         setAlmacen(prev => ({
-            cajas: prev.cajas + caja.cajas,
-            estuches: prev.estuches + caja.estuches,
-            lapices: prev.lapices + caja.lapices
+            centenas: prev.centenas + caja.centenas,
+            decenas: prev.decenas + caja.decenas,
+            unidades: prev.unidades + caja.unidades
         }));
-        if (lado === 'izq') setCajaIzq({ cajas: 0, estuches: 0, lapices: 0 });
-        else setCajaDer({ cajas: 0, estuches: 0, lapices: 0 });
+        if (lado === 'izq') setCajaIzq({ centenas: 0, decenas: 0, unidades: 0 });
+        else setCajaDer({ centenas: 0, decenas: 0, unidades: 0 });
         limpiarErrores();
         limpiarAciertos();
     };
 
     const desarmar = (tipo) => {
-        if (tipo === 'caja' && almacen.cajas > 0) {
-            setAlmacen(prev => ({ ...prev, cajas: prev.cajas - 1, estuches: prev.estuches + base }));
+        if (tipo === 'centenas' && almacen.centenas > 0) {
+            setAlmacen(prev => ({ ...prev, centenas: prev.centenas - 1, decenas: prev.decenas + base }));
         }
-        if (tipo === 'estuche' && almacen.estuches > 0) {
-            setAlmacen(prev => ({ ...prev, estuches: prev.estuches - 1, lapices: prev.lapices + base }));
+        if (tipo === 'decenas' && almacen.decenas > 0) {
+            setAlmacen(prev => ({ ...prev, decenas: prev.decenas - 1, unidades: prev.unidades + base }));
         }
         limpiarErrores();
         limpiarAciertos();
@@ -158,14 +158,26 @@ export function ActividadConteo() {
     };
 
     const renderObjetos = (cantidad, tipo, iconName, onClickFn) => {
+        const labelMap = {
+            'palillo-unidad': 'Unidad de palillo',
+            'palillo-decena': 'Grupo de palillos decena u octeto',
+            'palillo-centena': 'Caja de palillos centena'
+        };
+        const label = labelMap[tipo] || tipo;
+
         return Array.from({ length: cantidad }).map((_, i) => (
-            <button key={`${tipo}-${i}`} className={`objeto-conteo ${tipo}`} onClick={onClickFn}>
+            <button
+                key={`${tipo}-${i}`}
+                className={`objeto-conteo ${tipo}`}
+                onClick={onClickFn}
+                aria-label={`${label} número ${i + 1}`}
+            >
                 <Icon name={iconName} />
             </button>
         ));
     };
 
-    // Manejador de teclado para seleccionar contenerdor
+    // Manejador de teclado para seleccionar contenedor
     const handleCajaInteraccion = (lado, e) => {
         // Si es click de raton o tecla Enter/Espacio
         if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
@@ -194,8 +206,8 @@ export function ActividadConteo() {
 
                     <div className="caja-wrapper">
                         <div className="caja-header-externo">
-                            <h3>{new MiNumero(objetivos.izq, 10).toString()}</h3>
-                            <button className="icon-btn hover-danger" title="Quitar palillos" onClick={(e) => vaciarCaja('izq', e)}><Icon name="icon-erase" /></button>
+                            <h2>{new MiNumero(objetivos.izq, 10).toString()}</h2>
+                            <button className="icon-btn hover-danger" title="Quitar palillos" aria-label="Vaciar contenedor izquierdo" onClick={(e) => vaciarCaja('izq', e)}><Icon name="icon-erase" /></button>
                         </div>
                         <div
                             className={`conteo-caja ${cajaActiva === 'izq' ? 'activa' : ''} ${errores.izq ? 'erronea' : ''} ${aciertos.izq ? 'correcta' : ''} `}
@@ -206,17 +218,17 @@ export function ActividadConteo() {
                             onKeyDown={(e) => handleCajaInteraccion('izq', e)}
                         >
                             <div className="caja-zona-items">
-                                {renderObjetos(cajaIzq.cajas, 'caja', base === 8 ? 'icon-caja-facil-romescus' : 'icon-caja-facil-decimal' , (e) => devolverAlmacen('izq', 'cajas', e))}
-                                {renderObjetos(cajaIzq.estuches, 'estuche', base === 8 ? 'icon-estuche-facil-romescus' : 'icon-estuche-facil-decimal', (e) => devolverAlmacen('izq', 'estuches', e))}
-                                {renderObjetos(cajaIzq.lapices, 'lapiz', 'icon-lapiz-sm', (e) => devolverAlmacen('izq', 'lapices', e))}
+                                {renderObjetos(cajaIzq.centenas, 'palillo-centena', base === 8 ? 'icon-palillo-centena-romescus' : 'icon-palillo-centena-decimal' , (e) => devolverAlmacen('izq', 'centenas', e))}
+                                {renderObjetos(cajaIzq.decenas, 'palillo-decena', base === 8 ? 'icon-palillo-decena-romescus' : 'icon-palillo-decena-decimal', (e) => devolverAlmacen('izq', 'decenas', e))}
+                                {renderObjetos(cajaIzq.unidades, 'palillo-unidad', 'icon-palillo-unidad', (e) => devolverAlmacen('izq', 'unidades', e))}
                             </div>
                         </div>
                     </div>
 
                     <div className="caja-wrapper">
                         <div className="caja-header-externo">
-                            <h3>{new MiNumero(objetivos.der, 10).toString()}</h3>
-                            <button className="icon-btn hover-danger" title="Quitar palillos" onClick={(e) => vaciarCaja('der', e)}><Icon name="icon-erase" /></button>
+                            <h2>{new MiNumero(objetivos.der, 10).toString()}</h2>
+                            <button className="icon-btn hover-danger" title="Quitar palillos" aria-label="Vaciar contenedor derecho" onClick={(e) => vaciarCaja('der', e)}><Icon name="icon-erase" /></button>
                         </div>
                         <div
                             className={`conteo-caja ${cajaActiva === 'der' ? 'activa' : ''} ${errores.der ? 'erronea' : ''} ${aciertos.der ? 'correcta' : ''}`}
@@ -227,9 +239,9 @@ export function ActividadConteo() {
                             onKeyDown={(e) => handleCajaInteraccion('der', e)}
                         >
                             <div className="caja-zona-items">
-                                {renderObjetos(cajaDer.cajas, 'caja', base === 8 ? 'icon-caja-facil-romescus' : 'icon-caja-facil-decimal', (e) => devolverAlmacen('der', 'cajas', e))}
-                                {renderObjetos(cajaDer.estuches, 'estuche', base === 8 ? 'icon-estuche-facil-romescus' : 'icon-estuche-facil-decimal', (e) => devolverAlmacen('der', 'estuches', e))}
-                                {renderObjetos(cajaDer.lapices, 'lapiz', 'icon-lapiz-sm', (e) => devolverAlmacen('der', 'lapices', e))}
+                                {renderObjetos(cajaDer.centenas, 'palillo-centena', base === 8 ? 'icon-palillo-centena-romescus' : 'icon-palillo-centena-decimal', (e) => devolverAlmacen('der', 'centenas', e))}
+                                {renderObjetos(cajaDer.decenas, 'palillo-decena', base === 8 ? 'icon-palillo-decena-romescus' : 'icon-palillo-decena-decimal', (e) => devolverAlmacen('der', 'decenas', e))}
+                                {renderObjetos(cajaDer.unidades, 'palillo-unidad', 'icon-palillo-unidad', (e) => devolverAlmacen('der', 'unidades', e))}
                             </div>
                         </div>
                     </div>
@@ -242,30 +254,30 @@ export function ActividadConteo() {
                             {dificultad === 2 && (
                                 <div className="almacen-seccion-wrapper">
                                     <div className="almacen-seccion-header-externo">
-                                        <Icon name="icon-lapiz-caja" />
-                                        <button className="icon-btn hover-primary" title='Dividir Caja' disabled={almacen.cajas === 0} onClick={() => desarmar('caja')}><Icon name="icon-split" /></button>
+                                        <Icon name={base === 8 ? 'icon-palillo-centena-romescus' : 'icon-palillo-centena-decimal'} />
+                                        <button className="icon-btn hover-primary" title='Dividir Caja' aria-label="Dividir caja de centenas en decenas" disabled={almacen.centenas === 0} onClick={() => desarmar('centenas')}><Icon name="icon-split" /></button>
                                     </div>
-                                    <div className="almacen-items">{renderObjetos(almacen.cajas, 'caja', base === 8 ? 'icon-caja-facil-romescus' : 'icon-caja-facil-decimal', () => moverAActiva('cajas'))}</div>
+                                    <div className="almacen-items">{renderObjetos(almacen.centenas, 'palillo-centena', base === 8 ? 'icon-palillo-centena-romescus' : 'icon-palillo-centena-decimal', () => moverAActiva('centenas'))}</div>
                                 </div>
                             )}
 
                             {(dificultad >= 1) && (
                                 <div className="almacen-seccion-wrapper">
                                     <div className="almacen-seccion-header-externo">
-                                        <Icon name="icon-lapiz-estuche" />
-                                        <button className="icon-btn hover-primary" title='Dividir Estuche' disabled={almacen.estuches === 0} onClick={() => desarmar('estuche')}><Icon name="icon-split" /></button>
+                                        <Icon name={base === 8 ? 'icon-palillo-decena-romescus' : 'icon-palillo-decena-decimal'} />
+                                        <button className="icon-btn hover-primary" title='Dividir Estuche' aria-label="Dividir estuche de decenas en unidades" disabled={almacen.decenas === 0} onClick={() => desarmar('decenas')}><Icon name="icon-split" /></button>
                                     </div>
-                                    <div className="almacen-items">{renderObjetos(almacen.estuches, 'estuche', base === 8 ? 'icon-estuche-facil-romescus' : 'icon-estuche-facil-decimal', () => moverAActiva('estuches'))}</div>
+                                    <div className="almacen-items">{renderObjetos(almacen.decenas, 'palillo-decena', base === 8 ? 'icon-palillo-decena-romescus' : 'icon-palillo-decena-decimal', () => moverAActiva('decenas'))}</div>
                                 </div>
                             )}
 
                             <div className="almacen-seccion-wrapper">
                                 <div className="almacen-seccion-header-externo">
-                                    <Icon name="icon-lapiz" />
+                                    <Icon name="icon-palillo-unidad" />
                                     {/* Mantiene la simetria visual y de altura */}
-                                    <button className="icon-btn" style={{ visibility: 'hidden' }} disabled><Icon name="icon-split" /></button>
+                                    <div className="icon-btn" style={{ visibility: 'hidden' }} aria-hidden="true"><Icon name="icon-split" /></div>
                                 </div>
-                                <div className="almacen-items">{renderObjetos(almacen.lapices, 'lapiz', 'icon-lapiz-sm', () => moverAActiva('lapices'))}</div>
+                                <div className="almacen-items">{renderObjetos(almacen.unidades, 'palillo-unidad', 'icon-palillo-unidad', () => moverAActiva('unidades'))}</div>
                             </div>
                         </div>
                     </div>
