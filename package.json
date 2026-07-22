@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "host": "vite --host",
-    "audit": "npx lighthouse http://localhost:4173 --output json --output-path ./reports/lighthouse-report.json --chrome-flags=\"--headless\""
+    "audit": "npx lighthouse http://localhost:4173 --output json --output-path ./reports/lighthouse-report.json --chrome-flags=\"--headless\"",
+    "audit:all": "node scripts/audit-all.js"
   },
   "dependencies": {
     "react": "^19.2.0",

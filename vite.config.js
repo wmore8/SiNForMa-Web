@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
         }
       },
       VitePWA({
-        registerType: 'autoUpdate',
+        registerType: 'prompt',
         devOptions: {
           enabled: true,
           suppressWarnings: true
