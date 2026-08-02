@@ -132,17 +132,15 @@ export function ActividadDivisiones() {
         const nuevoFeedback = { ...feedback };
 
         const comprobarCelda = (id, valorEsperado) => {
-            const usuarioLimpiado = celdas[id].replace(/^0+/, '');
-            const esperadoLimpiado = valorEsperado.replace(/^0+/, '');
-
-            // Tolerancia para el cero (la casilla vacia y los 0 a la izquierda son validos)
-            const esCeroLogico = esperadoLimpiado === '0' || esperadoLimpiado === '';
-            const usuarioEsCero = usuarioLimpiado === '0' || usuarioLimpiado === '';
+            const usuarioVal = celdas[id].trim();
+            const usuarioLimpiado = usuarioVal.replace(/^0+/, '') || '0';
+            const esperadoLimpiado = valorEsperado.trim().replace(/^0+/, '') || '0';
 
             let esCorrecta = false;
-            if (esCeroLogico && usuarioEsCero) {
-                esCorrecta = true;
-            } else if (usuarioLimpiado === esperadoLimpiado || celdas[id] === valorEsperado) {
+            // Si la celda se deja vacia cuando se espera un numero (incluido el 0), es incorrecto
+            if (usuarioVal === '') {
+                esCorrecta = false;
+            } else if (usuarioLimpiado === esperadoLimpiado || usuarioVal === valorEsperado.trim()) {
                 esCorrecta = true;
             }
 

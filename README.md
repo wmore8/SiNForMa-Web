@@ -1,7 +1,7 @@
 # SiNForMa-Web
 ### Sistema Interactivo de un Nuevo Sistema Numérico
 
-**SiNForMa-Web** es una plataforma educativa interactiva diseñada para la enseñanza y práctica del sistema de numeración en **Base 8 (Romescus)** y su relación con el sistema decimal. El proyecto busca facilitar la transición cognitiva hacia bases no decimales mediante actividades visuales, algorítmicas y lúdicas orientadas a futuros docentes y estudiantes.
+**SiNForMa-Web** es una plataforma educativa interactiva diseñada para la enseñanza y práctica del sistema de numeración en **Base 8 (Romes)** y su relación con el sistema decimal. El proyecto busca facilitar la transición cognitiva hacia bases no decimales mediante actividades visuales, algorítmicas y lúdicas orientadas a futuros docentes y estudiantes.
 
 ---
 
@@ -19,7 +19,7 @@
 - [x] **Diccionario de Constantes**: Centralización de todos los textos de la app en `textos.js` para facilitar el mantenimiento e internacionalización.
 - [x] **Accesibilidad Universal (A11y)**: Control total por teclado (flechas bidimensionales y `:focus-visible` de alto contraste), traps de foco en modales e indicadores semánticos ARIA.
 - [x] **Paletas Cromáticas Adaptadas**: Modos de visión para discromatopsias (Protanopía, Deuteranopía, Tritanopía y Monocromático/Acromatopsia) diseñados bajo estándares Okabe e Ito.
-- [x] **Sistemas Numéricos Dinámicos**: Conversor y ejecutor dinámico entre Romescus (Base 8) y Decimal (Base 10).
+- [x] **Sistemas Numéricos Dinámicos**: Conversor y ejecutor dinámico entre Romes (Base 8) y Decimal (Base 10).
 
 ---
 

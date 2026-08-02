@@ -150,10 +150,12 @@ export function ActividadRecortados() {
 
         Object.keys(ejercicio.soluciones).forEach(id => {
             const esperado = ejercicio.soluciones[id];
-            const usuarioStr = celdas[id].replace(/^0+/, '') || '0';
+            const usuarioVal = celdas[id].trim();
+            const usuarioStr = usuarioVal.replace(/^0+/, '') || '0';
             const esperadoLimpiado = esperado.replace(/^0+/, '') || '0';
 
-            if (usuarioStr === esperadoLimpiado || (celdas[id] === '' && esperadoLimpiado === '0')) {
+            // Si la celda esta vacia, no se considera correcta aunque la solucion sea 0 (exige 0 explicito)
+            if (usuarioVal !== '' && (usuarioStr === esperadoLimpiado || usuarioVal === esperado)) {
                 nuevoFeedback[id] = 'correcta';
             } else {
                 nuevoFeedback[id] = 'erronea';
@@ -182,7 +184,7 @@ export function ActividadRecortados() {
             ]}
             backPath="/operaciones/multiplicaciones"
             dificultad={0}
-            opcionesDificultad={[{ id: 0, label: "Nivel Único" }]}
+            opcionesDificultad={[{ id: 0, label: TEXTOS.dificultades.nivelUnico }]}
             onChangeDificultad={() => { }}
             onReiniciar={reiniciarTodo}
             textoInfo={TEXTOS.infoActividades.recortados}

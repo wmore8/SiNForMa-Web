@@ -165,7 +165,7 @@ export function ActividadResta() {
         cellIds.forEach((id, index) => {
             const esperado = solPad[index];
             const usuario = userVals[index];
-            let esCorrecta = (esperado === ' ' || esperado === '0') ? (usuario === ' ' || usuario === '0') : (usuario === esperado);
+            let esCorrecta = (esperado === ' ') ? (usuario === ' ' || usuario === '0') : (usuario === esperado);
 
             if (!esCorrecta) todoCorrecto = false;
             nuevoFeedback[id] = esCorrecta ? 'correcta' : 'erronea';

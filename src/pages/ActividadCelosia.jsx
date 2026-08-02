@@ -168,22 +168,23 @@ export function ActividadCelosia() {
 
         Object.keys(ejercicio.soluciones).forEach(id => {
             const esperado = ejercicio.soluciones[id];
-            const usuario = celdas[id];
+            const usuario = celdas[id].trim();
 
             let esCorrecta = false;
 
-            // Para dar por valido las casillas vacias como 0
-            const esCeroLogico = esperado === '0' || esperado === '';
-            const usuarioEsCeroLogico = usuario === '0' || usuario === '';
-
-            // Para dar por valida los resultados con 0 a la izquierda (raro pero puedes hacerlo)
-            if ((id.startsWith('r_') || id === 'solTotal') && esperado.startsWith('0') && usuario === esperado.slice(1)) {
-                esCorrecta = true;
-            } else if (esCeroLogico && usuarioEsCeroLogico) {
-                // Si ambos representan la ausencia de valor o un cero
+            if (id.endsWith('_d') && esperado === '0') {
+                // Decenas de subproductos en la celosia: la decena 0 puede escribirse '0' o dejarse vacia ('')
+                esCorrecta = (usuario === '0' || usuario === '');
+            } else if (esperado === '0') {
+                // El 0 posicional (unidades posicionales, ceros intermedios) debe ser explicito, no se acepta casilla vacia
+                esCorrecta = (usuario === '0');
+            } else if (esperado === '') {
+                // Posiciones vacias esperadas en el perimetro
+                esCorrecta = (usuario === '' || usuario === '0');
+            } else if ((id.startsWith('r_') || id === 'solTotal') && esperado.startsWith('0') && usuario === esperado.slice(1)) {
+                // Cero a la izquierda en el resultado del perimetro
                 esCorrecta = true;
             } else {
-                // Comparacion estricta normal
                 esCorrecta = (usuario === esperado);
             }
 
@@ -209,7 +210,7 @@ export function ActividadCelosia() {
             ]}
             backPath="/operaciones/multiplicaciones"
             dificultad={0}
-            opcionesDificultad={[{ id: 0, label: "Nivel Único" }]}
+            opcionesDificultad={[{ id: 0, label: TEXTOS.dificultades.nivelUnico }]}
             onChangeDificultad={() => { }}
             onReiniciar={reiniciarTodo}
             textoInfo={TEXTOS.infoActividades.celosia}

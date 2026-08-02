@@ -113,7 +113,18 @@ export const TEXTOS = {
             instalar: "Instalar aplicación",
             instalada: "Aplicación instalada",
             actualizar: "Actualizar versión",
-            noCompatible: "Instalación no disponible en este navegador"
+            noCompatible: "Instalación no disponible en este navegador",
+            tituloDebugBase: "MODO DESARROLLADOR: Sistema Numérico",
+            baseRomes: "Romes (Base 8)",
+            baseDecimal: "Decimal (Base 10)"
+        },
+        dificultades: {
+            nivelUnico: "Nivel Único",
+            facil: "Dificultad Fácil",
+            media: "Dificultad Media",
+            dificil: "Dificultad Difícil",
+            muyDificil: "Dificultad Muy Difícil",
+            maxima: "Dificultad Máxima"
         },
         lapiceros: {
             lapiz: "Lápiz",

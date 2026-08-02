@@ -127,10 +127,11 @@ export function ActividadSuma() {
             const usuario = userVals[index];
             let esCorrecta = false;
 
-            if (esperado === ' ' || esperado === '0') {
-                // Si la celda debia estar vacia, perdonamos si dejan el espacio o si ponen un '0'
+            if (esperado === ' ') {
+                // Ceros a la izquierda no significativos: perdonamos si dejan el espacio o si ponen un '0'
                 esCorrecta = (usuario === ' ' || usuario === '0');
             } else {
+                // Digitos posicionales significativos (incluido el 0): exige coincidencia exacta
                 esCorrecta = (usuario === esperado);
             }
 
