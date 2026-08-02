@@ -152,7 +152,7 @@ export function ActividadMultiplicacionClasica() {
             cellIds.forEach((id, index) => {
                 const esperado = solPad[index];
                 const usuario = userVals[index];
-                let esCorrecta = (esperado === ' ' || esperado === '0') ? (usuario === ' ' || usuario === '0') : (usuario === esperado);
+                let esCorrecta = (esperado === ' ') ? (usuario === ' ' || usuario === '0') : (usuario === esperado);
                 if (!esCorrecta) todoCorrecto = false;
                 nuevoFeedback[id] = esCorrecta ? 'correcta' : 'erronea';
             });
@@ -168,7 +168,7 @@ export function ActividadMultiplicacionClasica() {
                     const valorRaw = valoresCeldas[id] || 0;
                     const val = valorRaw > 0 ? (valorRaw - 1).toString() : ' ';
 
-                    let esCorrecta = (esperado === ' ' || esperado === '0') ? (val === ' ' || val === '0') : (val === esperado);
+                    let esCorrecta = (esperado === ' ') ? (val === ' ' || val === '0') : (val === esperado);
                     if (!esCorrecta) todoCorrecto = false;
                     nuevoFeedback[id] = esCorrecta ? 'correcta' : 'erronea';
                 }

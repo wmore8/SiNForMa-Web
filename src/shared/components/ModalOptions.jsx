@@ -81,19 +81,19 @@ export function OptionsModal({ isOpen, onClose, toggleTheme, isDark, textSize, c
       {import.meta.env.SINFORMA_MODO_DEBUG === 'true' && (
         <>
           {/* SECCION DEBUG BASE */}
-          <h3 className='modal-legend modal-legend-spaced debug-title'>MODO DESARROLLADOR: Sistema Numérico</h3>
+          <h3 className='modal-legend modal-legend-spaced debug-title'>{TEXTOS.ui.opciones.tituloDebugBase}</h3>
           <div className="theme-toggle-buttons">
             <button
               className={`theme-btn ${localStorage.getItem('debugBase') === '8' || (!localStorage.getItem('debugBase') && import.meta.env.SINFORMA_APP_SISTEMA_NUMERACION === '8') ? 'active' : ''} debug`}
               onClick={() => { localStorage.setItem('debugBase', '8'); window.location.reload(); }}
             >
-              Romescus (Base 8)
+              {TEXTOS.ui.opciones.baseRomes}
             </button>
             <button
               className={`theme-btn ${localStorage.getItem('debugBase') === '10' || (!localStorage.getItem('debugBase') && import.meta.env.SINFORMA_APP_SISTEMA_NUMERACION === '10') ? 'active' : ''} debug`}
               onClick={() => { localStorage.setItem('debugBase', '10'); window.location.reload(); }}
             >
-              Decimal (Base 10)
+              {TEXTOS.ui.opciones.baseDecimal}
             </button>
           </div>
         </>

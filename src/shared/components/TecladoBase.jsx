@@ -42,17 +42,17 @@ export function TecladoBase({ onTeclaClick, deshabilitado }) {
 
             const key = e.key.toLowerCase();
 
-            // Comportamiento segun el sistema numerico (Romescus o Decimal)
+            // Comportamiento segun el sistema numerico (Romes o Decimal)
             if (base === 8) {
                 // En base 8, usamos letras para que el alumno deduzca el contexto
-                const mapeoRomescus = {
+                const mapeoRomes = {
                     'q': '0', 'w': '1', 'e': '2', 'r': '3',
                     'a': '4', 's': '5', 'd': '6', 'f': '7'
                 };
                 
-                if (mapeoRomescus[key]) {
+                if (mapeoRomes[key]) {
                     e.preventDefault();
-                    onTeclaClick(mapeoRomescus[key]);
+                    onTeclaClick(mapeoRomes[key]);
                 }
             } else {
                 // En sistema decimal, usamos los numeros normales
