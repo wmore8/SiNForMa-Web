@@ -26,14 +26,14 @@ export const TEXTOS = {
         celosia: "Celosía",
         recortados: "Recortados",
         productoClasico: "Producto clásico",
-        conteo:"Actividad Conteo",
+        conteo: "Actividad Conteo",
         agrupacion: "Actividad Palillos",
         error404: "Página no encontrada"
     },
 
     // Textos de Informacion de las Actividades (Para el ModalInfo)
     infoActividades: {
-        titulo:"¿Cómo jugar?",
+        titulo: "¿Cómo jugar?",
         tablas: "Adivina los números ocultos en la tabla. Selecciona el número correcto en las ruletas y toca la casilla con el '?'.",
         tablasMultiplicar: "Resuelve las multiplicaciones. Elige el número en la ruleta y toca la casilla con el '?'.",
         lapiceros: "Cuenta los lapiceros, estuches y cajas para alcanzar el objetivo. Usa los botones + y -.",
@@ -46,9 +46,8 @@ export const TEXTOS = {
         productoClasicoDificil: "Toca las casillas vacías y usa el teclado numérico de abajo para rellenar los pasos intermedios y el resultado final.",
         celosia: "Multiplica cada cifra y suma las diagonales para obtener el resultado final. Recuerda que las decenas van arriba y las unidades abajo.",
         recortados: "Multiplica el número de la izquierda por la descomposición de los de arriba y pon el resultado en las casillas. Suma las filas para el total parcial.",
-        conteo : "Reparte los palillos entre los 2 contenedores para alcanzar ambos objetivos. Si no te alcanza, puedes dividir los objetos más grandes.",
-        agrupacion: "Cuenta cuantos objetos solicitados hay en total. Puedes agrupar o desagrupar objetos para contar más rápido",
-    
+        conteo: "Reparte los palillos entre los 2 contenedores para alcanzar ambos objetivos. Si no te alcanza, puedes dividir los objetos más grandes.",
+        agrupacion: "Cuenta cuantos objetos solicitados hay en total. Puedes agrupar o desagrupar objetos para contar más rápido"
     },
 
     // Mensajes de Feedback (Para el ModalFeedback)
@@ -83,8 +82,18 @@ export const TEXTOS = {
         exitoLapiceros: "¡Perfecto!",
         errorLapiceros: "Prueba otra vez",
 
-        exitoConteo : "¡Perfecto! Has distribuido correctamente los palillos",
-        errorConteo : "¡Vaya! Prueba otra vez",
+        exitoConteo: "¡Perfecto! Has distribuido correctamente los palillos",
+        errorConteo: "¡Vaya! Prueba otra vez"
+    },
+
+    // Niveles de dificultad
+    dificultades: {
+        nivelUnico: "Nivel Único",
+        facil: "Dificultad Fácil",
+        media: "Dificultad Media",
+        dificil: "Dificultad Difícil",
+        muyDificil: "Dificultad Muy Difícil",
+        maxima: "Dificultad Máxima"
     },
 
     // Textos específicos dentro de la UI de las actividades
@@ -93,9 +102,10 @@ export const TEXTOS = {
             subtitulo: "¡Vaya! Te has salido de la cuadrícula.",
             mensaje: "Parece que la página que buscas se ha perdido en otra base numérica o ha dejado de existir.",
             botonHome: "Volver al inicio"
-        },opciones: {
-            tituloNavBar:"Barra de navegación",
-            plano:"Plano",
+        },
+        opciones: {
+            tituloNavBar: "Barra de navegación",
+            plano: "Plano",
             relleno: "Relleno",
             tituloFuente: "Tamaño de fuente",
             pequeno: "Pequeño",
@@ -104,11 +114,11 @@ export const TEXTOS = {
             tituloTema: "Tema de la aplicación",
             claro: "Claro",
             oscuro: "Oscuro",
-            tituloAccesibilidad : "Accesibilidad Visual",
-            acromatopsia:"Acromatopsia",
-            protanopia:"Protanopía",
-            deuteranopia:"Deuteranopía",
-            tritanopia:"Tritanopía",
+            tituloAccesibilidad: "Accesibilidad Visual",
+            acromatopsia: "Acromatopsia",
+            protanopia: "Protanopía",
+            deuteranopia: "Deuteranopía",
+            tritanopia: "Tritanopía",
             tituloEstadoApp: "Estado de la App",
             instalar: "Instalar aplicación",
             instalada: "Aplicación instalada",
