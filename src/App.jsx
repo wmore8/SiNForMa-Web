@@ -145,6 +145,16 @@ function AppLayout() {
     else document.body.classList.remove('layout-desktop');
   }, [isDesktop]);
 
+  // Efecto para prevenir el menu contextual en pulsaciones largas
+  useEffect(() => {
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+    };
+
+    window.addEventListener('contextmenu', handleContextMenu);
+    return () => window.removeEventListener('contextmenu', handleContextMenu);
+  }, []);
+
   return (
     <div className='main-container'>
       <Navbar onOpenSettings={() => setIsModalOpen(true)} />

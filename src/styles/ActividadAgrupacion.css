@@ -56,11 +56,17 @@
     justify-content: center;
     padding: 0.3rem;
     color: var(--text-color);
-    /* transition: border 0.25s; */
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .objeto-agrupacion:hover {
     border: 3px dashed var(--primary);
+}
+
+.objeto-agrupacion:active {
+    transform: scale(0.95);
 }
 
 .objeto-agrupacion.seleccionado {
@@ -111,7 +117,15 @@
     background-color: var(--bg-color);
     border: 2px solid var(--card-border);
     border-radius: 1rem;
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
     transition: all 0.2s ease;
+}
+
+.btn-herramienta:active {
+    transform: scale(0.92);
 }
 
 /* BLOQUE RESPUESTA */

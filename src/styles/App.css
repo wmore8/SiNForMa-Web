@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 @font-face {
@@ -249,6 +251,8 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   min-height: 100vh;
+  user-select: none;
+  -webkit-user-select: none;
 
   --nav-bg: var(--bg-color);
   --nav-text: var(--primary);
@@ -272,6 +276,12 @@ button,
 textarea {
   font-family: var(--font-principal);
   font-weight: 600;
+}
+
+input,
+textarea {
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 option {
@@ -547,6 +557,8 @@ html.text-size-lg {
   color: var(--text-color);
   cursor: pointer;
   font-weight: bold;
+  touch-action: manipulation;
+  user-select: none;
   transition: transform 0.2s ease;
 }
 
@@ -554,6 +566,10 @@ html.text-size-lg {
   border-color: var(--primary);
   color: var(--primary);
   transform: scale(1.01);
+}
+
+.theme-btn:active {
+  transform: scale(0.96);
 }
 
 .theme-btn:focus {
@@ -665,6 +681,13 @@ html.text-size-lg {
   border-radius: 0.5rem;
   cursor: pointer;
   color: var(--text-color);
+  touch-action: manipulation;
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+
+.icon-btn:active {
+  transform: scale(0.94);
 }
 
 .icon-btn:focus {
@@ -680,7 +703,13 @@ html.text-size-lg {
   background-color: transparent;
   color: var(--text-color);
   cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
   transition: all 0.2s ease;
+}
+
+.btn-secundario:active {
+  transform: scale(0.96);
 }
 
 .btn-secundario.danger:hover {
@@ -699,6 +728,8 @@ html.text-size-lg {
   border: none;
   font-size: 1.2rem;
   cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
   transition: transform 0.1s ease, opacity 0.2s;
 }
 
@@ -736,12 +767,14 @@ html.text-size-lg {
 .btn-volver {
   color: var(--text-color);
   font-size: 1em;
+  touch-action: manipulation;
 }
 
 .btn-info,
 .btn-toggle {
   font-size: 1.2em;
   padding: 0 1rem;
+  touch-action: manipulation;
 }
 
 .btn-icon-text {
@@ -760,6 +793,13 @@ html.text-size-lg {
   border: 2px solid var(--card-border);
   background-color: var(--bg-color);
   color: var(--text-color);
+  touch-action: manipulation;
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+
+.btn-icon-text:active {
+  transform: scale(0.96);
 }
 
 .btn-icon-text:focus {
@@ -1057,9 +1097,17 @@ html.text-size-lg {
   cursor: pointer;
   height: 100%;
   width: 100%;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   transition: all 0.2s ease;
   text-decoration: none;
   color: var(--text-color);
+}
+
+.card:active {
+  transform: scale(0.98);
 }
 
 .card:hover {
