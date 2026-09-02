@@ -78,6 +78,9 @@
     background-color: var(--bg-color);
     border: 2px solid var(--card-border);
     border-radius: 0.5rem;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
     transition: all 0.2s ease;
 }
 
@@ -226,6 +229,9 @@
     background-color: var(--bg-color);
     font-weight: bold;
     cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
     transition: all 0.2s ease;
 }
 
@@ -393,6 +399,9 @@
     background-color: var(--bg-color);
     border: 2px solid var(--card-border);
     border-radius: 0.35rem;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
     transition: all 0.2s ease;
     color: var(--text-color);
     /* Para que quede por encima de la linea diagonal */
@@ -423,6 +432,9 @@
     font-size: clamp(1.2rem, 3vw, 2.5rem);
     font-weight: 600;
     cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
     color: var(--text-color);
 }
 

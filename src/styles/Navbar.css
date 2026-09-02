@@ -26,7 +26,13 @@
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  transition: background-color 0.2s ease, opacity 0.2s ease;
+  touch-action: manipulation;
+  user-select: none;
+  transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.1s ease;
+}
+
+.nav-brand:active {
+  transform: scale(0.96);
 }
 
 .nav-brand:hover {
@@ -117,7 +123,13 @@
   opacity: 0.8;
   border-radius: 0.75rem;
   margin: 0.2rem 0;
-  transition: color 0.2s, opacity 0.2s, background-color 0.2s ease;
+  touch-action: manipulation;
+  user-select: none;
+  transition: color 0.2s, opacity 0.2s, background-color 0.2s ease, transform 0.1s ease;
+}
+
+.nav-link:active {
+  transform: scale(0.97);
 }
 
 .nav-link:hover,
@@ -142,7 +154,13 @@
   align-items: center;
   justify-content: center;
   padding: 0.25rem;
-  transition: background-color 0.2s;
+  touch-action: manipulation;
+  user-select: none;
+  transition: background-color 0.2s, transform 0.1s ease;
+}
+
+.nav-btn:active {
+  transform: scale(0.92);
 }
 
 .nav-btn:focus {

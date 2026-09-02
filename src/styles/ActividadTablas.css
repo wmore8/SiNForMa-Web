@@ -53,10 +53,16 @@
     color: var(--primary-text);
     transition: all 0.2s;
     font-weight: 600;
+    touch-action: manipulation;
 }
 
 .tabla-celda.guessable:hover {
     filter: brightness(0.9);
+}
+
+.tabla-celda.guessable:active {
+    filter: brightness(0.85);
+    transform: scale(0.95);
 }
 
 .tabla-celda.covered {
